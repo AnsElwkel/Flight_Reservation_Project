@@ -1,15 +1,13 @@
 package com.egyptFlightReservation.Controller;
 
-import com.egyptFlightReservation.Model.Client;
-import com.egyptFlightReservation.Model.UserValidation;
+import com.egyptFlightReservation.Model.Database;
+import com.egyptFlightReservation.Model.User.Client;
 import com.egyptFlightReservation.View.LoginView;
-import com.egyptFlightReservation.View.UserView;
-import javafx.util.Pair;
 
 public class LoginController {
-    LoginView loginView;
-    UserValidation check;
-    Client client;
+    private String username , password;
+    private LoginView loginView;
+    private Client client;
 
 
     public LoginController(LoginView loginView){
@@ -17,17 +15,35 @@ public class LoginController {
     }
 
     public boolean LoginProcess(){
-        String username = this.loginView.takeName();
-        String password = this.loginView.takePassword();
 
-        check = new UserValidation(username , password);
+        return false;
+    }
+    public void loginInput(){
+        username = this.loginView.takeName();
+        while(isContainSpaces(username.trim())){
+            System.out.print("Enter a username without spaces: ");
+            username = this.loginView.takeName();
+        }
+        password = this.loginView.takePassword();
+        while(isContainSpaces(password.trim())){
+            System.out.print("Enter a password without spaces: ");
+            password = this.loginView.takePassword();
+        }
+    }
+    public void validateUserName(){
+        loginInput();
 
-        int isValid = check.Validate();
-        if(isValid == 0)
-            return false;
-        else if(isValid == 2)
-        //Open the Account
-        client = new Client(username , password);
-        return true;
+        if(Database.getDatabase().isAdmin(username , password)){
+            //call adminController
+        }else if(Database.getDatabase().isCorrectLogin(username, password)){
+            Database.getDatabase().setCurUser(username);
+        }else {
+            System.out.println("Invalid username or password");
+            validateUserName(); // recursion function
+        }
+    }
+
+    public boolean isContainSpaces(String str){
+        return str.contains(" ");
     }
 }

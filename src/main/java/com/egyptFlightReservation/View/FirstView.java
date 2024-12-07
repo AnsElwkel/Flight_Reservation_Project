@@ -1,10 +1,8 @@
 package com.egyptFlightReservation.View;
 
-import OurExceptions.RangeException;
 import Tools.Menu;
 import Tools.MenuSelector;
 import com.egyptFlightReservation.Controller.LoginController;
-import com.egyptFlightReservation.Model.Client;
 
 public class FirstView {
     public void Run() throws OurExceptions.RangeException {
@@ -19,6 +17,9 @@ public class FirstView {
                 isSuccess = loginController.LoginProcess();
             }
             System.out.println("Successfully logged in (Admin)");
+        }else if (choice == 2) {
+
+        }else { //exit
         }
     }
 }

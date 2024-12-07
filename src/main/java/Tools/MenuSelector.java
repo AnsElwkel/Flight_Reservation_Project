@@ -9,7 +9,7 @@ public class MenuSelector {
         System.out.print(text + ": ");
         Scanner cin = new Scanner(System.in);
         choice = cin.nextInt();
-        if(!(from <= choice && choice <= to))
+        if(!(from <= choice && choice <= to || choice == -1))
             throw new RangeException(from , to);
 
         return choice;

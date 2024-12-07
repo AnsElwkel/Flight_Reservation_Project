@@ -1,14 +1,14 @@
 package com.egyptFlightReservation.Model;
 
 import java.util.ArrayList;
-class airline{
+public class Airline{
     //class attributes
     private String name;
     private int ID;
     private String location;
     private ArrayList<Flight> Fights;
     //Constructor
-    public airline(String name,int ID,String location){
+    public Airline(String name,int ID,String location){
         this.name=name;
         this.ID=ID;
         this.location=location;
