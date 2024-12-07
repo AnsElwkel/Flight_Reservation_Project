@@ -1,11 +1,8 @@
 package com.egyptFlightReservation.Model;
 
 class Passenger{
-    private String Name;
-    private  String ID;
-    private  String PhoneNumber;
-    private String  Email;
 
+    private String Name,ID,PhoneNumber,Email;
 
     public Passenger(String Name, String ID, String PhoneNumber, String Email){
         this.Name=Name;

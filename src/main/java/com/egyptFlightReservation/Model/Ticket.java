@@ -3,10 +3,10 @@ package com.egyptFlightReservation.Model;
 
 class Ticket{
 
-    private int TicketNumber;
+    private int TicketNumber, SeatNum;
     private boolean TicketStatus;
     private double Fare ;
-    private int SeatNum;
+
 
     public Ticket(int TicketNumber,boolean TicketStatus,double Fare ,int SeatNum){
         this.Fare=Fare;
