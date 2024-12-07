@@ -1,10 +1,12 @@
 package com.egyptFlightReservation.Controller;
+
 import com.egyptFlightReservation.View.signUpView;
 
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeParseException;
 import java.util.Scanner;
+
 public class signUpController {
     protected String userName, firstName, midName, lastName, email, password,
             mobileNumber, date, gender, passportNumber;
@@ -99,13 +101,6 @@ public class signUpController {
         }
         return true;
     }
-
-//    public int calculateAge() {
-//        LocalDate birthDateParsed = LocalDate.parse(date);
-//        LocalDate currentDate = LocalDate.now();
-//        Period age = Period.between(birthDateParsed, currentDate);
-//        return age.getYears();
-//    }
 
     public int calculateAge() {
         try {
