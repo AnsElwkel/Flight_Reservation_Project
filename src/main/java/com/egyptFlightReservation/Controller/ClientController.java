@@ -22,6 +22,7 @@ public class ClientController {
 
         if(choice == 1){
             /// //////////
+            showProfile();
 
 
 
@@ -32,5 +33,8 @@ public class ClientController {
             firstView.Run();
         }
 
+    }
+    public void showProfile(){
+        //implement in this function
     }
 }
