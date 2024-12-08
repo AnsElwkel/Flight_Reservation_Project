@@ -3,6 +3,7 @@ package com.egyptFlightReservation.View;
 import Tools.Menu;
 import Tools.MenuSelector;
 import com.egyptFlightReservation.Controller.LoginController;
+import com.egyptFlightReservation.Controller.signUpController;
 
 public class FirstView {
     public static void Run() throws OurExceptions.RangeException {
@@ -16,8 +17,10 @@ public class FirstView {
                 System.out.println("Invalid username or password ..try again");
                 isSuccess = loginController.LoginProcess();
             }
-            System.out.println("Successfully logged in (Admin)");
+//            System.out.println("Successfully logged in (Admin)");
         }else if (choice == 2) {
+            signUpController signUp = new signUpController();
+            signUp.SignUpProcess();
 
         }else { //exit
         }

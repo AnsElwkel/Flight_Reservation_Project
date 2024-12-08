@@ -49,9 +49,8 @@ public class LoginController {
 
         }else if(Database.getDatabase().isCorrectLogin(username, password)){
             Database.getDatabase().setCurUser(username);
-        }else {
-            System.out.println("Invalid username or password");
-            validateUserName(); // recursion function
+            ClientController clientController = new ClientController();
+            clientController.ClientProcess();
         }
     }
 

@@ -74,7 +74,6 @@ public class AdminController {
         Admin newAdmin = new Admin(adminUserName, adminName, adminPassword, adminEmail, airlineName);
         Database.getDatabase().saveAdmin(adminName, newAdmin, airlineName, airlineCode , airlineLocation);
     }
-
     public void AdminProcess() throws RangeException {
         int choice ;
         do{
