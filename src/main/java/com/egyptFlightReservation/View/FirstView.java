@@ -5,7 +5,7 @@ import Tools.MenuSelector;
 import com.egyptFlightReservation.Controller.LoginController;
 
 public class FirstView {
-    public void Run() throws OurExceptions.RangeException {
+    public static void Run() throws OurExceptions.RangeException {
         Menu.show(new String[]{"Login", "Sign Up"});
         int choice = MenuSelector.select("Select Number in Range (1 - 2)", 1, 2);
 

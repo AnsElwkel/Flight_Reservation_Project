@@ -8,10 +8,11 @@ import com.egyptFlightReservation.Model.User.Admin;
 import com.egyptFlightReservation.Model.User.Client;
 
 public class Database {
-    private static TreeMap<String , myTuple<Client, ArrayList<Booking> , ArrayList<Ticket> , ArrayList<PaymentMethod> >> userTable;
-    private static TreeMap<String , ArrayList<Admin> > adminTable;
+    private static TreeMap<String , myTuple<Client, ArrayList<Booking> , ArrayList<Ticket> , ArrayList<PaymentMethod> >> userTable;//loading done
+    private static TreeMap<String , Admin > adminTable; //loading done
     private static TreeMap<myPair<String, String>, ArrayList<Flight>> searchingTable;
     private static TreeMap<String , Airline> adminOperations;
+    private static ArrayList<Airport> airports;
     private static String curUser;
     private static Database database ;
 
@@ -43,7 +44,7 @@ public class Database {
     public static boolean isAdmin(String userName, String password){
         if(!adminTable.containsKey(userName))
             return false;
-        return password.equals(adminTable.get(userName).getFirst().getPassword());
+        return password.equals(adminTable.get(userName).getPassword());
     }
     public static String getCurUser(){
         return curUser;
@@ -51,19 +52,21 @@ public class Database {
     public static void setCurUser(String username){
         curUser = username;
     }
+
     public static void addNewFlight(Flight flight){
         myPair<String,String> pair = new myPair<>(flight.getDeparture_airport() , flight.getArrival_airport());
         if(!searchingTable.containsKey(pair))
             searchingTable.put(pair, new ArrayList<>());
-        if(!adminOperations.containsKey(AirlineNumber))
-            adminOperations.put(AirlineNumber, new ArrayList<>());
 
         searchingTable.get(pair).add(flight);
-        adminOperations.get(AirlineNumber).add(flight);
+        adminOperations.get(curUser).addFlight(flight);
     }
-    public static void removeFlight(String AirlineNumber , String flightNumber){
-        if(adminOperations.containsKey(AirlineNumber))
-            adminOperations.get(AirlineNumber).remove(flightNumber);
+
+    public static void removeFlight(String flightNumber){
+        if(adminOperations.containsKey(curUser))
+            adminOperations.get(curUser).removeFlight(flightNumber);
+        else
+            System.out.println("Admin Name not contain in admin operations container");
     }
 
     public static void loadUserTable(String userName , String[] clientContent, String[] bookingHistory,
@@ -112,6 +115,17 @@ public class Database {
 
     }
 
-
-
+    public static void saveAdmin(String adminName, Admin admin , String AirlineName , String AirlineCode , String airlineLocation){
+        adminTable.put(adminName,admin);
+        adminOperations.put(adminName , new Airline(AirlineName , AirlineCode ,airlineLocation));
+    }
+    public static Admin getAdmin(){
+        return adminTable.get(curUser);
+    }
+    public static void updateSchedule(String flightNumber ,String departureDate, String arrivalDate){
+        adminOperations.get(curUser).setSchedule(flightNumber,departureDate,arrivalDate);
+    }
+    public static boolean expandCountOfSeats(String flightNumber,int newCountOfRows , int countOfFirstClass,int countOfBusinessClass ,int countOfEconomyClass){
+         return adminOperations.get(flightNumber).expandCountOfSeats(flightNumber,newCountOfRows, countOfFirstClass, countOfBusinessClass, countOfEconomyClass);
+    }
 }

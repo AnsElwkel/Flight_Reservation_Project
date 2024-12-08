@@ -1,10 +1,10 @@
 package com.egyptFlightReservation.Model.Seat;
 
-public class Economy extends Seat {
+public class EconomyClass extends Seat {
     double baggageAllowance;
     float SeatSpace;
 
-    public Economy(String seatNumber,  boolean availabilityStatus, int seatPrice, double baggageAllowance, float seatSpace) {
+    public EconomyClass(String seatNumber, boolean availabilityStatus, int seatPrice, double baggageAllowance, float seatSpace) {
         super(seatNumber, availabilityStatus, seatPrice);
         this.baggageAllowance = baggageAllowance;
         this.SeatSpace = seatSpace;

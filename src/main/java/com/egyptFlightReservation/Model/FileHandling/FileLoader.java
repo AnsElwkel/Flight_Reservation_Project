@@ -95,7 +95,6 @@ public class FileLoader {
         }
     }
 
-    public static void load
 
     public static String[] loadFile(String fileName) {
         File file = new File(fileName);

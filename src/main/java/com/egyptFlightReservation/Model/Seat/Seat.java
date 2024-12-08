@@ -20,7 +20,9 @@ public abstract class Seat {
     public String getSeatNumber() {
         return SeatNumber;
     }
-
+    public void setSeatNumber(String seatNumber) {
+        this.SeatNumber = seatNumber;
+    }
     public void DisplayDetails(){
         System.out.println("Seat Number: "+SeatNumber);
         System.out.println("Seat Price: "+SeatPrice);
