@@ -100,7 +100,8 @@ public class AdminController {
         }
     }
     public void addFlight(){
-        ArrayList info = view.getInfoOfNewFlight();
+        ArrayList<String> info = view.getInfoOfNewFlight();
+        info.add(Database.getDatabase().getAirline().get_name());
         Flight newFlight = new Flight(info);
         admin.addFlight(newFlight);
     }

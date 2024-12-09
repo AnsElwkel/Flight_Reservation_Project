@@ -1,16 +1,20 @@
 package com.egyptFlightReservation.Model;
-import java.util.ArrayList;
-import java.util.TreeMap;
+import java.time.LocalDate;
+import java.util.*;
+
 import Tools.myTuple;
 import Tools.myPair;
 import com.egyptFlightReservation.Model.Payment.*;
 import com.egyptFlightReservation.Model.User.Admin;
 import com.egyptFlightReservation.Model.User.Client;
 
+
 public class Database {
     private static TreeMap<String , myTuple<Client, ArrayList<Booking> , ArrayList<Ticket> , ArrayList<PaymentMethod> >> userTable;//loading done
     private static TreeMap<String , Admin > adminTable; //loading done
-    private static TreeMap<myPair<String, String>, ArrayList<Flight>> searchingTable;
+//    private static TreeMap<myPair<String, String>, ArrayList<Flight>> searchingTable;
+//    private static TreeSet<Flight> searchingTable;
+    private static TreeMap<LocalDate , ArrayList<Flight>> searchingTable
     private static TreeMap<String , Airline> adminOperations;
     private static ArrayList<Airport> airports;
     private static String curUser;
@@ -20,7 +24,8 @@ public class Database {
         adminOperations = new TreeMap<>();
         userTable = new TreeMap<>();
         adminTable = new TreeMap<>();
-        searchingTable = Tools.myPair.getPairArrayListTreeMap();
+//        searchingTable = Tools.myPair.getPairArrayListTreeMap();
+        searchingTable = new TreeMap<>();
     }
 
     public static Database getDatabase(){
@@ -29,10 +34,14 @@ public class Database {
         return database;
     }
 
-    public static ArrayList<Integer> getSearchingResult(String from , String to){
-         searchingTable.get(new myPair<String , String>(from , to));
-        return new ArrayList<Integer>();
+    public static Airline getAirline(){
+        return adminOperations.get(curUser);
     }
+
+//    public static ArrayList<Integer> getSearchingResult(String from , String to){
+//         searchingTable.get(new myPair<String , String>(from , to));
+//        return new ArrayList<Integer>();
+//    }
     public static boolean isUniqueUserName(String userName){
         return !userTable.containsKey(userName);
     }
@@ -54,13 +63,10 @@ public class Database {
     }
 
     public static void addNewFlight(Flight flight){
-        myPair<String,String> pair = new myPair<>(flight.getDeparture_airport() , flight.getArrival_airport());
-        if(!searchingTable.containsKey(pair))
-            searchingTable.put(pair, new ArrayList<>());
-
-        searchingTable.get(pair).add(flight);
+        searchingTable.add(flight);
         adminOperations.get(curUser).addFlight(flight);
     }
+
 
     public static void removeFlight(String flightNumber){
         if(adminOperations.containsKey(curUser))
@@ -127,5 +133,16 @@ public class Database {
     }
     public static boolean expandCountOfSeats(String flightNumber,int newCountOfRows , int countOfFirstClass,int countOfBusinessClass ,int countOfEconomyClass){
          return adminOperations.get(flightNumber).expandCountOfSeats(flightNumber,newCountOfRows, countOfFirstClass, countOfBusinessClass, countOfEconomyClass);
+    }
+
+
+    public static ArrayList<Flight> searchFlights(LocalDate fromDate , LocalDate toDate){
+        SortedMap<LocalDate, ArrayList<Flight>> resultFlights = searchingTable.subMap(fromDate, true, toDate, true);
+        ArrayList<Flight> flights = new ArrayList<>();
+        for(var cur : resultFlights.keySet())
+            for(Flight flight : resultFlights.get(cur))
+                flights.add(flight);
+
+        return flights;
     }
 }
