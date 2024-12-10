@@ -12,9 +12,7 @@ import com.egyptFlightReservation.Model.User.Client;
 public class Database {
     private static TreeMap<String , myTuple<Client, ArrayList<Booking> , ArrayList<Ticket> , ArrayList<PaymentMethod> >> userTable;//loading done
     private static TreeMap<String , Admin > adminTable; //loading done
-//    private static TreeMap<myPair<String, String>, ArrayList<Flight>> searchingTable;
-//    private static TreeSet<Flight> searchingTable;
-    private static TreeMap<LocalDate , ArrayList<Flight>> searchingTable
+    private static TreeMap<LocalDate , ArrayList<Flight>> searchingTable;
     private static TreeMap<String , Airline> adminOperations;
     private static ArrayList<Airport> airports;
     private static String curUser;
@@ -24,7 +22,6 @@ public class Database {
         adminOperations = new TreeMap<>();
         userTable = new TreeMap<>();
         adminTable = new TreeMap<>();
-//        searchingTable = Tools.myPair.getPairArrayListTreeMap();
         searchingTable = new TreeMap<>();
     }
 
@@ -37,11 +34,6 @@ public class Database {
     public static Airline getAirline(){
         return adminOperations.get(curUser);
     }
-
-//    public static ArrayList<Integer> getSearchingResult(String from , String to){
-//         searchingTable.get(new myPair<String , String>(from , to));
-//        return new ArrayList<Integer>();
-//    }
     public static boolean isUniqueUserName(String userName){
         return !userTable.containsKey(userName);
     }
@@ -61,20 +53,16 @@ public class Database {
     public static void setCurUser(String username){
         curUser = username;
     }
-
     public static void addNewFlight(Flight flight){
-        searchingTable.add(flight);
+        searchingTable.get(flight.getDepartureDate()).add(flight);
         adminOperations.get(curUser).addFlight(flight);
     }
-
-
     public static void removeFlight(String flightNumber){
         if(adminOperations.containsKey(curUser))
             adminOperations.get(curUser).removeFlight(flightNumber);
         else
             System.out.println("Admin Name not contain in admin operations container");
     }
-
     public static void loadUserTable(String userName , String[] clientContent, String[] bookingHistory,
                                      String[] tickets, String[][] paymentMethods){
         Client newClient = new Client(clientContent[0] , clientContent[1] , clientContent[2] , clientContent[3]
@@ -120,7 +108,6 @@ public class Database {
                                      ( newClient , bookings ,newTickets, methods));
 
     }
-
     public static void saveAdmin(String adminName, Admin admin , String AirlineName , String AirlineCode , String airlineLocation){
         adminTable.put(adminName,admin);
         adminOperations.put(adminName , new Airline(AirlineName , AirlineCode ,airlineLocation));
@@ -134,8 +121,6 @@ public class Database {
     public static boolean expandCountOfSeats(String flightNumber,int newCountOfRows , int countOfFirstClass,int countOfBusinessClass ,int countOfEconomyClass){
          return adminOperations.get(flightNumber).expandCountOfSeats(flightNumber,newCountOfRows, countOfFirstClass, countOfBusinessClass, countOfEconomyClass);
     }
-
-
     public static ArrayList<Flight> searchFlights(LocalDate fromDate , LocalDate toDate){
         SortedMap<LocalDate, ArrayList<Flight>> resultFlights = searchingTable.subMap(fromDate, true, toDate, true);
         ArrayList<Flight> flights = new ArrayList<>();
@@ -145,4 +130,21 @@ public class Database {
 
         return flights;
     }
+    public static Client getClient(){
+        return userTable.get(curUser).getFirst();
+    }
+    public static String[][] getBookingHistory(){
+//        return userTable.get(curUser).getSecond();
+        String[][] history = new String[userTable.get(curUser).getSecond().size()][11];
+        int i = -1;
+        for(var cur : userTable.get(curUser).getSecond()){
+            String[] tmp = {cur.getBookingId() , (cur.getBookingStatus() ? "Done" : "Failed") ,
+                    String.valueOf(cur.getBookingDate()), cur.getAirlineName() , cur.getFlightNumber() ,
+                    cur.getDepartureAirport() , cur.getArrivalAirport() , cur.getDepartureDate() , cur.getArrivalDate() ,
+                    String.valueOf(cur.getCountOfSeats()) , String.valueOf(cur.getTotalPrice())};
+            history[++i] = tmp;
+        }
+        return history;
+    }
+
 }

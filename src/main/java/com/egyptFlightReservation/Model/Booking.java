@@ -1,17 +1,23 @@
 package com.egyptFlightReservation.Model;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+
 public class Booking {
     private String bookingId;
-    private String clientName;
+    private boolean bookingStatus;
+    private LocalDate bookingDate;
+    private String airlineName;
     private String flightNumber;
-    private String seatNumber;
     private String departureAirport;
     private String arrivalAirport;
-    private String airlineName;
     private String departureDate;
     private String arrivalDate;
+    private int countOfSeats;    ///May be book more than seat !
     private int totalPrice;
-    private boolean bookingStatus;
+
+    private ArrayList<String> seatNumbers;  ///May be book more than seat !
+    private String clientName;
 //    private int frequentFlyerPoints;
 
     public Booking(String bookingId, String clientName, String flightNumber, String seatNumber,
@@ -28,6 +34,7 @@ public class Booking {
         this.bookingStatus = bookingStatus;
         this.arrivalAirport = arrivalAirport;
         this.airlineName = airlineName;
+        this.bookingDate = LocalDate.now();
     }
 
     public Booking(String[] info) {
@@ -42,6 +49,7 @@ public class Booking {
         arrivalDate=info[8];
         totalPrice=Integer.parseInt(info[9]);
         bookingStatus=Boolean.parseBoolean(info[10]);
+        this.bookingDate = LocalDate.now();
     }
 
     public void displayBookingDetails() {
@@ -96,5 +104,20 @@ public class Booking {
 
     public String getAirlineName() {
         return airlineName;
+    }
+
+    public LocalDate getBookingDate() {
+        return bookingDate;
+    }
+
+    public int getCountOfSeats() {
+        return countOfSeats;
+    }
+
+    public ArrayList<String> getSeatNumbers() {
+        return seatNumbers;
+    }
+    public boolean getBookingStatus() {
+        return bookingStatus;
     }
 }

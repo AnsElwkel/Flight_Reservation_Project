@@ -4,14 +4,15 @@ import OurExceptions.RangeException;
 import java.util.Scanner;
 
 public class MenuSelector {
-    public static int select (String text , int from , int to) throws RangeException {
+    public static int select (String text , int from , int to) {
         int choice ;
-        System.out.print(text + ": ");
+        System.out.print(text + " (range " + from + " - " + to + ") : ");
         Scanner cin = new Scanner(System.in);
         choice = cin.nextInt();
-        if(!(from <= choice && choice <= to || choice == -1))
-            throw new RangeException(from , to);
-
+        while((!(from <= choice && choice <= to))){
+            System.out.println("Invalid choice. Try again.");
+            choice = cin.nextInt();
+        }
         return choice;
     }
 }

@@ -1,5 +1,7 @@
 package com.egyptFlightReservation.Controller;
 
+import OurExceptions.RangeException;
+import com.egyptFlightReservation.Model.Database;
 import com.egyptFlightReservation.View.signUpView;
 
 import java.time.LocalDate;
@@ -21,7 +23,7 @@ public class signUpController {
     public boolean validateUserName() {
         this.userName = view.getUserName();
         while (!(!isContainSpaces(this.userName.trim())
-//                   && Database.getDatabase().isUniqueUserName(this.userName.trim()) // return true when the username is new
+                   && Database.getDatabase().isUniqueUserName(this.userName.trim()) // return true when the username is new
         )) {
             System.out.println((isContainSpaces(this.userName.trim()) ? "Please enter a username without spaces" :
                     "That username is already in use. Please try again.") + ": ");
@@ -30,9 +32,10 @@ public class signUpController {
         return true;
     }
 
-    public void SignUpProcess() {
+    public void SignUpProcess() throws RangeException {
         validateInput();
-
+        ClientController clientController = new ClientController();
+        clientController.process();
     }
 
 
@@ -45,7 +48,6 @@ public class signUpController {
         while (!email.endsWith("gmail.com")) {
             System.out.println("Email Not Valid,It must contain \"@gmail.com\" ");
             this.email = view.getEmail();
-
         }
         return true;
 

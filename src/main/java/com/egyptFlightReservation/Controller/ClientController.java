@@ -8,9 +8,10 @@ import com.egyptFlightReservation.View.FirstView;
 
 public class ClientController {
     ClientView view;
-    Client client = Database.getDatabase().getCurrentClient();
+    Client client ;
     public ClientController(){
         view = new ClientView();
+        client = Database.getDatabase().getClient();
     }
 
     public void process() throws RangeException {
@@ -30,11 +31,11 @@ public class ClientController {
             //reserve call call search engine
 
         }else if(choice == 3){
-            FirstView firstView = new FirstView();
-            firstView.Run();
+            FirstView.Run();
         }
-
     }
+
+
     public void showProfile(){
         //implement in this function
     }

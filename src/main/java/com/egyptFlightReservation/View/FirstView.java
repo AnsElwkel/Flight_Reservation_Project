@@ -7,8 +7,8 @@ import com.egyptFlightReservation.Controller.signUpController;
 
 public class FirstView {
     public static void Run() throws OurExceptions.RangeException {
-        Menu.show(new String[]{"Login", "Sign Up"});
-        int choice = MenuSelector.select("Select Number in Range (1 - 2)", 1, 2);
+        Menu.show(new String[]{"Login", "Sign Up" , "Exit"});
+        int choice = MenuSelector.select("Enter Number", 1, 3);
 
         if (choice == 1) {
             LoginController loginController = new LoginController(new LoginView());
@@ -17,12 +17,9 @@ public class FirstView {
                 System.out.println("Invalid username or password ..try again");
                 isSuccess = loginController.LoginProcess();
             }
-//            System.out.println("Successfully logged in (Admin)");
         }else if (choice == 2) {
             signUpController signUp = new signUpController();
             signUp.SignUpProcess();
-
-        }else { //exit
         }
     }
 }

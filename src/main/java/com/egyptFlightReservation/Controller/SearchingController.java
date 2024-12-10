@@ -63,7 +63,6 @@ public class SearchingController {
             }
             showResult(searchResults);
         }
-            //call sorting process
         else if(choice == 2) {
             choice = view.getChoiceOfFlight(1 , searchResults.size()); // from 1 to size of array
             //

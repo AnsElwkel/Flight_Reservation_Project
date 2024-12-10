@@ -37,7 +37,7 @@ public class Client extends User {
     String getGender(){
         return this.gender;
     }
-    String getPhoneNumber(){
+    public String getPhoneNumber(){
         return this.phoneNumber;
     }
 
