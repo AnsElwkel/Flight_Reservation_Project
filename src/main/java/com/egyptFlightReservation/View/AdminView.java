@@ -104,6 +104,12 @@ public class AdminView {
         info.add(Input.cin.nextLine());
         System.out.println("Enter price of economy seat: ");
         info.add(Input.cin.nextLine());
+        System.out.println("Enter First Class Feature: ");
+        info.add(Input.cin.nextLine());
+        System.out.println("Enter Business Class Feature: ");
+        info.add(Input.cin.nextLine());
+        System.out.println("Enter Economy Class Feature: ");
+        info.add(Input.cin.nextLine());
         return info;
     }
 

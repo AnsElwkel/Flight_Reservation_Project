@@ -1,20 +1,18 @@
 package com.egyptFlightReservation.Controller;
 
-import com.egyptFlightReservation.Model.Booking;
 import com.egyptFlightReservation.Model.Database;
 import com.egyptFlightReservation.Model.User.Client;
 import com.egyptFlightReservation.View.userProfileView;
-import java.util.ArrayList;
 
 import java.util.Scanner;
 
-public class userProfileController {
+public class ClientProfileController {
     private int choice;
     protected userProfileView userView;
     protected signUpController controller;
     protected Scanner scanner;
     private Client client ;
-    public userProfileController() {
+    public ClientProfileController() {
         this.userView = new userProfileView();
         this.controller = new signUpController();
         this.client = Database.getDatabase().getClient();

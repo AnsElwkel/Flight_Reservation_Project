@@ -1,6 +1,5 @@
 package com.egyptFlightReservation.Controller;
 
-import OurExceptions.RangeException;
 import com.egyptFlightReservation.Model.Database;
 import com.egyptFlightReservation.Model.User.Client;
 import com.egyptFlightReservation.View.ClientView;
@@ -14,7 +13,7 @@ public class ClientController {
         client = Database.getDatabase().getClient();
     }
 
-    public void process() throws RangeException {
+    public void process()  {
         int choice = view.clientMenu();
         while(choice > 3 || choice < 1){
             System.out.println("Invalid input");
@@ -22,13 +21,12 @@ public class ClientController {
         }
 
         if(choice == 1){
-            /// //////////
             showProfile();
-
-
-
         }else if(choice == 2){
-            //reserve call call search engine
+            //reserve call search engine
+            SearchingController searchingController = new SearchingController();
+            if(!searchingController.searchProcess())
+                process(); /// recursion checking !!!!!
 
         }else if(choice == 3){
             FirstView.Run();
@@ -36,7 +34,8 @@ public class ClientController {
     }
 
 
-    public void showProfile(){
-        //implement in this function
+    public void showProfile(){ /// Call profile controller
+        ClientProfileController profileController = new ClientProfileController();
+        profileController.mainMenu();
     }
 }

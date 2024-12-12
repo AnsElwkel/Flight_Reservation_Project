@@ -1,5 +1,5 @@
 package com.egyptFlightReservation.Model.Payment;
 
 public interface PaymentProcessor {
-    void paymentProcess();
+    boolean paymentProcess(int amount);
 }

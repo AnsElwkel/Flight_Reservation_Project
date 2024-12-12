@@ -3,16 +3,31 @@ package com.egyptFlightReservation.Model.Payment;
 public class PayPal extends PaymentMethod {
     private String paypalEmail;
 
-    public PayPal(String holderName , String paypalEmail ,int curCash){
-        super(holderName , curCash);
+    public PayPal(String paypalEmail , int cash){
+        super(cash);
         this.paypalEmail = paypalEmail;
-    }
-    public PayPal(String[] info){
-        super(info[0] , Integer.parseInt(info[2]));
-        this.paypalEmail = info[1];
     }
 
     public String getPaypalEmail() {
         return paypalEmail;
+    }
+
+    @Override
+    public void showPaymentDetails() {
+        System.out.println("Paypal Email : " + this.paypalEmail );
+        System.out.println("Cash : " + getCurCash());
+    }
+
+    @Override
+    public String PublicPaymentDetails() {
+        return new String("Paypal : " + this.paypalEmail);
+    }
+    @Override
+    public boolean paymentProcess(int amount) {
+        if(getCurCash() >= amount){
+            curCash -= amount;
+            return true;
+        }
+        return false;
     }
 }

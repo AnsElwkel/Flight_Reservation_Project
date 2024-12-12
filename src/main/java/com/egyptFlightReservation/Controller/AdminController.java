@@ -27,11 +27,7 @@ public class AdminController {
                 addNewAdminProcess();
         } while (choice != 1);
 
-        try {
-            FirstView.Run();
-        } catch (RangeException e) {
-            System.out.println(e.getMessage());
-        }
+        FirstView.Run();
     }
 
     public void addNewAdminProcess() {
@@ -74,7 +70,7 @@ public class AdminController {
         Admin newAdmin = new Admin(adminUserName, adminName, adminPassword, adminEmail, airlineName);
         Database.getDatabase().saveAdmin(adminName, newAdmin, airlineName, airlineCode , airlineLocation);
     }
-    public void AdminProcess() throws RangeException {
+    public void AdminProcess()  {
         int choice ;
         do{
             choice=view.adminMenu();
@@ -93,11 +89,7 @@ public class AdminController {
 
         }while(choice!=5);
         //log out
-        try {
-            FirstView.Run();
-        } catch (RangeException e) {
-            System.out.println(e.getMessage());
-        }
+        FirstView.Run();
     }
     public void addFlight(){
         ArrayList<String> info = view.getInfoOfNewFlight();

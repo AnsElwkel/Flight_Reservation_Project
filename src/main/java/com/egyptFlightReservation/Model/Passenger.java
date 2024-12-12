@@ -1,6 +1,6 @@
 package com.egyptFlightReservation.Model;
 
-class Passenger{
+public class Passenger{
 /// /
     private String Name,ID,PhoneNumber,Email;
 
@@ -10,6 +10,7 @@ class Passenger{
         this.PhoneNumber=PhoneNumber;
         this.Email=Email;
     }
+
 
     public String get_name(){return Name;}
     public String get_ID(){return ID;}

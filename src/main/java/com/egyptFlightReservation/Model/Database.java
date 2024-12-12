@@ -31,6 +31,24 @@ public class Database {
         return database;
     }
 
+    public static void addTicket(LocalDate DepDate, String flightNumber , Ticket ticket){
+        userTable.get(curUser).getThird().add(ticket);
+        for(Flight flight : searchingTable.get(DepDate)){
+            if(flight.getFlight_number() == flightNumber){
+                flight.addTicket(ticket);
+                break;
+            }
+        }
+    }
+    public static ArrayList<PaymentMethod> getClientPayment(){
+        return userTable.get(curUser).getFourth();
+    }
+    public static void addPaymentMethod(PaymentMethod paymentMethod){
+        userTable.get(curUser).getFourth().add(paymentMethod);
+    }
+    public static void addBooking(Booking booking){
+        userTable.get(curUser).getSecond().add(booking);
+    }
     public static Airline getAirline(){
         return adminOperations.get(curUser);
     }
@@ -70,7 +88,7 @@ public class Database {
         ArrayList<Ticket> newTickets = new ArrayList<>();
         for(String ticket : tickets){
             String[] tmp = ticket.split(" ");
-            Ticket curTicket = new Ticket(tmp[0],Boolean.parseBoolean(tmp[1]),Double.parseDouble(tmp[2]) , tmp[3] , tmp[4],tmp[5],tmp[6],tmp[7]);
+            Ticket curTicket = new Ticket(tmp[0],tmp[1],Boolean.parseBoolean(tmp[1]),Double.parseDouble(tmp[2]) , tmp[3] , tmp[4],tmp[5],tmp[6],tmp[7]);
             newTickets.add(curTicket);
         }
 
@@ -87,12 +105,12 @@ public class Database {
         }
         for(int i = 0;i < paymentMethods[2].length;i++){
             String[] tmp = paymentMethods[2][i].split(" ");
-            PayPal payPal = new PayPal(tmp[0],tmp[1], Integer.parseInt(tmp[2]));
+            PayPal payPal = new PayPal(tmp[0], Integer.parseInt(tmp[1]));
             methods.add(payPal);
         }
         for(int i = 0;i < paymentMethods[3].length;i++){
             String[] tmp = paymentMethods[3][i].split(" ");
-            VodafoneCash cash = new VodafoneCash(tmp[0],tmp[1],Integer.parseInt(tmp[2]));
+            VodafoneCash cash = new VodafoneCash(tmp[0],Integer.parseInt(tmp[1]));
             methods.add(cash);
         }
 
@@ -100,7 +118,8 @@ public class Database {
         ArrayList<Booking> bookings = new ArrayList<>();
         for(int i = 0;i < bookingHistory.length;i++){
             String[] tmp = bookingHistory[i].split(" ");
-            Booking curBooking = new Booking(tmp);
+
+            Booking curBooking = new Booking(new ArrayList<String>(List.of(tmp)));
             bookings.add(curBooking);
         }
 
@@ -115,7 +134,7 @@ public class Database {
     public static Admin getAdmin(){
         return adminTable.get(curUser);
     }
-    public static void updateSchedule(String flightNumber ,String departureDate, String arrivalDate){
+    public static void updateSchedule(String flightNumber ,LocalDate departureDate, LocalDate arrivalDate){
         adminOperations.get(curUser).setSchedule(flightNumber,departureDate,arrivalDate);
     }
     public static boolean expandCountOfSeats(String flightNumber,int newCountOfRows , int countOfFirstClass,int countOfBusinessClass ,int countOfEconomyClass){
@@ -138,13 +157,20 @@ public class Database {
         String[][] history = new String[userTable.get(curUser).getSecond().size()][11];
         int i = -1;
         for(var cur : userTable.get(curUser).getSecond()){
-            String[] tmp = {cur.getBookingId() , (cur.getBookingStatus() ? "Done" : "Failed") ,
+            String[] tmp = {cur.getBookingId() , (cur.getBookingStatus().equals("true") ? "Done" : "Failed") ,
                     String.valueOf(cur.getBookingDate()), cur.getAirlineName() , cur.getFlightNumber() ,
                     cur.getDepartureAirport() , cur.getArrivalAirport() , cur.getDepartureDate() , cur.getArrivalDate() ,
                     String.valueOf(cur.getCountOfSeats()) , String.valueOf(cur.getTotalPrice())};
             history[++i] = tmp;
         }
         return history;
+    }
+    public static void addPassenger(String flightNumber , LocalDate departureDate){
+        for(Flight flight : searchingTable.get(departureDate))
+            if(flight.getFlight_number().equals(flightNumber)){
+                flight.addPassenger(new Passenger(userTable.get(curUser).getFirst().getName(), UUID.randomUUID().toString(),
+                        userTable.get(curUser).getFirst().getPhoneNumber() , userTable.get(curUser).getFirst().getEmail()));
+            }
     }
 
 }

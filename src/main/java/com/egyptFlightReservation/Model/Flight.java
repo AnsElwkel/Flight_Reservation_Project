@@ -3,6 +3,7 @@ package com.egyptFlightReservation.Model;
 import Tools.DateValidation;
 import com.egyptFlightReservation.Model.Seat.*;
 
+import java.sql.SQLOutput;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -13,6 +14,7 @@ public class Flight {
             MIN_COLS = 10, MIN_ROWS = 4;
     private ArrayList<Passenger> passengers;
     private ArrayList<ArrayList<Seat>> Seats;
+    private ArrayList<Ticket> reservedTickets;
     private String flight_number;
     private String departure_airport;
     private String arrival_airport;
@@ -22,7 +24,7 @@ public class Flight {
             cntFirstClassCols, cntBusinessClassCols, cntEconomyClassCols,
             cntOfAvailableFirstClassSeats , cntOfAvailableBusinessClassSeats, cntOfAvailableEconomyClassSeats, // should be decremented when booking seat
             firstClassPrice, businessClassPrice, economyClassPrice;
-    private String airlineName;
+    private String airlineName , firstClassFeatures , businessClassFeatures , economyClassFeatures;
 
     public Flight(ArrayList<String> info) {
         this.flight_number = info.get(0);
@@ -30,26 +32,58 @@ public class Flight {
         this.arrival_airport = info.get(2);
         this.departureDate = LocalDate.parse(info.get(3) , dateFormatter);
         this.arrivalDate = LocalDate.parse(info.get(4) , dateFormatter);
-        this.cntTotalSeatRows = Integer.parseInt(info.get(5));
+//        this.cntTotalSeatRows = Integer.parseInt(info.get(5));
+//        this.cntFirstClassCols = Integer.parseInt(info.get(7));
+//        this.cntBusinessClassCols = Integer.parseInt(info.get(9));
+//        this.cntEconomyClassCols = Integer.parseInt(info.get(11));
+        this.passengers = new ArrayList<>();
+        this.firstClassFeatures = info.get(13);
+        this.businessClassFeatures = info.get(14);
+        this.economyClassFeatures = info.get(15);
+        this.airlineName = info.get(16);
+
+        expandCountOfSeats(Integer.parseInt(info.get(5)), Integer.parseInt(info.get(7)),
+                Integer.parseInt(info.get(9)), Integer.parseInt(info.get(11)));
+
         this.cntTotalSeatCols = Integer.parseInt(info.get(6));
         this.totalSeats = cntTotalSeatRows * cntTotalSeatCols;   // calculate total seats
-        this.cntFirstClassCols = Integer.parseInt(info.get(7));
         this.firstClassPrice = Integer.parseInt(info.get(8));
-        this.cntBusinessClassCols = Integer.parseInt(info.get(9));
         this.businessClassPrice = Integer.parseInt(info.get(10));
-        this.cntEconomyClassCols = Integer.parseInt(info.get(11));
         this.economyClassPrice = Integer.parseInt(info.get(12));
-        this.passengers = new ArrayList<>();
-        this.Seats = new ArrayList<ArrayList<Seat>>(cntTotalSeatRows); // test this
-        this.Seats.addAll(new ArrayList<>(cntTotalSeatCols));
-        setSeatNumbers();
-        this.airlineName = info.get(13);
+//        this.Seats = new ArrayList<ArrayList<Seat>>(cntTotalSeatRows); // test this
+//        this.Seats.addAll(new ArrayList<>(cntTotalSeatCols));
+//        setSeatNumbers();
+//        / add features of seats
+//        addSeatFeatures(firstClassFeatures , businessClassFeatures , economyClassFeatures);
 
         this.cntOfAvailableFirstClassSeats = getCntOfCertainSeats(this.cntFirstClassCols);
         this.cntOfAvailableBusinessClassSeats = getCntOfCertainSeats(this.cntBusinessClassCols);
         this.cntOfAvailableEconomyClassSeats = getCntOfCertainSeats(this.cntEconomyClassCols);
     }
+//
+//    public void addSeatFeatures(String firstClassFeatures , String businessClassFeatures , String economyClassFeatures){
+//        for(int i = 0 ;i < cntOfAvailableFirstClassSeats;i++)
+//            for(Seat seat : Seats.get(i))
+//                seat.setSeatFeatures(firstClassFeatures);
+//
+//
+//        for(int i = cntOfAvailableFirstClassSeats ;i < cntOfAvailableFirstClassSeats+cntOfAvailableBusinessClassSeats;i++)
+//            for(Seat seat : Seats.get(i))
+//                seat.setSeatFeatures(businessClassFeatures);
+//
+//
+//        for(int i = cntOfAvailableFirstClassSeats + cntOfAvailableBusinessClassSeats ;
+//            i < cntOfAvailableFirstClassSeats+cntOfAvailableBusinessClassSeats+cntOfAvailableEconomyClassSeats;i++)
+//            for(Seat seat : Seats.get(i))
+//                seat.setSeatFeatures(economyClassFeatures);
+//    }
 
+    public void addPassenger(Passenger passenger) {
+        passengers.add(passenger);
+    }
+    public void addTicket(Ticket ticket){
+        reservedTickets.add(ticket);
+    }
 
     public void setDeparture_airport(String departure_airport) {
         this.departure_airport = departure_airport;
@@ -159,26 +193,26 @@ public class Flight {
         }
         //add new rows
         while (this.cntTotalSeatRows < newCountOfRows) {
-            Seats.add(new ArrayList<>());
+            Seats.add(new ArrayList<Seat>());
             ++this.cntTotalSeatRows;
         }
         while (this.cntFirstClassCols < newCountOfFirstClass) {
             for (ArrayList<Seat> row : Seats)
-                row.add(cntFirstClassCols, new FirstClass("", true, firstClassPrice, true, true));
+                row.add(cntFirstClassCols, new FirstClass("", true, firstClassPrice , firstClassFeatures));
             ++this.cntFirstClassCols;
-            ++this.cntBusinessClassCols;
-            ++this.cntEconomyClassCols;
             ++this.cntTotalSeatCols;
         }
         while (this.cntBusinessClassCols < newCountOfBusinessClass) {
             for (ArrayList<Seat> row : Seats)
-                row.add(cntBusinessClassCols, new BusinessClass("", true, businessClassPrice, true, true));
+                row.add(cntFirstClassCols +cntBusinessClassCols, new BusinessClass("", true, businessClassPrice,businessClassFeatures));
             ++this.cntBusinessClassCols;
+            ++this.cntTotalSeatCols;
         }
         while (this.cntEconomyClassCols < newCountOfEconomyClass) {
             for (ArrayList<Seat> row : Seats)
-                row.add(cntEconomyClassCols, new EconomyClass("", true, economyClassPrice, 20.0, 60.0f));
+                row.add(cntFirstClassCols + cntBusinessClassCols+cntEconomyClassCols, new EconomyClass("", true, economyClassPrice, economyClassFeatures));
             ++this.cntEconomyClassCols;
+            ++this.cntTotalSeatCols;
         }
 
         setSeatNumbers();
@@ -190,6 +224,7 @@ public class Flight {
             for (int i = 0; i < this.cntTotalSeatCols; i++)
                 Seats.get(rowCharcter - 'A').get(i).setSeatNumber(String.valueOf(rowCharcter) + String.valueOf(i + 1));
         }
+        System.out.println("Seat Number is updated");
     }
 
     public int getCntOfAvailableFirstClassSeats() {

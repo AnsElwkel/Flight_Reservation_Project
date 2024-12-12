@@ -13,7 +13,6 @@ public class signUpController {
     protected String userName, firstName, midName, lastName, email, password,
             mobileNumber, date, gender, passportNumber;
     protected String confirmPassword;
-    protected Scanner scanner;
     protected signUpView view;
 
     public signUpController() {
@@ -32,7 +31,7 @@ public class signUpController {
         return true;
     }
 
-    public void SignUpProcess() throws RangeException {
+    public void SignUpProcess()  {
         validateInput();
         ClientController clientController = new ClientController();
         clientController.process();
@@ -131,7 +130,7 @@ public class signUpController {
     }
 
     public void validateInput() {
-        System.out.println(((validateUserName() && validateEmail() && isStrongPassword() && confirmPassword() && validateGender()
+        System.out.println(( (validateUserName() && validateEmail() && isStrongPassword() && confirmPassword() && validateGender()
                 && validateMobile() && validatePassportNum() && validateAge() ? "SignUp Successfully." : "SignUp failed ,Please check your inputs.")));
     }
 }

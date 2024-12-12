@@ -1,5 +1,6 @@
 package com.egyptFlightReservation.Model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -34,7 +35,7 @@ public class Airline{
     public void addFlight(Flight flight){
         Flights.put(flight.getFlight_number() , flight);
     }
-    public void setSchedule(String ID , String departureDate , String arrivalDate){
+    public void setSchedule(String ID , LocalDate departureDate , LocalDate arrivalDate){
         Flights.get(ID).setArrivalDate(arrivalDate);
         Flights.get(ID).setDepartureDate(departureDate);
     }

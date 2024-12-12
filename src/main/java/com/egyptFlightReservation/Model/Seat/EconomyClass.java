@@ -1,24 +1,14 @@
 package com.egyptFlightReservation.Model.Seat;
 
 public class EconomyClass extends Seat {
-    double baggageAllowance;
-    float SeatSpace;
 
-    public EconomyClass(String seatNumber, boolean availabilityStatus, int seatPrice, double baggageAllowance, float seatSpace) {
-        super(seatNumber, availabilityStatus, seatPrice);
-        this.baggageAllowance = baggageAllowance;
-        this.SeatSpace = seatSpace;
+    public EconomyClass(String seatNumber, boolean availabilityStatus, int seatPrice, String seatFeatures) {
+        super(seatNumber, availabilityStatus, seatPrice , seatFeatures);
     }
 
     @Override
-    public int getSeatPrice() {
-        return super.SeatPrice;
+    public void showSeatFeatures() {
+        System.out.println("Some advantage of Economy seat: " + seatFeatures);
     }
 
-    @Override
-    public void DisplayDetails() {
-        super.DisplayDetails();
-        System.out.println("Baggage Allowance: "+ baggageAllowance);
-        System.out.println("Area Seat: "+SeatSpace);
-    }
 }

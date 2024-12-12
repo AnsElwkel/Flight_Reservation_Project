@@ -13,16 +13,16 @@ public class showTableFormat {
 
 
         StringBuilder headerRow = new StringBuilder("|");
-        for (int i = 0; i < titles.length; i++) {
+        for (int i = 0; i < titles.length; i++)
             headerRow.append(" ").append(String.format("%-" + columnWidths[i] + "s", titles[i])).append(" |");
-        }
+
         System.out.println(headerRow); ///First row is header row (titles)
 
         // Print a divider
         StringBuilder divider = new StringBuilder("+");
-        for (int width : columnWidths) {
+        for (int width : columnWidths)
             divider.append("-".repeat(width + 2)).append("+");
-        }
+
         System.out.println(divider);
 
         for (String[] row : data) {
