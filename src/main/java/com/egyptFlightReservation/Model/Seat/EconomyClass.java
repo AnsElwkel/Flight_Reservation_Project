@@ -3,7 +3,7 @@ package com.egyptFlightReservation.Model.Seat;
 public class EconomyClass extends Seat {
 
     public EconomyClass(String seatNumber, boolean availabilityStatus, int seatPrice, String seatFeatures) {
-        super(seatNumber, availabilityStatus, seatPrice , seatFeatures);
+        super(seatNumber, availabilityStatus, seatPrice, seatFeatures);
     }
 
     @Override

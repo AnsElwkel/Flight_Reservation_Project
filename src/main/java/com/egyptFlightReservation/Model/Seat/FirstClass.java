@@ -3,7 +3,7 @@ package com.egyptFlightReservation.Model.Seat;
 public class FirstClass extends Seat {
 
     public FirstClass(String seatNumber, boolean availabilityStatus, int seatPrice, String seatFeatures) {
-        super(seatNumber, availabilityStatus, seatPrice , seatFeatures);
+        super(seatNumber, availabilityStatus, seatPrice, seatFeatures);
     }
 
     @Override

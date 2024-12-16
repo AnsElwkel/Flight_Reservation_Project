@@ -1,7 +1,7 @@
 package com.egyptFlightReservation.Controller;
 
-import OurExceptions.RangeException;
 import Tools.Input;
+import com.egyptFlightReservation.Model.Airport;
 import com.egyptFlightReservation.Model.Database;
 import com.egyptFlightReservation.Model.Flight;
 import com.egyptFlightReservation.Model.User.Admin;
@@ -10,24 +10,31 @@ import com.egyptFlightReservation.View.FirstView;
 
 import java.util.ArrayList;
 
+/// add show all airports , show all admins , show all clients
 public class AdminController {
     Admin admin;
     private AdminView view;
 
     public AdminController() {
-        admin = Database.getDatabase().getAdmin();
         this.view = new AdminView();
     }
 
     public void MainAdminFunction() {
         int choice;
-        do {
-            choice = view.mainAdminMenu();
-            if (choice == 1)
-                addNewAdminProcess();
-        } while (choice != 1);
+        choice = view.mainAdminMenu();
+        if (choice == 1)
+            addNewAdminProcess();
+        else if (choice == 2)
+            addNewAirport();
+        else
+            FirstView.Run();
+    }
 
-        FirstView.Run();
+    public void addNewAirport() {
+        ArrayList<String> info = view.getInfoOfNewAirport();
+        Airport airport = new Airport(info.get(0), info.get(1), info.get(2));
+        Database.getDatabase().addNewAirport(airport);
+        MainAdminFunction(); //rec
     }
 
     public void addNewAdminProcess() {
@@ -67,15 +74,19 @@ public class AdminController {
             airlineLocation = view.getAirlineLocation();
         }
 
-        Admin newAdmin = new Admin(adminUserName, adminName, adminPassword, adminEmail, airlineName);
-        Database.getDatabase().saveAdmin(adminName, newAdmin, airlineName, airlineCode , airlineLocation);
+        Admin newAdmin = new Admin(adminUserName, adminName, adminEmail, adminPassword, airlineName);
+        Database.getDatabase().createNewAdmin(adminUserName, newAdmin, airlineName, airlineCode, airlineLocation);
+        MainAdminFunction(); //rec
     }
-    public void AdminProcess()  {
-        int choice ;
-        do{
-            choice=view.adminMenu();
+
+    public void AdminProcess() {
+        admin = Database.getDatabase().getAdmin();
+
+        int choice;
+        do {
+            choice = view.adminMenu();
             while (!((1 <= choice && choice <= 6))) {
-                System.out.println("Enter number in range 1 - 5");
+                System.out.println("Invalid Number");
                 choice = view.adminMenu();
             }
             if (choice == 1)
@@ -87,37 +98,42 @@ public class AdminController {
             else if (choice == 4)
                 expandCountOfSeats();
 
-        }while(choice!=5);
+        } while (choice != 5);
         //log out
         FirstView.Run();
     }
-    public void addFlight(){
+
+    public void addFlight() {
         ArrayList<String> info = view.getInfoOfNewFlight();
+        if (Database.getDatabase().getAirline() == null) System.out.println("Airline not found");
         info.add(Database.getDatabase().getAirline().get_name());
         Flight newFlight = new Flight(info);
         admin.addFlight(newFlight);
     }
-    public void removeFlight(){
+
+    public void removeFlight() {
         String flightNumber = view.getFlightNumber();
         admin.removeFlight(flightNumber);
     }
-    public void updateSchedule(){
-        String flightNumber = view.getFlightNumber() ,
-               departureDate = view.getNewDepartureDate() ,
-               arrivalDate = view.getNewArrivalDate();
+
+    public void updateSchedule() {
+        String flightNumber = view.getFlightNumber(),
+                departureDate = view.getNewDepartureDate(),
+                arrivalDate = view.getNewArrivalDate();
         admin.updateSchedule(flightNumber, departureDate, arrivalDate);
     }
-    public void expandCountOfSeats(){
-        String flightNumber = view.getFlightNumber() ,
+
+    public void expandCountOfSeats() {
+        String flightNumber = view.getFlightNumber(),
                 newCountOfRows = view.newCountOfRows(),
                 newFirstClassCols = view.getNewFirstClassCols(),
                 newBusinessClassCols = view.getNewBusinessClassCols(),
                 newEconomyClassCols = view.getNewEconomyClassCols();
 
-        while(!admin.expandCountOfSeats(flightNumber , Integer.parseInt(newCountOfRows) , Integer.parseInt(newFirstClassCols) ,
-               Integer.parseInt(newBusinessClassCols), Integer.parseInt(newEconomyClassCols))){
+        while (!admin.expandCountOfSeats(flightNumber, Integer.parseInt(newCountOfRows), Integer.parseInt(newFirstClassCols),
+                Integer.parseInt(newBusinessClassCols), Integer.parseInt(newEconomyClassCols))) {
             System.out.println("");
-            flightNumber = view.getFlightNumber() ;
+            flightNumber = view.getFlightNumber();
             newCountOfRows = view.newCountOfRows();
             newFirstClassCols = view.getNewFirstClassCols();
             newBusinessClassCols = view.getNewBusinessClassCols();

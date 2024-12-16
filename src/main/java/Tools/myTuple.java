@@ -16,24 +16,31 @@ public class myTuple<T1, T2, T3, T4> {
     public T1 getFirst() {
         return first;
     }
+
     public void setFirst(T1 first) {
         this.first = first;
     }
+
     public T2 getSecond() {
         return second;
     }
+
     public void setSecond(T2 second) {
         this.second = second;
     }
+
     public T3 getThird() {
         return third;
     }
+
     public void setThird(T3 third) {
         this.third = third;
     }
+
     public T4 getFourth() {
         return fourth;
     }
+
     public void setFourth(T4 fourth) {
         this.fourth = fourth;
     }

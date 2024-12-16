@@ -7,34 +7,39 @@ import com.egyptFlightReservation.View.FirstView;
 
 public class ClientController {
     ClientView view;
-    Client client ;
-    public ClientController(){
+    Client client;
+
+    public ClientController() {
         view = new ClientView();
         client = Database.getDatabase().getClient();
     }
 
-    public void process()  {
-        int choice = view.clientMenu();
-        while(choice > 3 || choice < 1){
+    public void process() {
+        int choice = view.clientMenu(Database.getDatabase().getCurUser());
+        while (choice > 3 || choice < 1) {
             System.out.println("Invalid input");
-            choice = view.clientMenu();
+            choice = view.clientMenu(Database.getDatabase().getCurUser());
         }
 
-        if(choice == 1){
+        boolean again = false;
+        if (choice == 1) {
             showProfile();
-        }else if(choice == 2){
+            again = true;
+        } else if (choice == 2) {
             //reserve call search engine
             SearchingController searchingController = new SearchingController();
-            if(!searchingController.searchProcess())
+            if (!searchingController.searchProcess())
                 process(); /// recursion checking !!!!!
-
-        }else if(choice == 3){
+            again = true;
+        } else if (choice == 3) {
             FirstView.Run();
         }
+
+        if (again) process();// recurse
     }
 
 
-    public void showProfile(){ /// Call profile controller
+    public void showProfile() { /// Call profile controller
         ClientProfileController profileController = new ClientProfileController();
         profileController.mainMenu();
     }

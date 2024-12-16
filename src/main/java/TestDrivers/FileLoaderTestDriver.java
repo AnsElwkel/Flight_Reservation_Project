@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public class FileLoaderTestDriver {
     public static void main(String[] args) {
-//        FileLoader.loadClient(); // testing loadClient
+        FileLoader.loadUserTable(); // testing loadClient
     }
 }

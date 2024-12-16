@@ -11,57 +11,58 @@ import com.egyptFlightReservation.View.LoginView;
 import static Tools.Input.isContainSpaces;
 
 public class LoginController {
-    private String username , password;
+    private String username, password;
     private LoginView loginView;
     private Client client;
 
 
-    public LoginController(){
+    public LoginController() {
         this.loginView = new LoginView();
     }
 
-    public void LoginProcess(){
+    public void LoginProcess() {
         loginInput();
-        validateLogin();
+
     }
 
 
-
-    public void loginInput(){
+    public void loginInput() {
         username = this.loginView.takeName();
 
-        while(Input.isContainSpaces(username)){
+        while (Input.isContainSpaces(username)) {
             System.out.print("Please enter a username without spaces: ");
             username = this.loginView.takeName();
         }
-        if(username.equals("-1")){
+        if (username.equals("-1")) {
             FirstView.Run(); /// Return to first view
         }
 
         password = this.loginView.takePassword();
-        while(Input.isContainSpaces(password)){
+        while (Input.isContainSpaces(password)) {
             System.out.print("Please enter a password without spaces:");
             password = this.loginView.takePassword();
         }
-        if(password.equals("-1")){
+        if (password.equals("-1")) {
             FirstView.Run();
         }
+        validateLogin();
     }
+
     public void validateLogin() {
-        if( username.equals(Admin.MAIN_ADMIN_NAME) && password.equals(Admin.MAIN_ADMIN_PASSWORD) ){/// MainAdmin
+        if (username.equals(Admin.MAIN_ADMIN_NAME) && password.equals(Admin.MAIN_ADMIN_PASSWORD)) {/// MainAdmin
             AdminController adminController = new AdminController();
             adminController.MainAdminFunction();
-        }else if(Database.getDatabase().isAdmin(username , password)){ /// Airline Admin
+        } else if (Database.getDatabase().isAdmin(username, password)) { /// Airline Admin
             //call adminController
             Database.getDatabase().setCurUser(username);
             AdminController adminController = new AdminController();
             adminController.AdminProcess();
 
-        }else if(Database.getDatabase().isCorrectLogin(username, password)){ /// Client Admin
+        } else if (Database.getDatabase().isCorrectLogin(username, password)) { /// Client Admin
             Database.getDatabase().setCurUser(username);
             ClientController clientController = new ClientController();
             clientController.process();
-        }else{
+        } else {
             System.out.println("Invalid username or password");
             loginInput(); //////// Recursion confusion possible
         }

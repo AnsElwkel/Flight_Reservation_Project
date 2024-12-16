@@ -1,0 +1,64 @@
+Some Assumption
+- In Admin we assume that admin will input true format :)
+- The Client is wise :)
+
+=========================================== Testing ===========================================
+MainAdmin       -> add airports (Done)
+                -> add admins   (Done)
+
+Airline Admins  -> add Flight      (Done)
+                -> remove Flight   (Done)
+                -> Update Schedule (Done)
+                -> Expand Seats    (Done)
+
+Loading         -> (Done)
+Saving          -> (Done) (deleteing not done)
+Login           -> (Done)
+Sign Up         -> (Done)
+Profile         -> (Done)
+Search Engine   -> (Done)
+Seat Selection  -> (Done)
+Payment Process -> (Done)
+
+=========================================== Samples ===========================================
+MainAdmin:
+ANASELWKEL Anas_11
+
+=== Airline Admins sample ===
+Ahmed  ahmed ahmed@gmail.com Ahmed_12 FlyEgypt  FE1 Cairo
+Mohamed mohamed mohamed@gmail.com Mohamed@32 NileAir NA1 Giza
+Kareem kareem kareem@gmail.com Kareem_1 NesmaAirlines NSM Cairo
+
+=== Airline Sample ===
+FlyEgypt FE1 Cairo
+NileAir NA1 Giza
+NesmaAirlines NSM Cairo
+
+=== Client Sample ===
+anas anas hesham anas@gmail.com Anas_123 Male 01117581803 012345678 2005-07-02
+
+=== Airports sample ===
+Cairo_International_Airport      CAI    Cairo
+Hurghada_International_Airport  HRG     Hurghada
+Sharm_El_Sheikh_International_Airport   SSH     Sharm_El_sheikh
+Los_Angeles_International_Airport   LAX     Los_Angeles
+
+=== Flights Sample ===
+F125 Cairo_International_Airport Los_Angeles_International_Airport 2024-12-25 2024-12-26 6 14 3 15000 5 10000 6 7000 premium_food_and_relaxation_areas  More_Legroom_and_noise-canceling_headphones  Limited_Legroom_and_regular_food_and_personal_space_more_limited
+F2324 Cairo_International_Airport Los_Angeles_International_Airport 2024-12-26 2024-12-28 6 14 4 13000 5 9000 5 5000 relaxation_areas  More_Legroom  Limited_Legroom_and_regular_food_and_personal_space_more_limited
+F1324 Cairo_International_Airport Los_Angeles_International_Airport 2024-11-14 2024-11-15 6 14 4 17000 4 12000 7 9000 relaxation_areas  More_Legroom  Limited_Legroom_and_regular_food_and_personal_space_more_limited
+
+=== Sign Up Sample ===
+AnsElwkel
+ans@gmail.com
+Anas_123
+Male
+2005-07-02
+01117581803
+123456789
+
+============
+In File handling
+when remove the flight .... files of this flight not
+deleted ( create the array of string contain string of files of folder name that
+you want to delete it and call the function when exit ( with saveData function)

@@ -29,7 +29,7 @@ public class myPair<K, V> {
                 return pair1.getSecond().compareTo(pair2.getSecond());
             }
         };
-        TreeMap<myPair<String , String>, ArrayList<Flight>> mp =  new TreeMap<>(pairComparator);
+        TreeMap<myPair<String, String>, ArrayList<Flight>> mp = new TreeMap<>(pairComparator);
         return mp;
     }
 

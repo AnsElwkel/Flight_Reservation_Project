@@ -2,24 +2,29 @@ package com.egyptFlightReservation.Model;
 
 public class Airport {
     private String name;
-    private String airportcode;
+    private String airportCode;
     private String location;
-    public Airport(String name,String airportcode,String location)
-    {
-        this.name=name;
-        this.airportcode=airportcode;
-        this.location=location;
+
+    public Airport(String name, String airportCode, String location) {
+        this.name = name;
+        this.airportCode = airportCode;
+        this.location = location;
     }
-    public String getName()
-    {
+
+    public String getName() {
         return name;
     }
 
     public String getAirportcode() {
-        return airportcode;
+        return airportCode;
     }
-    public String getLocation()
-    {
+
+    public String getLocation() {
         return location;
+    }
+
+    @Override
+    public String toString() {
+        return name + " " + airportCode + " " + location;
     }
 }

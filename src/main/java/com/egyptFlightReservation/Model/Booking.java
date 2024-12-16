@@ -7,16 +7,18 @@ public class Booking {
     private String bookingId;
     private String bookingStatus;
     private String bookingDate;
-    private String airlineName , airlineID;
+    private String airlineName, airlineID;
     private String flightNumber;
     private String departureAirport;
     private String arrivalAirport;
     private String departureDate;
     private String arrivalDate;
-    private String countOfSeats;    ///May be book more than seat !
+    private String countOfSeats;
+    /// May be book more than seat !
     private String totalPrice;
 
-    private ArrayList<String> seatNumbers;  ///May be book more than seat !
+    private ArrayList<String> seatNumbers;
+    /// May be book more than seat !
     private String clientName;
 //    private int frequentFlyerPoints;
 //
@@ -52,6 +54,14 @@ public class Booking {
         this.bookingStatus = info.get(11);
     }
 
+    @Override
+    public String toString() {
+        return bookingId + " " + bookingDate + " " + clientName + " " +
+                airlineName + " " + flightNumber + " " + departureAirport + " " +
+                arrivalAirport + " " + departureDate + " " + arrivalDate + " " +
+                countOfSeats + " " + totalPrice + " " + bookingStatus;
+    }
+
     public void displayBookingDetails() {
         System.out.println("Booking ID: " + bookingId);
         System.out.println("Flight Number: " + flightNumber);
@@ -64,42 +74,55 @@ public class Booking {
     public String getClientName() {
         return clientName;
     }
+
     public String getFlightNumber() {
         return flightNumber;
     }
+
     public String getBookingId() {
         return bookingId;
     }
+
     public String getDepartureAirport() {
         return departureAirport;
     }
+
     public String getArrivalAirport() {
         return arrivalAirport;
     }
+
     public String getDepartureDate() {
         return departureDate;
     }
+
     public String getArrivalDate() {
         return arrivalDate;
     }
+
     public String isBookingStatus() {
         return bookingStatus;
     }
+
     public String getTotalPrice() {
         return totalPrice;
     }
+
     public String getAirlineName() {
         return airlineName;
     }
+
     public String getBookingDate() {
         return bookingDate;
     }
+
     public String getCountOfSeats() {
         return countOfSeats;
     }
+
     public ArrayList<String> getSeatNumbers() {
         return seatNumbers;
     }
+
     public String getBookingStatus() {
         return bookingStatus;
     }

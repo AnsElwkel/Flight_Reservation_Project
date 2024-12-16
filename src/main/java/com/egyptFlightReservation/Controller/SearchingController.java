@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class SearchingController {
-    private String departureAirport, arrivalAirport;
+    //    private String departureAirport, arrivalAirport;
     LocalDate fromDate, toDate;
     private SearchingView view;
     private ArrayList<Flight> searchResults;
@@ -22,20 +22,16 @@ public class SearchingController {
     }
 
     public boolean searchProcess() {
-        this.departureAirport = view.getDepartureAirportName();
-        if (departureAirport.equals("-1")) return false;
-        this.arrivalAirport = view.getArrivalAirportName();
-        if (arrivalAirport.equals("-1")) return false;
+        this.fromDate = view.getFromDate();
+        while (fromDate == null) {
+            System.out.println("invalid format");
+            this.fromDate = view.getFromDate();
+        }
 
         this.toDate = view.getToDate();
         while (toDate == null) {
             System.out.println("invalid format");
             this.toDate = view.getToDate();
-        }
-        this.fromDate = view.getFromDate();
-        while (fromDate == null) {
-            System.out.println("invalid format");
-            this.fromDate = view.getFromDate();
         }
 
         /// Return filtered flights in toDate from fromDate range
@@ -46,20 +42,12 @@ public class SearchingController {
             return false;
         }
 
-        if(!selectionAfterShowResult()) return false;
-
-
-
-        //show sorted by or choosing flight ?
-        //take this input and call the function select flight or sort by depend on input
-        //sort by -> 1- date , cost , count of available seats
-        //select flight -> take the input and (index of flight in array) and call the seat selection
-        //after seat selection process go to booking or -1 to back to home page
+        if (!selectionAfterShowResult()) return false;
 
         return true;
     }
 
-    public boolean selectionAfterShowResult(){ /// recursive function
+    public boolean selectionAfterShowResult() { /// recursive function
         this.showResult(searchResults);
 
         int choice = view.askToSortOrSelectFlight();
@@ -72,29 +60,22 @@ public class SearchingController {
         if (choice == 1) {
             choice = view.sortBy();
             this.sortBy(choice);
-            if (choice == 1)
-                this.searchResults = filterFunction();
-            else if (choice == 2)
-                sortByPrice(this.searchResults);
-            else if (choice == 3)
-                sortByAvailableSeats(this.searchResults);
-
-             selectionAfterShowResult(); /// recursion call
+            selectionAfterShowResult(); /// recursion call
 
         } else if (choice == 2) {
             choice = view.getChoiceOfFlight(1, searchResults.size()); // from 1 to size of array
             --choice;
 
-            SeatSelectorController seatController = new SeatSelectorController(searchResults.get(choice).getAirlineName() ,
-                    searchResults.get(choice).getFlight_number(), searchResults.get(choice).getSeats() , searchResults.get(choice).getCntTotalSeatRows(),
+            SeatSelectorController seatController = new SeatSelectorController(searchResults.get(choice).getAirlineName(),
+                    searchResults.get(choice).getFlight_number(), searchResults.get(choice).getSeats(), searchResults.get(choice).getCntTotalSeatRows(),
                     searchResults.get(choice).getCntFirstClassCols(), searchResults.get(choice).getCntBusinessClassCols(),
-                    searchResults.get(choice).getCntEconomyClassCols() ,
-                    searchResults.get(choice).getFirstClassPrice() , searchResults.get(choice).getBusinessClassPrice() , searchResults.get(choice).getEconomyClassPrice(),
-                    searchResults.get(choice).getCntOfAvailableFirstClassSeats() , searchResults.get(choice).getCntOfAvailableBusinessClassSeats(),
-                    searchResults.get(choice).getCntOfAvailableEconomyClassSeats() ,
-                    searchResults.get(choice).getDeparture_airport() , searchResults.get(choice).getArrival_airport(),
-                    searchResults.get(choice).getDepartureDate() ,searchResults.get(choice).getArrivalDate());
-            if(!seatController.selectionProcess()) return false;
+                    searchResults.get(choice).getCntEconomyClassCols(),
+                    searchResults.get(choice).getFirstClassPrice(), searchResults.get(choice).getBusinessClassPrice(), searchResults.get(choice).getEconomyClassPrice(),
+                    searchResults.get(choice).getCntOfAvailableFirstClassSeats(), searchResults.get(choice).getCntOfAvailableBusinessClassSeats(),
+                    searchResults.get(choice).getCntOfAvailableEconomyClassSeats(),
+                    searchResults.get(choice).getDeparture_airport(), searchResults.get(choice).getArrival_airport(),
+                    searchResults.get(choice).getDepartureDate(), searchResults.get(choice).getArrivalDate());
+            if (!seatController.selectionProcess()) return false;
             return true;
         } else {
             return false;
@@ -107,46 +88,40 @@ public class SearchingController {
         if (searchResults.isEmpty()) {
             System.out.println("No Suitable Flights found");
         } else {
-            String[] results = new String[(int) searchResults.size()];
+            String[] titles = {"Number", "AirlineName", "Dep. Date", "Arr. Date",
+                    "First Class Cnt", "First Class Price", "Business Class Cnt", "Business Class Price",
+                    "Economy Class Cnt", "Economy Class Price"};
+            String[][] results = new String[(int) searchResults.size()][];
 
             for (int i = 0; i < searchResults.size(); i++)
-                results[i] = makeResultFormat(searchResults.get(i));
-            view.showResult(results);
+                results[i] = makeResultFormat(i + 1, searchResults.get(i));
+            view.showResult(titles, results);
         }
 
     }
 
-    public String makeResultFormat(Flight flight) { ///  change this to table format
-        String ret = "Airline: " + flight.getAirlineName() + "\n";
-        ret += "Departure Date: " + flight.getDepartureDate() + "\n";
-        ret += "Arrival Date: " + flight.getArrivalDate() + "\n";
-        ret += "Count of available first class seats: " + flight.getCntOfCertainSeats(flight.getCntFirstClassCols()) + '\n';
-        ret += "First class seat price: " + flight.getFirstClassPrice() + "\n";
-        ret += "Count of available business class seats: " + flight.getCntOfCertainSeats(flight.getCntBusinessClassCols()) + '\n';
-        ret += "Business class seat price: " + flight.getBusinessClassPrice() + "\n";
-        ret += "Count of available economy class seats: " + flight.getCntOfCertainSeats(flight.getCntEconomyClassCols()) + '\n';
-        ret += "Economy class seat price: " + flight.getEconomyClassPrice() + "\n";
+    public String[] makeResultFormat(int number, Flight flight) { ///  change this to table format
+        String[] ret = {String.valueOf(number), flight.getAirlineName(), flight.getDepartureDate().toString(), flight.getArrivalDate().toString(),
+                String.valueOf(flight.getCntOfAvailableFirstClassSeats()), String.valueOf(flight.getFirstClassPrice()),
+                String.valueOf(flight.getCntOfAvailableBusinessClassSeats()), String.valueOf(flight.getBusinessClassPrice()),
+                String.valueOf(flight.getCntOfAvailableEconomyClassSeats()), String.valueOf(flight.getEconomyClassPrice())};
         return ret;
     }
 
     public void sortBy(int choice) {
-        if (choice == 1) {
+        if (choice == 1) { /// Sort by Date
             this.searchResults = filterFunction();
-            showResult(searchResults);
         } else if (choice == 2) {
             // sort based on price
-
-            this.searchResults.sort(Comparator.comparing(Flight::getFirstClassPrice));
-            this.searchResults.sort(Comparator.comparing(Flight::getBusinessClassPrice));
-            this.searchResults.sort(Comparator.comparing(Flight::getEconomyClassPrice));
+            sortByPrice(this.searchResults);
         } else if (choice == 3) {
             // sort based on cnt of available seat
-
+            sortByAvailableSeats(searchResults);
         }
     }
 
     public ArrayList<Flight> filterFunction() {
-        return Database.getDatabase().searchFlights(toDate, fromDate);
+        return Database.getDatabase().searchFlights(fromDate, toDate);
     }
 
     public void sortByPrice(ArrayList<Flight> flights) {
@@ -162,16 +137,19 @@ public class SearchingController {
         else flights.sort(Comparator.comparing(Flight::getEconomyClassPrice));
     }
 
-    public void sortByAvailableSeats(ArrayList<Flight> flights) {
+    public void sortByAvailableSeats(ArrayList<Flight> flights) {///  check logic again
         int choice = view.getChoiceOfSortByAvailableOfAnyClass();
         while (choice < 1 || choice > 3) {
             System.out.println("Invalid choice");
             choice = view.getChoiceOfSortByAvailableOfAnyClass();
         }
+        for (int i = 0; i < flights.size(); i++) {
+            System.out.println("Cnt Of Available Seats " + flights.get(i).getCntOfAvailableFirstClassSeats() + " " + flights.get(i).getCntOfAvailableBusinessClassSeats() + " " + flights.get(i).getCntOfAvailableEconomyClassSeats());
+        }
         if (choice == 1)
-            flights.sort(Comparator.comparing(Flight::getCntOfAvailableFirstClassSeats).reversed());
+            flights.sort(Comparator.comparing(Flight::getCntOfAvailableFirstClassSeats).reversed()); ///debug
         else if (choice == 2)
-            flights.sort(Comparator.comparing(Flight::getCntOfAvailableBusinessClassSeats).reversed());
+            flights.sort(Comparator.comparing(Flight::getCntOfAvailableBusinessClassSeats).reversed()); ///debug
         else
             flights.sort(Comparator.comparing(Flight::getCntOfAvailableEconomyClassSeats).reversed());
     }

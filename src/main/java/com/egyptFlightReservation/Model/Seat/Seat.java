@@ -22,11 +22,15 @@ public abstract class Seat {
         return AvailabilityStatus;
     }
 
+    public void setAvailabilityStatus(boolean availabilityStatus) {
+        AvailabilityStatus = availabilityStatus;
+    }
     public String getSeatNumber() {
         return SeatNumber;
     }
 
     public abstract void showSeatFeatures();
+
     public void setSeatFeatures(String seatFeatures) {
         this.seatFeatures = seatFeatures;
     }
@@ -39,5 +43,10 @@ public abstract class Seat {
         System.out.println("Seat Number: "+SeatNumber);
         System.out.println("Seat Price: "+SeatPrice);
         System.out.println("Availability of Seat: "+ AvailabilityStatus);
+    }
+
+    @Override
+    public String toString(){
+        return SeatNumber + " " + AvailabilityStatus  + " " + SeatPrice + " " + seatFeatures;
     }
 }

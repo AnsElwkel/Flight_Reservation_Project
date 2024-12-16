@@ -1,7 +1,10 @@
 package com.egyptFlightReservation.Controller;
 
 import OurExceptions.RangeException;
+import Tools.InputValidator;
 import com.egyptFlightReservation.Model.Database;
+import com.egyptFlightReservation.Model.User.Client;
+import com.egyptFlightReservation.View.FirstView;
 import com.egyptFlightReservation.View.signUpView;
 
 import java.time.LocalDate;
@@ -10,7 +13,7 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 public class signUpController {
-    protected String userName, firstName, midName, lastName, email, password,
+    protected String userName, name, email, password,
             mobileNumber, date, gender, passportNumber;
     protected String confirmPassword;
     protected signUpView view;
@@ -21,17 +24,15 @@ public class signUpController {
 
     public boolean validateUserName() {
         this.userName = view.getUserName();
-        while (!(!isContainSpaces(this.userName.trim())
-                   && Database.getDatabase().isUniqueUserName(this.userName.trim()) // return true when the username is new
-        )) {
+        while (!InputValidator.isValidUsername(userName)) {
             System.out.println((isContainSpaces(this.userName.trim()) ? "Please enter a username without spaces" :
-                    "That username is already in use. Please try again.") + ": ");
+                    "That username is already in use. Please try again."));
             this.userName = view.getUserName();
         }
         return true;
     }
 
-    public void SignUpProcess()  {
+    public void SignUpProcess() {
         validateInput();
         ClientController clientController = new ClientController();
         clientController.process();
@@ -44,22 +45,19 @@ public class signUpController {
 
     public boolean validateEmail() {    //bashof lw elEmail a5ro @gmail.com
         this.email = view.getEmail();
-        while (!email.endsWith("gmail.com")) {
+        while (!InputValidator.isValidEmail(this.email)) {
             System.out.println("Email Not Valid,It must contain \"@gmail.com\" ");
             this.email = view.getEmail();
         }
         return true;
-
     }
 
     public boolean isStrongPassword() {
         this.password = view.getPassword();
-        while (!(password.matches(".*[0-9]{1,}.*") && password.matches(".*[-_@]{1,}.*") &&
-                password.matches(".*[A-Z]{1,}.*") && password.matches(".*[a-z]{1,}.*") &&
-                password.length() == 8)) {
-            System.out.println("Enter Password (contain 8 character include digits, lower and upper case" +
-                    " characters and special character lika(_,-, @)):");
+        while (!InputValidator.isValidPassword(this.password)) {
+            System.out.println("Invalid Password, try again");
             this.password = view.getPassword();
+
         }
         return true;
     }
@@ -76,7 +74,7 @@ public class signUpController {
 
     public boolean validateGender() {
         this.gender = view.getGender();
-        while (!gender.equals("Female") && !gender.equals("Male")) {
+        while (!InputValidator.isValidGender(this.gender)) {
             System.out.println("Gender it must be Female or Male only");
             this.gender = view.getGender();
         }
@@ -86,7 +84,7 @@ public class signUpController {
 
     public boolean validateMobile() {//Ahndl 01
         this.mobileNumber = view.getMobileNumber();
-        while (!(String.valueOf(mobileNumber).length() == 11) || !String.valueOf(mobileNumber).startsWith("01")) {
+        while (!InputValidator.isValidPhoneNumber(mobileNumber)) {
             System.out.println("PhoneNumber must be 11 digit and must be started with 01");
             this.mobileNumber = view.getMobileNumber();
 
@@ -95,8 +93,9 @@ public class signUpController {
     }
 
     public boolean validatePassportNum() {
+
         this.passportNumber = view.getPassportNumber();
-        while (passportNumber.length() != 9) {
+        while (!InputValidator.isValidPassport(passportNumber)) {
             System.out.println("PassportNumber must be 9 digit ");
             this.passportNumber = view.getPassportNumber();
         }
@@ -129,8 +128,20 @@ public class signUpController {
         }
     }
 
+    public boolean validateName() {
+        this.name = view.getFullName().trim().replaceAll(" ", "_"); // to make it easy in file handling
+        return true;
+    }
+
     public void validateInput() {
-        System.out.println(( (validateUserName() && validateEmail() && isStrongPassword() && confirmPassword() && validateGender()
-                && validateMobile() && validatePassportNum() && validateAge() ? "SignUp Successfully." : "SignUp failed ,Please check your inputs.")));
+        if (validateUserName() && validateName() && validateEmail() && isStrongPassword() && confirmPassword() && validateGender()
+                && validateMobile() && validatePassportNum() && validateAge()) {
+            Database.getDatabase().setCurUser(userName);
+            Database.getDatabase().addClient(new Client(userName, name, email, password, gender, mobileNumber, date, passportNumber));
+            System.out.println("SignUp Successfully");
+        } else {
+            System.out.println("SignUp failed ,Please check your inputs.");
+            FirstView.Run();
+        }
     }
 }
