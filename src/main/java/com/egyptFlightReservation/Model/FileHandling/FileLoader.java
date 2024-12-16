@@ -65,7 +65,7 @@ public class FileLoader {
                 String userName = fin.nextLine();
 //                System.out.println(userName); //testing
 
-                String dir = "/home/anaselwkel/IdeaProjects/Flight_Reservation_Project/src/Files/User/Client/" + userName;
+                String dir = FileAdministrator.ROOT_PATH +"User/Client/" + userName;
 
                 //load info
                 fileName = dir + "/info";
