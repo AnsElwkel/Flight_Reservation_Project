@@ -107,14 +107,6 @@ public class Airline {
                     (ticketsInfo.size() - 1 < i ? null : ticketsInfo.get(i)),
                     (seatsInfo.size() - 1 < i ? null : seatsInfo.get(i))));
 
-//            if(passengersInfo!=null && i < passengersInfo.size())
-//                Flights.get(content[1]).setPassengers(passengersInfo.get(i));
-//            if(ticketsInfo!=null && i < ticketsInfo.size())
-//                Flights.get(content[1]).setTickets(ticketsInfo.get(i));
-//            if(seatsInfo!=null && i < seatsInfo.size()){
-//                System.out.println("content[1]: " + content[1] + "seatsInfo.get(i): " + seatsInfo.get(i).length );
-//                Flights.get(content[1]).setSeats(seatsInfo.get(i));
-//            }
             Database.getDatabase().addInSearchingTable(LocalDate.parse(content[4]), Flights.get(content[1]));
             System.out.println("Flight added to database");
         }

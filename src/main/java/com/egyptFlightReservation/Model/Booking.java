@@ -20,24 +20,6 @@ public class Booking {
     private ArrayList<String> seatNumbers;
     /// May be book more than seat !
     private String clientName;
-//    private int frequentFlyerPoints;
-//
-//    public Booking(String bookingId,String bookingDate , String clientName, String airlineName, String airlineID ,  String flightNumber,
-//                   String departureAirport, String arrivalAirport,  String departureDate,
-//                   String arrivalDate, int totalPrice, boolean bookingStatus) {
-//        this.bookingId = bookingId;
-//        this.bookingDate = LocalDate.parse(bookingDate);
-//        this.clientName = clientName;
-//        this.airlineName = airlineName;
-//        this.airlineID = airlineID;
-//        this.flightNumber = flightNumber;
-//        this.departureAirport = departureAirport;
-//        this.arrivalAirport = arrivalAirport;
-//        this.departureDate = departureDate;
-//        this.arrivalDate = arrivalDate;
-//        this.totalPrice = totalPrice;
-//        this.bookingStatus = bookingStatus;
-//    }
 
     public Booking(ArrayList<String> info) {
         this.bookingId = info.get(0);

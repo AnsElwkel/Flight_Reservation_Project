@@ -29,14 +29,6 @@ public class Passenger {
         return Email;
     }
 
-    public void set_ticket() {
-    }
-
-    ;
-
-    public void display_details() {
-    }
-
     @Override
     public String toString() {
         return Name + " " + ID + " " + PhoneNumber + " " + Email;
