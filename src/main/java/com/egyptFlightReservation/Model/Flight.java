@@ -24,7 +24,8 @@ public class Flight {
     private int totalSeats, cntTotalSeatRows, cntTotalSeatCols,
             cntFirstClassCols, cntBusinessClassCols, cntEconomyClassCols,
             cntOfAvailableFirstClassSeats, cntOfAvailableBusinessClassSeats, cntOfAvailableEconomyClassSeats, // should be decremented when booking seat
-            firstClassPrice, businessClassPrice, economyClassPrice;
+            firstClassPrice, businessClassPrice, economyClassPrice , firstClassPremiumPoints,
+            businessClassPremiumPoints , economyClassPremiumPoints;
     private String airlineName, firstClassFeatures, businessClassFeatures, economyClassFeatures;
 
     public Flight(ArrayList<String> info) {
@@ -41,6 +42,10 @@ public class Flight {
         this.businessClassFeatures = info.get(14);
         this.economyClassFeatures = info.get(15);
         this.airlineName = info.get(16);
+        this.firstClassPremiumPoints = Integer.parseInt(info.get(17));
+        this.businessClassPremiumPoints = Integer.parseInt(info.get(18));
+        this.economyClassPremiumPoints = Integer.parseInt(info.get(19));
+
 
         this.firstClassPrice = Integer.parseInt(info.get(8));
         this.businessClassPrice = Integer.parseInt(info.get(10));
@@ -84,6 +89,9 @@ public class Flight {
         this.firstClassFeatures = info[18];
         this.businessClassFeatures = info[19];
         this.economyClassFeatures = info[20];
+        this.firstClassPremiumPoints = Integer.parseInt(info[21]);
+        this.businessClassPremiumPoints = Integer.parseInt(info[22]);
+        this.economyClassPremiumPoints = Integer.parseInt(info[23]);
         setSeats(seatInfo);
         setPassengers(passengerInfo);
         setTickets(ticketInfo);
@@ -229,7 +237,8 @@ public class Flight {
                 cntFirstClassCols + " " + cntBusinessClassCols + " " + cntEconomyClassCols + " " +
                 cntOfAvailableFirstClassSeats + " " + cntOfAvailableBusinessClassSeats + " " + cntOfAvailableEconomyClassSeats + " " +
                 firstClassPrice + " " + businessClassPrice + " " + economyClassPrice + " " +
-                firstClassFeatures + " " + businessClassFeatures + " " + economyClassFeatures;
+                firstClassFeatures + " " + businessClassFeatures + " " + economyClassFeatures + " " +
+                firstClassPremiumPoints + " " + businessClassPremiumPoints + " " + economyClassPremiumPoints ;
     }
 
     public ArrayList<String> getPassengersInfo() {
@@ -389,5 +398,17 @@ public class Flight {
 
     public int getCntOfAvailableEconomyClassSeats() {
         return cntOfAvailableEconomyClassSeats;
+    }
+
+    public int getFirstClassPremiumPoints() {
+        return firstClassPremiumPoints;
+    }
+
+    public int getBusinessClassPremiumPoints() {
+        return businessClassPremiumPoints;
+    }
+
+    public int getEconomyClassPremiumPoints() {
+        return economyClassPremiumPoints;
     }
 }

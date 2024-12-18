@@ -2,6 +2,8 @@ package com.egyptFlightReservation.Controller;
 
 import com.egyptFlightReservation.Model.Database;
 import com.egyptFlightReservation.Model.Passenger;
+import com.egyptFlightReservation.Model.Seat.BusinessClass;
+import com.egyptFlightReservation.Model.Seat.FirstClass;
 import com.egyptFlightReservation.Model.Seat.Seat;
 import com.egyptFlightReservation.Model.Ticket;
 import com.egyptFlightReservation.View.SeatSelectorView;
@@ -15,16 +17,18 @@ public class SeatSelectorController {
     ArrayList<ArrayList<Seat>> seats;
     private int totalRows, cntOfFirst, cntOfBusiness,
             CntOfEconomy, FirstPrice, BusinessPrice, EconomyPrice,
-            availableFirst, availableBusiness, availableEconomy;
+            availableFirst, availableBusiness, availableEconomy ,
+            firstClassPremiumPoints , businessClassPremiumPoints , economyClassPremiumPoints;
     private String airlineName, flightNumber;
     private String departureAirport, arrivalAirport;
     private LocalDate departureDate, arrivalDate;
 
     public SeatSelectorController(String airlineName, String flightNumber, ArrayList<ArrayList<Seat>> seats, int totalRows, int cntOfFirst, int cntOfBusiness, int cntOfEconomy,
                                   int FirstPrice, int BusinessPrice, int EconomyPrice, int availableFirst,
-                                  int availableBusiness, int availableEconomy, String departureAirport
-            , String arrivalAirport, LocalDate departureDate,
-                                  LocalDate arrivalDate) {
+                                  int availableBusiness, int availableEconomy, String departureAirport,
+                                  String arrivalAirport, LocalDate departureDate,
+                                  LocalDate arrivalDate , int firstClassPremiumPoints , int businessClassPremiumPoints,
+                                  int economyClassPremiumPoints) {
         this.airlineName = airlineName;
         this.flightNumber = flightNumber;
         this.seats = seats;
@@ -42,6 +46,9 @@ public class SeatSelectorController {
         this.arrivalAirport = arrivalAirport;
         this.departureDate = departureDate;
         this.arrivalDate = arrivalDate;
+        this.firstClassPremiumPoints = firstClassPremiumPoints;
+        this.businessClassPremiumPoints = businessClassPremiumPoints;
+        this.economyClassPremiumPoints = economyClassPremiumPoints;
 
         view = new SeatSelectorView();
     }
@@ -50,7 +57,8 @@ public class SeatSelectorController {
         view.showMap(seats, totalRows, cntOfFirst,
                 cntOfBusiness, CntOfEconomy,
                 FirstPrice, BusinessPrice, EconomyPrice,
-                availableFirst, availableBusiness, availableEconomy);
+                availableFirst, availableBusiness, availableEconomy ,
+                firstClassPremiumPoints , businessClassPremiumPoints ,economyClassPremiumPoints);
 
         int choice = view.selectChoiceFromMenu();
         if (choice == 1) {
@@ -73,12 +81,22 @@ public class SeatSelectorController {
             //Book or go to home page
             //booking then payment  then return here true of false
             // if true -> make n tickets and record client as passenger and flag the seats
-            int totalPrice = 0;
-            for (int i = 0; i < seatNums.size(); ++i)
-                totalPrice += seats.get(seatNums.get(i).charAt(0) - 'A').get(Integer.parseInt(seatNums.get(i).substring(1)) - 1).getSeatPrice();
+            int totalPrice = 0 , gainedPremiumPoints = 0;
+            for (int i = 0; i < seatNums.size(); ++i){
+                Seat tmp = seats.get(seatNums.get(i).charAt(0) - 'A').get(Integer.parseInt(seatNums.get(i).substring(1)) - 1);
+                totalPrice += tmp.getSeatPrice();
+                if(tmp instanceof FirstClass)
+                    gainedPremiumPoints += firstClassPremiumPoints;
+                else if(tmp instanceof BusinessClass)
+                    gainedPremiumPoints += businessClassPremiumPoints;
+                else
+                    gainedPremiumPoints += economyClassPremiumPoints;
+            }
+
             BookingController bookingController = new BookingController(airlineName, flightNumber, departureAirport,
                     departureDate, arrivalAirport,
                     arrivalDate, String.valueOf(countOfSeats), totalPrice);
+
             if (bookingController.process()) {
                 //generate the tickets
                 for (int i = 0; i < seatNums.size(); ++i) {
@@ -88,6 +106,7 @@ public class SeatSelectorController {
                             (int) seats.get(seatNums.get(i).charAt(0) - 'A').get(Integer.parseInt(seatNums.get(i).substring(1)) - 1).getSeatPrice(),
                             seatNums.get(i), departureAirport, arrivalAirport, airlineName, flightNumber));
                 }
+                Database.getDatabase().addPremiumPoints(gainedPremiumPoints);
                 //generate the passengers in flight
                 Database.getDatabase().addPassenger(flightNumber, departureDate);
             }

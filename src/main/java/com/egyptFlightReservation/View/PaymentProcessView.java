@@ -12,15 +12,15 @@ public class PaymentProcessView {
     }
 
     public void showMenuOfMyPayments(String[] data) {
-        System.out.println("=====================");
-        System.out.println("==== My Payments ====");
-        System.out.println("=====================");
+        System.out.println("=====================================");
+        System.out.println("============ My Payments ============");
+        System.out.println("=====================================");
         Menu.show(data);
     }
 
-    public int getChoiceOfMyPayments(int size) {
+    public int getChoiceOfMyPayments(int size , double price) {
         Scanner cin = new Scanner(System.in);
-        System.out.println("Enter number in range (" + Math.min(size, 1) + " - " + size + ") or -1 to add new payment");
+        System.out.println("Enter number in range (" + Math.min(size, 1) + " - " + size + ") to pay " + price + " or -1 to add new payment");
         return cin.nextInt();
     }
 
@@ -39,20 +39,32 @@ public class PaymentProcessView {
         data.add(cin.nextLine());
         System.out.println("Enter Expiry Date (MM/YY):");
         data.add(cin.nextLine());
-        System.out.println("Enter CVV:");
+        System.out.print("Enter CVV: ");
         data.add(cin.nextLine());
         return data;
     }
 
     public String getPayPalDetails() {
         Scanner cin = new Scanner(System.in);
-        System.out.println("Enter Email:");
+        System.out.print("Enter Email: ");
         return cin.nextLine();
     }
 
     public String getVodaPhoneCashDetails() {
         Scanner cin = new Scanner(System.in);
-        System.out.println("Enter Phone Number:");
+        System.out.print("Enter Phone Number: ");
         return cin.nextLine();
+    }
+
+    public int getDiscountPoint(){
+        Scanner cin = new Scanner(System.in);
+        System.out.println("Enter Discount Point (must be less than or equal your Premium Points: ");
+        return cin.nextInt();
+    }
+
+    public int getChoiceOfDiscountInfo(){
+        Scanner cin = new Scanner(System.in);
+        System.out.print("Enter 1 to Use Your Premium Points to get the discount or -1 to skip: ");
+        return cin.nextInt();
     }
 }

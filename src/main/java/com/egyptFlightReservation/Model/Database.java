@@ -41,12 +41,21 @@ public class Database {
         return database;
     }
 
+    public static void addPremiumPoints(int gainedPremiumPoints) {
+        userTable.get(curUser).getFirst().addPremiumPoints(gainedPremiumPoints);
+    }
+    public static void subtractPremiumPoints(int points){
+        userTable.get(curUser).getFirst().subtractPremiumPoints(points);
+    }
 
 
 
 
 
 
+    public static int getUserPremiumPoints(){
+        return userTable.get(curUser).getFirst().getPremiumPoints();
+    }
 
     public static void addClient(Client client) {
         System.out.println(client.getName());
@@ -292,33 +301,27 @@ public class Database {
     public static void loadUserTable(String userName, String[] clientContent, String[] bookingHistory,
                                      String[] tickets, String[][] paymentMethods) {
         Client newClient = new Client(clientContent[0], clientContent[1], clientContent[2], clientContent[3]
-                , clientContent[4], clientContent[5], clientContent[6], clientContent[7]);
-//        ArrayList<Ticket> newTickets = new ArrayList<>();
-//        for(String ticket : tickets){
-//            String[] tmp = ticket.split(" ");
-//            Ticket curTicket = new Ticket(tmp[0],tmp[1],Boolean.parseBoolean(tmp[1]),Double.parseDouble(tmp[2]) , tmp[3] , tmp[4],tmp[5],tmp[6],tmp[7]);
-//            newTickets.add(curTicket);
-//        }
+                , clientContent[4], clientContent[5], clientContent[6], clientContent[7] , Integer.parseInt(clientContent[8]));
 
         ArrayList<PaymentMethod> methods = new ArrayList<>();
         for (int i = 0; i < (paymentMethods[0] == null ? 0 : paymentMethods[0].length); i++) {
             String[] tmp = paymentMethods[0][i].split(" ");
-            DebitCard debitCard = new DebitCard(tmp[0], tmp[1], tmp[2], tmp[3], Integer.parseInt(tmp[4]));
+            DebitCard debitCard = new DebitCard(tmp[0], tmp[1], tmp[2], tmp[3], Double.parseDouble(tmp[4]));
             methods.add(debitCard);
         }
         for (int i = 0; i < (paymentMethods[1] == null ? 0 : paymentMethods[1].length); i++) {
             String[] tmp = paymentMethods[1][i].split(" ");
-            MasterCard masterCard = new MasterCard(tmp[0], tmp[1], tmp[2], tmp[3], Integer.parseInt(tmp[4]));
+            MasterCard masterCard = new MasterCard(tmp[0], tmp[1], tmp[2], tmp[3], Double.parseDouble(tmp[4]));
             methods.add(masterCard);
         }
         for (int i = 0; i < (paymentMethods[2] == null ? 0 : paymentMethods[2].length); i++) {
             String[] tmp = paymentMethods[2][i].split(" ");
-            PayPal payPal = new PayPal(tmp[0], Integer.parseInt(tmp[1]));
+            PayPal payPal = new PayPal(tmp[0], Double.parseDouble(tmp[1]));
             methods.add(payPal);
         }
         for (int i = 0; i < (paymentMethods[3] == null ? 0 : paymentMethods[3].length); i++) {
             String[] tmp = paymentMethods[3][i].split(" ");
-            VodafoneCash cash = new VodafoneCash(tmp[0], Integer.parseInt(tmp[1]));
+            VodafoneCash cash = new VodafoneCash(tmp[0], Double.parseDouble(tmp[1]));
             methods.add(cash);
         }
 

@@ -1,5 +1,6 @@
 package com.egyptFlightReservation.Controller;
 
+import Tools.myPair;
 import com.egyptFlightReservation.Model.Database;
 import com.egyptFlightReservation.Model.Payment.*;
 import com.egyptFlightReservation.View.PaymentProcessView;
@@ -8,24 +9,27 @@ import java.util.ArrayList;
 
 public class PaymentProcessController {
     ArrayList<PaymentMethod> paymentMethods;
+    int curPremiumPoints;
 
     private PaymentProcessView view;
 
     public PaymentProcessController() {
         this.view = new PaymentProcessView();
+        this.curPremiumPoints = Database.getDatabase().getUserPremiumPoints();
     }
 
     private ArrayList<PaymentMethod> myPaymentMethods() {
         return Database.getDatabase().getClientPayment();
     }
 
-    public boolean paymentProcess(int amount) {
+    public myPair<Boolean, Double> paymentProcess(double amount) {
+        amount = discountProcess(amount);
         this.paymentMethods = myPaymentMethods();
         String[] s = new String[paymentMethods.size()];
         for (int i = 0; i < paymentMethods.size(); i++)
             s[i] = paymentMethods.get(i).PublicPaymentDetails();
         view.showMenuOfMyPayments(s);
-        int choice = view.getChoiceOfMyPayments(s.length);
+        int choice = view.getChoiceOfMyPayments(s.length , amount);
 
         if (choice == -1) {
             // add new Payment
@@ -33,8 +37,27 @@ public class PaymentProcessController {
             addNewPayment();
             return paymentProcess(amount);
         } else {
-            return myPaymentMethods().get(choice - 1).paymentProcess(amount);
+            return new myPair(myPaymentMethods().get(choice - 1).paymentProcess(amount) , amount);
         }
+    }
+    public double discountProcess(double amount) {
+        int choice = view.getChoiceOfDiscountInfo();
+        while(!(choice == 1 || choice == -1)){
+            System.out.println("Invalid choice , please try again");
+            choice = view.getChoiceOfDiscountInfo();
+        }
+
+        if(choice == 1){
+            int points = view.getDiscountPoint();
+            while(!(0 <= points && points <= curPremiumPoints)){
+                System.out.println("Invalid input , please try again");
+                points = view.getDiscountPoint();
+            }
+            Database.getDatabase().subtractPremiumPoints(points);
+            return amount - ((double)1 * amount * (points / 10000.0));
+
+        }
+        return amount;
     }
 
     public void addNewPayment() {

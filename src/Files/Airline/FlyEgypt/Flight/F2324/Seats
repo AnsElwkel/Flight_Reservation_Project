@@ -1,7 +1,7 @@
 84 6 14 4 5 5
 A1 false 13000 relaxation_areas
-B1 true 13000 relaxation_areas
-C1 true 13000 relaxation_areas
+B1 false 13000 relaxation_areas
+C1 false 13000 relaxation_areas
 D1 true 13000 relaxation_areas
 E1 true 13000 relaxation_areas
 F1 true 13000 relaxation_areas

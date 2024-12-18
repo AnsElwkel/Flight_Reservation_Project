@@ -146,6 +146,12 @@ public class AdminView {
         info.add(cin.nextLine());
         System.out.println("Enter Economy Class Feature: ");
         info.add(cin.nextLine());
+        System.out.println("Enter Premium Points of First Class: ");
+        info.add(cin.nextLine());
+        System.out.println("Enter Premium Points of Business Class: ");
+        info.add(cin.nextLine());
+        System.out.println("Enter Premium Points of Economy Class: ");
+        info.add(cin.nextLine());
         return info;
     }
 

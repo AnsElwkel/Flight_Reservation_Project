@@ -1,5 +1,6 @@
 package com.egyptFlightReservation.Controller;
 
+import Tools.myPair;
 import com.egyptFlightReservation.Model.Booking;
 import com.egyptFlightReservation.Model.Database;
 import com.egyptFlightReservation.View.BookingView;
@@ -9,7 +10,6 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class BookingController {
-    Booking booking;
     BookingView view;
     private String bookingID, airlineName, airlineID, flightNumber, departureAirport, arrivalAirport, countOfSeats;
     private LocalDate bookingDate, arrivalDate, departureDate;
@@ -29,7 +29,6 @@ public class BookingController {
         this.bookingID = UUID.randomUUID().toString();
         this.bookingDate = LocalDate.now();
         this.totalPrice = totalPrice;
-
     }
 
     public boolean process() {
@@ -45,13 +44,14 @@ public class BookingController {
             String[] info = {bookingID, bookingDate.toString(), Database.getDatabase().getCurUser(),
                     airlineName, flightNumber,
                     departureAirport, arrivalAirport,
-                    departureDate.toString(), arrivalDate.toString(), countOfSeats,
-                    String.valueOf(totalPrice)};
+                    departureDate.toString(), arrivalDate.toString(), countOfSeats};
             ArrayList<String> bookingInfo = new ArrayList<String>();
             bookingInfo.addAll(java.util.Arrays.asList(info));
-            for (String s : info) System.out.print(s + " ");
+//            for (String s : info) System.out.print(s + " ");
             System.out.println();
-            if (paymentProcessController.paymentProcess(totalPrice)) {
+            myPair<Boolean ,Double> paymentProcessRet = paymentProcessController.paymentProcess(totalPrice);
+            bookingInfo.add(String.valueOf(paymentProcessRet.getSecond()));
+            if (paymentProcessRet.getFirst()) {
                 //make new tickets
                 //flag the seats and add the passengers
                 //save the booking

@@ -137,7 +137,7 @@ public class signUpController {
         if (validateUserName() && validateName() && validateEmail() && isStrongPassword() && confirmPassword() && validateGender()
                 && validateMobile() && validatePassportNum() && validateAge()) {
             Database.getDatabase().setCurUser(userName);
-            Database.getDatabase().addClient(new Client(userName, name, email, password, gender, mobileNumber, date, passportNumber));
+            Database.getDatabase().addClient(new Client(userName, name, email, password, gender, mobileNumber, date, passportNumber , -1));
             System.out.println("SignUp Successfully");
         } else {
             System.out.println("SignUp failed ,Please check your inputs.");

@@ -9,11 +9,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class SearchingController {
-    //    private String departureAirport, arrivalAirport;
     LocalDate fromDate, toDate;
     private SearchingView view;
     private ArrayList<Flight> searchResults;
-//    private int choice;
 
     //take sort by choice
     public SearchingController() {
@@ -74,7 +72,9 @@ public class SearchingController {
                     searchResults.get(choice).getCntOfAvailableFirstClassSeats(), searchResults.get(choice).getCntOfAvailableBusinessClassSeats(),
                     searchResults.get(choice).getCntOfAvailableEconomyClassSeats(),
                     searchResults.get(choice).getDeparture_airport(), searchResults.get(choice).getArrival_airport(),
-                    searchResults.get(choice).getDepartureDate(), searchResults.get(choice).getArrivalDate());
+                    searchResults.get(choice).getDepartureDate(), searchResults.get(choice).getArrivalDate() ,
+                    searchResults.get(choice).getFirstClassPremiumPoints() , searchResults.get(choice).getBusinessClassPremiumPoints() ,
+                    searchResults.get(choice).getEconomyClassPremiumPoints());
             if (!seatController.selectionProcess()) return false;
             return true;
         } else {
@@ -89,8 +89,8 @@ public class SearchingController {
             System.out.println("No Suitable Flights found");
         } else {
             String[] titles = {"Number", "AirlineName", "Dep. Date", "Arr. Date",
-                    "First Class Cnt", "First Class Price", "Business Class Cnt", "Business Class Price",
-                    "Economy Class Cnt", "Economy Class Price"};
+                    "First Class Cnt", "First Class Price" , "First Class Premium Points", "Business Class Cnt", "Business Class Price", "Business Class Premium Points",
+                    "Economy Class Cnt", "Economy Class Price" , "Economy Class Premium Points"};
             String[][] results = new String[(int) searchResults.size()][];
 
             for (int i = 0; i < searchResults.size(); i++)
@@ -102,9 +102,9 @@ public class SearchingController {
 
     public String[] makeResultFormat(int number, Flight flight) { ///  change this to table format
         String[] ret = {String.valueOf(number), flight.getAirlineName(), flight.getDepartureDate().toString(), flight.getArrivalDate().toString(),
-                String.valueOf(flight.getCntOfAvailableFirstClassSeats()), String.valueOf(flight.getFirstClassPrice()),
-                String.valueOf(flight.getCntOfAvailableBusinessClassSeats()), String.valueOf(flight.getBusinessClassPrice()),
-                String.valueOf(flight.getCntOfAvailableEconomyClassSeats()), String.valueOf(flight.getEconomyClassPrice())};
+                String.valueOf(flight.getCntOfAvailableFirstClassSeats()), String.valueOf(flight.getFirstClassPrice()), String.valueOf(flight.getFirstClassPremiumPoints()),
+                String.valueOf(flight.getCntOfAvailableBusinessClassSeats()), String.valueOf(flight.getBusinessClassPrice()), String.valueOf(flight.getBusinessClassPremiumPoints()),
+                String.valueOf(flight.getCntOfAvailableEconomyClassSeats()), String.valueOf(flight.getEconomyClassPrice()) , String.valueOf(flight.getEconomyClassPremiumPoints())};
         return ret;
     }
 

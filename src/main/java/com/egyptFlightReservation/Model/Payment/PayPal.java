@@ -3,7 +3,7 @@ package com.egyptFlightReservation.Model.Payment;
 public class PayPal extends PaymentMethod {
     private String paypalEmail;
 
-    public PayPal(String paypalEmail, int cash) {
+    public PayPal(String paypalEmail, double cash) {
         super(cash);
         this.paypalEmail = paypalEmail;
     }
@@ -24,7 +24,7 @@ public class PayPal extends PaymentMethod {
     }
 
     @Override
-    public boolean paymentProcess(int amount) {
+    public boolean paymentProcess(double amount) {
         if (getCurCash() >= amount) {
             curCash -= amount;
             return true;

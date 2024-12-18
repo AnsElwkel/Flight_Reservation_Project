@@ -3,7 +3,7 @@ package com.egyptFlightReservation.Model.Payment;
 public class VodafoneCash extends PaymentMethod {
     private String phoneNumber;
 
-    public VodafoneCash(String phoneNumber, int cash) {
+    public VodafoneCash(String phoneNumber, double cash) {
         super(cash);
         this.phoneNumber = phoneNumber;
     }
@@ -24,7 +24,7 @@ public class VodafoneCash extends PaymentMethod {
     }
 
     @Override
-    public boolean paymentProcess(int amount) {
+    public boolean paymentProcess(double amount) {
         if (getCurCash() >= amount) {
             curCash -= amount;
             return true;

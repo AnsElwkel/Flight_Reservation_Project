@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class MasterCard extends PaymentMethod {
     private String holderName, cardNumber, expiryDate, cvv;
 
-    public MasterCard(String holderName, String cardNumber, String expiryDate, String cvv, int cash) {
+    public MasterCard(String holderName, String cardNumber, String expiryDate, String cvv, double cash) {
         super(cash);
         this.holderName = holderName;
         this.cardNumber = cardNumber;
@@ -14,7 +14,7 @@ public class MasterCard extends PaymentMethod {
     }
 
     public MasterCard(ArrayList<String> info) {
-        super(20000);
+        super(PaymentMethod.DEFAULT_CASH);
         this.holderName = info.get(0);
         this.cardNumber = info.get(1);
         this.expiryDate = info.get(2);
@@ -51,7 +51,7 @@ public class MasterCard extends PaymentMethod {
     }
 
     @Override
-    public boolean paymentProcess(int amount) {
+    public boolean paymentProcess(double amount) {
         if (getCurCash() >= amount) {
             curCash -= amount;
             return true;

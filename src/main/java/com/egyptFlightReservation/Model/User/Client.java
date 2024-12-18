@@ -6,24 +6,20 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Client extends User {
+    private static final int DEFAULT_PREMIUM_POINTS = 1000; // %10 discount
     private String passportNumber;
     private String gender;
     private String phoneNumber;
     private String birthDate;
+    private int premiumPoints;
 
-    public Client(String username, String name, String email, String password, String gender, String phoneNumber, String birthDate, String passportNumber) {
+    public Client(String username, String name, String email, String password, String gender, String phoneNumber, String birthDate, String passportNumber , int premiumPoints) {
         super(username, name, email, password);
         this.passportNumber = passportNumber;
         this.gender = gender;
         this.birthDate = birthDate;
         this.phoneNumber = phoneNumber;
-    }
-    public Client(String[] info) {
-        super(info[0], info[1], info[3], info[2]);
-        this.birthDate = info[6];
-        this.passportNumber = info[7];
-        this.gender = info[5];
-        this.phoneNumber = info[4];
+        this.premiumPoints = (premiumPoints == -1 ? DEFAULT_PREMIUM_POINTS : premiumPoints);
     }
 
     public String getPassportNumber() {
@@ -40,7 +36,9 @@ public class Client extends User {
     public String getPhoneNumber(){
         return this.phoneNumber;
     }
-
+    public void addPremiumPoints(int points){
+        this.premiumPoints += points;
+    }
     public void setUsername(String username) {
         this.username = username;
     }
@@ -56,9 +54,15 @@ public class Client extends User {
     public void setName(String newName) {
         this.name = newName;
     }
-
+    public void subtractPremiumPoints(int points) {
+        this.premiumPoints -= points;
+    }
     @Override
     public String toString() {
-        return super.toString() + " " + gender + " " +phoneNumber  + " " + birthDate + " " + passportNumber;
+        return super.toString() + " " + gender + " " +phoneNumber  + " " + birthDate + " " + passportNumber + " " + premiumPoints;
+    }
+
+    public int getPremiumPoints() {
+        return premiumPoints;
     }
 }
