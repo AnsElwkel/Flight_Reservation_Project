@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class showTableFormat {
     public static void show(String tableName, String[] titles, String[][] data) {
+        if(data == null) {
+            System.out.println("No Data founded");
+            return;
+        }
         int[] columnWidths = new int[titles.length];
         for (int i = 0; i < titles.length; i++) {
             columnWidths[i] = titles[i].length();

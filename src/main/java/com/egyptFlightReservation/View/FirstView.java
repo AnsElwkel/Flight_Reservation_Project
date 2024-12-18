@@ -34,6 +34,7 @@ public class FirstView {
             signUp.SignUpProcess();
         } else {
             Database.getDatabase().saveData();
+            System.exit(0);
         }
     }
 }

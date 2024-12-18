@@ -1,6 +1,7 @@
 package com.egyptFlightReservation.Controller;
 
 import Tools.Input;
+import Tools.Menu;
 import com.egyptFlightReservation.Model.Airport;
 import com.egyptFlightReservation.Model.Database;
 import com.egyptFlightReservation.Model.Flight;
@@ -20,23 +21,84 @@ public class AdminController {
     }
 
     public void MainAdminFunction() {
-        int choice;
-        choice = view.mainAdminMenu();
+
+        int choice = view.mainAdminMenu();
+        while(!(1 <= choice && choice <= 6)) {
+            System.out.println("Invalid choice");
+            choice = view.mainAdminMenu();
+        }
         if (choice == 1)
             addNewAdminProcess();
         else if (choice == 2)
             addNewAirport();
+        else if(choice == 3)
+            showAirports();
+        else if(choice == 4)
+            showClients();
+        else if(choice == 5)
+            showAirlineAdmins();
         else
             FirstView.Run();
     }
 
+    public void removeClient(){
+        String clientUsername = view.getClientUsername();
+        if(!Database.getDatabase().removeClient(clientUsername))
+            Menu.showMessage("Client not found" , 1);
+        else Menu.showMessage("Client successfully removed" , 1);
+    }
+    public void removeAdmin(){
+        String adminUsername = view.getAdminUsername();
+        if(!Database.getDatabase().removeAdmin(adminUsername))
+            Menu.showMessage("Admin not found" , 1);
+        else Menu.showMessage("Admin successfully removed" , 1);
+    }
+    public void removeAirport(){
+        String airportCode = view.getAirportCode();
+        if(!Database.getDatabase().removeAirport(airportCode))
+            Menu.showMessage("Airport not found" , 1);
+        else Menu.showMessage("Airport successfully removed" , 1);
+    }
+    public void showClients() {
+        String[] titles = {"Client Username", "Client Name", "Client Email" , "Client Password" , "Gender" , "Phone" , "BirthDate" , "Passport Number"};
+        String[][] data = Database.getDatabase().getAllClientsInfo();
+        Tools.showTableFormat.show("Clients Information" , titles , data);
+
+        int choice = view.getChoiceOfShowClients();
+        if(choice == 1)
+            removeClient();
+
+        MainAdminFunction();
+    }
+    public void showAirlineAdmins() {
+        String[] titles = {"Admin username", "Admin name", "Admin email", "Admin password" , "Airline name"};
+        String[][] data = Database.getDatabase().getAllAdminsInfo();
+        Tools.showTableFormat.show("Admins Information" , titles , data);
+
+        int choice = view.getChoiceOfShowAirlineAdmins();
+        if(choice == 1)
+            removeAdmin();
+
+        MainAdminFunction(); //rec
+    }
+    public void showAirports() {
+        String[] titles = {"Airport Name", "Airports Code", "Airport Location"};
+        String[][] data = Database.getDatabase().getAllAirportsInfo();
+        Tools.showTableFormat.show("Airports Information" , titles , data);
+        //
+        int choice = view.getChoiceOfShowAirports();
+        if(choice == 1)
+            removeAirport();
+
+        MainAdminFunction();
+    }
     public void addNewAirport() {
         ArrayList<String> info = view.getInfoOfNewAirport();
         Airport airport = new Airport(info.get(0), info.get(1), info.get(2));
         Database.getDatabase().addNewAirport(airport);
+        Menu.showMessage("Airport successfully added" , 1);
         MainAdminFunction(); //rec
     }
-
     public void addNewAdminProcess() {
         String adminUserName = view.getNewAdminUserName();
         while (Input.isContainSpaces(adminUserName)) {
@@ -76,8 +138,10 @@ public class AdminController {
 
         Admin newAdmin = new Admin(adminUserName, adminName, adminEmail, adminPassword, airlineName);
         Database.getDatabase().createNewAdmin(adminUserName, newAdmin, airlineName, airlineCode, airlineLocation);
+        Menu.showMessage("Admin successfully added" , 1);
         MainAdminFunction(); //rec
     }
+
 
     public void AdminProcess() {
         admin = Database.getDatabase().getAdmin();
@@ -109,11 +173,13 @@ public class AdminController {
         info.add(Database.getDatabase().getAirline().get_name());
         Flight newFlight = new Flight(info);
         admin.addFlight(newFlight);
+        Menu.showMessage("Flight successfully added" , 1);
     }
 
     public void removeFlight() {
         String flightNumber = view.getFlightNumber();
         admin.removeFlight(flightNumber);
+        Menu.showMessage("Flight successfully removed" , 1);
     }
 
     public void updateSchedule() {
@@ -121,6 +187,7 @@ public class AdminController {
                 departureDate = view.getNewDepartureDate(),
                 arrivalDate = view.getNewArrivalDate();
         admin.updateSchedule(flightNumber, departureDate, arrivalDate);
+        Menu.showMessage("Schedule successfully updated" , 1);
     }
 
     public void expandCountOfSeats() {

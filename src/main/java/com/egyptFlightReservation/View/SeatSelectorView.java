@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class SeatSelectorView {
-    public static Scanner cin = new Scanner(System.in);
 
     public SeatSelectorView() {
     }
@@ -47,6 +46,7 @@ public class SeatSelectorView {
     public void instructionOfSeatSelection(ArrayList<ArrayList<Seat>> seats, int totalRows, int firstClassCol, int businessClassCol, int economyClassCol,
                                            int FirstPrice, int BusinessPrice, int EconomyPrice, int availableFirst,
                                            int availableBusiness, int availableEconomy) {
+        System.out.println("=======================================");
         System.out.println("====== Details of Seat Selection ======");
         System.out.println("=======================================");
         System.out.println("Seat Number ->  row character and column number (eg. A1) ");
@@ -82,11 +82,13 @@ public class SeatSelectorView {
     }
 
     public int getCountOfSeat() {
+        Scanner cin = new Scanner(System.in);
         System.out.print("Enter Seat Count: ");
         return cin.nextInt();
     }
 
     public String getSeatNumber(int i) {
+        Scanner cin = new Scanner(System.in);
         System.out.print("Enter Seat Number " + i + ": ");
         return cin.nextLine();
     }

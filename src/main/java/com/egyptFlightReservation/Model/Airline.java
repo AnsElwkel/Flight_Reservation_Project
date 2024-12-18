@@ -1,19 +1,18 @@
 package com.egyptFlightReservation.Model;
 
+import Tools.Menu;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeMap;
 
 public class Airline {
-    //class attributes
     private String name;
     private String ID;
     private String location;
     private TreeMap<String, Flight> Flights;
 
-    /// flight number  flight
-    //Constructor
     public Airline(String name, String ID, String location) {
         this.name = name;
         this.ID = ID;
@@ -21,17 +20,14 @@ public class Airline {
         this.Flights = new TreeMap<>();
     }
 
-    // method to get name
     public String get_name() {
         return name;
     }
 
-    // method to get ID
     public String get_ID() {
         return ID;
     }
 
-    // method to get location
     public String get_location() {
         return location;
     }
@@ -60,6 +56,7 @@ public class Airline {
             System.out.println("No flight found for " + flightNumber + "in expand count of seats in airline funciton");
             return false;
         }
+        Menu.showMessage("Seats successfully updated" , 1);
         return true;
     }
 

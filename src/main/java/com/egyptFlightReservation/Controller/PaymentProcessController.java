@@ -49,10 +49,10 @@ public class PaymentProcessController {
             newMethod = new DebitCard(info);
         } else if (choice == 3) {
             String newPayPalEmail = view.getPayPalDetails();
-            newMethod = new PayPal(newPayPalEmail, 20000);
+            newMethod = new PayPal(newPayPalEmail, PaymentMethod.DEFAULT_CASH);
         } else if (choice == 4) {
             String phoneNumber = view.getVodaPhoneCashDetails();
-            newMethod = new VodafoneCash(phoneNumber, 20000);
+            newMethod = new VodafoneCash(phoneNumber, PaymentMethod.DEFAULT_CASH);
         }
 
         if (1 <= choice && choice <= 4) // save new method in database

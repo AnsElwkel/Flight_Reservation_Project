@@ -4,7 +4,7 @@ import com.egyptFlightReservation.Model.Database;
 
 public class InputValidator {
     public static boolean isValidEmail(String email) {
-        return email.endsWith("gmail.com");
+        return email.endsWith("@gmail.com");
     }
 
     public static boolean isValidPassword(String password) {
@@ -14,11 +14,16 @@ public class InputValidator {
     }
 
     public static boolean isValidPhoneNumber(String mobileNumber) {
+        for(char c : mobileNumber.toCharArray()) {
+            if(!Character.isDigit(c)) {
+                return false;
+            }
+        }
         return String.valueOf(mobileNumber).length() == 11 && String.valueOf(mobileNumber).startsWith("01");
     }
 
     public static boolean isValidGender(String gender) {
-        return gender.equals("Female") || gender.equals("Male");
+        return gender.toLowerCase().equals("female") || gender.toLowerCase().equals("male");
     }
 
     public static boolean isValidPassport(String passport) {

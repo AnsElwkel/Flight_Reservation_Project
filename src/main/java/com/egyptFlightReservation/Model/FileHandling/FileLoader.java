@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -71,7 +72,7 @@ public class FileLoader {
                 fileName = dir + "/info";
 
                 testFile(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/info");
-                String[] clientContent = loadFile(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/info")[0].split(" ");
+                String[] clientContent = Objects.requireNonNull(loadFile(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/info"))[0].split(" ");
 
                 //load Booking
                 fileName = dir + "/Booking";

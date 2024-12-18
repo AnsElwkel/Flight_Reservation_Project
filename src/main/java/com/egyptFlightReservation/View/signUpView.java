@@ -4,7 +4,7 @@ import Tools.Input;
 
 import java.util.Scanner;
 
-public class signUpView {
+public class  signUpView {
     public static Scanner cin = new Scanner(System.in);
 
     public signUpView() {
@@ -26,7 +26,7 @@ public class signUpView {
     }
 
     public String getPassword() {
-        System.out.println("Enter Password (contain 8 character include digits, lower and upper case characters and special character lika(_,-, @)): ");
+        System.out.println("Enter Password (contain 8 character include digits, lower and upper case characters and special character like a(_,-, @)): ");
         return cin.nextLine();
     }
 

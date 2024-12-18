@@ -11,15 +11,12 @@ import java.util.Scanner;
 public class ClientProfileController {
     private int choice;
     protected ClientProfileView view;
-    protected signUpController controller;
     protected Scanner scanner;
     private Client client;
 
     public ClientProfileController() {
         this.view = new ClientProfileView();
-        this.controller = new signUpController();
         this.client = Database.getDatabase().getClient();
-
     }
 
     public void action(int choice) {

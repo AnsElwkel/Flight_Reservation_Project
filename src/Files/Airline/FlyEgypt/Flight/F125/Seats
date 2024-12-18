@@ -1,7 +1,7 @@
 84 8 22 5 8 9
 A1 false 15000 premium_food_and_relaxation_areas
-B1 true 15000 premium_food_and_relaxation_areas
-C1 true 15000 premium_food_and_relaxation_areas
+B1 false 15000 premium_food_and_relaxation_areas
+C1 false 15000 premium_food_and_relaxation_areas
 D1 true 15000 premium_food_and_relaxation_areas
 E1 true 15000 premium_food_and_relaxation_areas
 F1 true 15000 premium_food_and_relaxation_areas
@@ -97,14 +97,14 @@ G12 true 10000 More_Legroom_and_noise-canceling_headphones
 H12 true 10000 More_Legroom_and_noise-canceling_headphones
 A13 true 10000 More_Legroom_and_noise-canceling_headphones
 B13 true 10000 More_Legroom_and_noise-canceling_headphones
-C13 true 10000 More_Legroom_and_noise-canceling_headphones
+C13 false 10000 More_Legroom_and_noise-canceling_headphones
 D13 true 10000 More_Legroom_and_noise-canceling_headphones
 E13 true 10000 More_Legroom_and_noise-canceling_headphones
 F13 true 10000 More_Legroom_and_noise-canceling_headphones
 G13 true 10000 More_Legroom_and_noise-canceling_headphones
 H13 true 10000 More_Legroom_and_noise-canceling_headphones
 A14 true 7000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
-B14 true 7000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
+B14 false 7000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
 C14 true 7000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
 D14 true 7000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
 E14 true 7000 Limited_Legroom_and_regular_food_and_personal_space_more_limited

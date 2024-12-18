@@ -33,17 +33,20 @@ public class Database {
         System.out.println("Database initialized successfully");
     }
 
-    public static void addNewAirport(Airport airport) {
-        if (airports == null)
-            airports = new ArrayList<>();
-        airports.add(airport);
-    }
+
 
     public static Database getDatabase() {
         if (database == null)
             database = new Database();
         return database;
     }
+
+
+
+
+
+
+
 
     public static void addClient(Client client) {
         System.out.println(client.getName());
@@ -124,12 +127,6 @@ public class Database {
             System.out.println("Admin Name not contain in admin operations container");
     }
 
-    public static void createNewAdmin(String adminName, Admin admin, String AirlineName, String AirlineCode, String airlineLocation) {
-        adminTable.put(adminName, admin);
-        adminOperations.put(adminName, new Airline(AirlineName, AirlineCode, airlineLocation));
-        System.out.println("admin table size : " + adminTable.size());
-        System.out.println("admin operations size : " + adminOperations.size());
-    }
 
     public static Admin getAdmin() {
         if (adminTable == null || !adminTable.containsKey(curUser))
@@ -193,7 +190,7 @@ public class Database {
     }
 
 
-    /// edit client information
+    /// Edit Client Information
     public static void editUsername(String username) {
         userTable.put(username, userTable.get(curUser));
         userTable.remove(curUser);
@@ -215,6 +212,79 @@ public class Database {
 
     public static void editFullName(String fullName) {
         userTable.get(curUser).getFirst().setName(fullName);
+    }
+
+    /// Main Admin Functions
+    public static void createNewAdmin(String adminName, Admin admin, String AirlineName, String AirlineCode, String airlineLocation) {
+        adminTable.put(adminName, admin);
+        adminOperations.put(adminName, new Airline(AirlineName, AirlineCode, airlineLocation));
+        System.out.println("admin table size : " + adminTable.size());
+        System.out.println("admin operations size : " + adminOperations.size());
+    }
+
+    public static void addNewAirport(Airport airport) {
+        if (airports == null)
+            airports = new ArrayList<>();
+        airports.add(airport);
+    }
+
+    public static String[][] getAllAirportsInfo(){
+        if(airports != null && !airports.isEmpty()){
+            String[][] info = new String[airports.size()][3];
+            for(int i = 0 ;i < airports.size() ; ++i)
+                info[i] = airports.get(i).toString().split(" ");
+            return info;
+        }
+        return null;
+    }
+
+    public static boolean removeAirport(String airportCode){
+        for(Airport airport : airports){
+            if(airportCode.equals(airport.getAirportcode())){
+                airports.remove(airport);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean removeAdmin(String adminUsername){
+        if(!adminTable.containsKey(adminUsername))
+            return false;
+        adminTable.remove(adminUsername);
+        return true;
+    }
+
+    public static boolean removeClient(String clientUsername){
+        if(!userTable.containsKey(clientUsername))
+            return false;
+        userTable.remove(clientUsername);
+        return true;
+    }
+
+    public static String[][] getAllAdminsInfo(){
+        if(adminTable != null && !adminTable.isEmpty()){
+            String[][] info = new String[adminTable.size()][5];
+            int i = -1;
+            for(String name : adminTable.keySet())
+                info[++i] = adminTable.get(name).toString().split(" ");
+            return info;
+        }
+        return null;
+    }
+
+    public static String[][] getAllClientsInfo(){
+        if(userTable != null && !userTable.isEmpty()){
+            String[][] info = new String[userTable.size()][8];
+            int i = -1;
+            for(String name : userTable.keySet()){
+                info[++i] = userTable.get(name).getFirst().toString().split(" ");
+                info[i][2].replaceAll("_" , " ");
+            }
+
+            return info;
+        }
+        return null;
     }
 
 
@@ -417,26 +487,29 @@ public class Database {
                 for (Booking booking : userTable.get(userName).getSecond()) {
                     content.add(booking.toString());
                 }
-
                 FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/Booking", content);
-                ArrayList<String> depCard, masCard, payPal, vodafoneCash;
-                depCard = masCard = payPal = vodafoneCash = new ArrayList<>();
+
+
+                ArrayList<String> depCard = new ArrayList<>(),
+                                  masCard = new ArrayList<>(),
+                                  payPal = new ArrayList<>(),
+                                  vodafoneCash = new ArrayList<>();
                 FileSaver.testDir(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod");
                 for (PaymentMethod paymentMethod : userTable.get(userName).getFourth()) {
                     if (paymentMethod instanceof DebitCard) {
                         depCard.add(paymentMethod.toString());
-                        FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod/DebitCard", depCard);
                     } else if (paymentMethod instanceof MasterCard) {
                         masCard.add(paymentMethod.toString());
-                        FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod/MasterCard", masCard);
                     } else if (paymentMethod instanceof PayPal) {
                         payPal.add(paymentMethod.toString());
-                        FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod/PayPal", payPal);
                     } else if (paymentMethod instanceof VodafoneCash) {
                         vodafoneCash.add(paymentMethod.toString());
-                        FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod/VodafoneCash", vodafoneCash);
                     }
                 }
+                FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod/DebitCard", depCard);
+                FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod/MasterCard", masCard);
+                FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod/PayPal", payPal);
+                FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod/VodafoneCash", vodafoneCash);
             }
             System.out.println("Save user table done (save admin function) ");
         }

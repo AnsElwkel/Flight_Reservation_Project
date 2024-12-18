@@ -6,6 +6,8 @@ import java.util.ArrayList;
 // Handle Singleton DP
 public class FileSaver {
     public static void save(String filePath, ArrayList<String> lines) {
+        if(lines == null || lines.size() == 0)
+            return;
         File file = new File(filePath);
 
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(file, false))) {

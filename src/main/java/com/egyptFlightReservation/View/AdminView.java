@@ -13,7 +13,8 @@ import java.util.Scanner;
 public class AdminView {
     public int mainAdminMenu() {
         Scanner cin = new Scanner(System.in);
-        Menu.show(new String[]{"Add Admin", "Add Airport", "Log out"});
+        System.out.println("----- Main Admin Menu -----");
+        Menu.show(new String[]{"Add Admin", "Add Airport" , "Show Airports" , "Show Users" , "Show Airline Admins", "Log out"});
         System.out.println("Enter your choice: ");
         return cin.nextInt();
     }
@@ -158,5 +159,37 @@ public class AdminView {
         System.out.print("Enter Airport Location: ");
         info.add(cin.nextLine());
         return info;
+    }
+
+    public int getChoiceOfShowAirports(){
+        Scanner cin = new Scanner(System.in);
+        System.out.print("Enter 1 to remove certain airport or any number to go back: ");
+        return cin.nextInt();
+    }
+    public int getChoiceOfShowAirlineAdmins(){
+        Scanner cin = new Scanner(System.in);
+        System.out.print("Enter 1 to remove certain admin or any number to go back: ");
+        return cin.nextInt();
+    }
+    public int getChoiceOfShowClients(){
+        Scanner cin = new Scanner(System.in);
+        System.out.print("Enter 1 to remove certain client or any number to go back: ");
+        return cin.nextInt();
+    }
+
+    public String getAirportCode(){
+        Scanner cin = new Scanner(System.in);
+        System.out.print("Enter Airport Code: ");
+        return cin.nextLine();
+    }
+    public String getAdminUsername(){
+        Scanner cin = new Scanner(System.in);
+        System.out.print("Enter Admin Username Code: ");
+        return cin.nextLine();
+    }
+    public String getClientUsername(){
+        Scanner cin = new Scanner(System.in);
+        System.out.print("Enter Client Username Code: ");
+        return cin.nextLine();
     }
 }

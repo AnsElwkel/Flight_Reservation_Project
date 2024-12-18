@@ -7,4 +7,12 @@ public class Menu {
         for (int i = 1; i <= list.length; ++i)
             System.out.println(i + "- " + list[i - 1]);
     }
+    public static void showMessage(String message , int seconds) {
+        System.out.println(message);
+        try{
+            Thread.sleep(seconds* 1000L);
+        }catch (InterruptedException e){
+            System.out.println(e.getMessage());
+        }
+    }
 }
