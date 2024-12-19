@@ -31,19 +31,17 @@ public class FileSaver {
         File dir = new File(dirPath);
 
         if (dir.exists()) {
-            if (dir.isDirectory())
-                System.out.println("Directory already exists: " + dirPath);
-            else
-                System.out.println("this is a file Path not dir path" + dirPath); /// testing
+            if (dir.isDirectory()){}
+//                System.out.println("Directory already exists: " + dirPath);
+//            else
+//                System.out.println("this is a file Path not dir path" + dirPath); /// testing
 //
         } else {
             if (dir.mkdirs()) {
-                System.out.println("Directory did not exist. It has been created at: " + dirPath);
+//                System.out.println("Directory did not exist. It has been created at: " + dirPath);
             } else {
-                System.out.println("Failed to create the dir at: " + dirPath);
+//                System.out.println("Failed to create the dir at: " + dirPath);
             }
         }
     }
 }
-//  /home/anaselwkel/IdeaProjects/Flight_Reservation_Project/src/Files/Airline
-

@@ -115,7 +115,7 @@ public class signUpController {
 
     public boolean validateAge() {
         while (true) {
-            this.date = view.getDate();
+            this.date = view.getDate().trim();
             int age = calculateAge();
 
             if (age == -1) { //le el format 8lt

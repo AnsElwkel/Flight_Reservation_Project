@@ -6,6 +6,7 @@ import java.util.*;
 import Tools.myTuple;
 import com.egyptFlightReservation.Model.FileHandling.FileAdministrator;
 import com.egyptFlightReservation.Model.FileHandling.FileSaver;
+import com.egyptFlightReservation.Model.FileHandling.FolderCleaner;
 import com.egyptFlightReservation.Model.Payment.*;
 import com.egyptFlightReservation.Model.User.Admin;
 import com.egyptFlightReservation.Model.User.Client;
@@ -30,7 +31,6 @@ public class Database {
         adminTable = new TreeMap<>();
         searchingTable = new TreeMap<>();
         airports = new ArrayList<>();
-        System.out.println("Database initialized successfully");
     }
 
 
@@ -51,8 +51,6 @@ public class Database {
 
 
 
-
-
     public static int getUserPremiumPoints(){
         return userTable.get(curUser).getFirst().getPremiumPoints();
     }
@@ -66,7 +64,6 @@ public class Database {
     }
 
     public static void addTicket(LocalDate DepDate, String flightNumber, Ticket ticket) {
-//        userTable.get(curUser).getThird().add(ticket);
         for (Flight flight : searchingTable.get(DepDate)) {
             if (flight.getFlight_number().equals(flightNumber)) {
                 flight.addTicket(ticket);
@@ -80,7 +77,6 @@ public class Database {
     }
 
     public static void addPaymentMethod(PaymentMethod paymentMethod) {
-        System.out.println("Payment method is added to client " + curUser + " successfully. in database");
         userTable.get(curUser).getFourth().add(paymentMethod);
     }
 
@@ -194,8 +190,6 @@ public class Database {
         if (!searchingTable.containsKey(departureDate))
             searchingTable.put(departureDate, new ArrayList<>());
         searchingTable.get(departureDate).add(flight);
-        System.out.println("Dep Date : " + departureDate);
-        System.out.println("Searching table size : " + searchingTable.size());
     }
 
 
@@ -227,8 +221,6 @@ public class Database {
     public static void createNewAdmin(String adminName, Admin admin, String AirlineName, String AirlineCode, String airlineLocation) {
         adminTable.put(adminName, admin);
         adminOperations.put(adminName, new Airline(AirlineName, AirlineCode, airlineLocation));
-        System.out.println("admin table size : " + adminTable.size());
-        System.out.println("admin operations size : " + adminOperations.size());
     }
 
     public static void addNewAirport(Airport airport) {
@@ -336,9 +328,6 @@ public class Database {
 
         userTable.put(userName, new myTuple<Client, ArrayList<Booking>, ArrayList<Ticket>, ArrayList<PaymentMethod>>
                 (newClient, bookings, null, methods));
-        System.out.println("User table loaded successfully");
-        System.out.println("User table size : " + userTable.size());
-
     }
 
     public static void loadAdminTable(String[] content) {
@@ -346,68 +335,52 @@ public class Database {
             String[] tmp = cur.split(" ");
             adminTable.put(tmp[0], new Admin(tmp[0], tmp[1], tmp[2], tmp[3], tmp[4]));
         }
-
-        System.out.println("Admin table loaded successfully");
-        System.out.println("Admin table size : " + adminTable.size());
     }
 
     public static void loadAdminOperations(String[] airlineInfo, ArrayList<String[]> flightsInfo,
                                            ArrayList<String[]> passengersInfo,
                                            ArrayList<String[]> ticketsInfo,
                                            ArrayList<String[]> seatsInfo) {
-//        for(int i = 0 ;i  < seatsInfo.size();i++){
-//            for(int k = 0 ;k < seatsInfo.get(i).length;k++){
-//                System.out.println("Seats oooo " + seatsInfo.get(i)[k] + " " + i + " " + k);
-//            }
-//        }
         if (adminOperations == null)
             adminOperations = new TreeMap<>();
-        // make the admin operations container
 
         String[] tmp = airlineInfo[0].split(" ");
         if (!adminOperations.containsKey(tmp[0])) {
             adminOperations.put(tmp[0], new Airline(tmp[1], tmp[2], tmp[3]));
-            System.out.println(tmp[0]);
         }
 
         if (flightsInfo != null && flightsInfo.size() > 0) {
             adminOperations.get(tmp[0]).setFlights(flightsInfo, passengersInfo, ticketsInfo, seatsInfo);
         }
-
-        System.out.println("Admin operations loaded successfully");
-        System.out.println("Admin operations size : " + adminOperations.size());
     }
 
     public static void loadAirports(String[] content) {
         for (String cur : content) {
             String[] tmp = cur.split(" ");
-            System.out.println(tmp[0] + " " + tmp[1] + " " + tmp[2]);
+//            System.out.println(tmp[0] + " " + tmp[1] + " " + tmp[2]);
             airports.add(new Airport(tmp[0], tmp[1], tmp[2]));
         }
-        System.out.println("Airports loaded successfully");
-        System.out.println("Airports size : " + airports.size());
     }
 
     /// Saving Process
     public static void saveAdminOperations() {
-//        if(adminOperations == null)
-//            throw new IllegalArgumentException("Admin operations not found (save admin function)");
         if (adminOperations != null || adminOperations.size() != 0) {
 
             ArrayList<String> content = new ArrayList<>();
             for (String adminName : adminOperations.keySet()) {
-                System.out.println(adminName + " in save admin operations function");
                 content.add(adminOperations.get(adminName).get_name());
             }
 
             FileSaver.testDir(FileAdministrator.ROOT_PATH + "Airline");
             FileSaver.save(FileAdministrator.ROOT_PATH + "Airline" + "/AirlineNames", content); /// AirlineNames file saved
-            System.out.println("Save airline names done (save admin function) ");
 
             for (String airlineName : content) { // Make all airline directory
-                System.out.println(airlineName + " in save admin operations function");
                 FileSaver.testDir(FileAdministrator.ROOT_PATH + "Airline/" + airlineName);
             }
+
+            /// Clean any airline folders that removed
+            content.add("AirlineNames");
+            FolderCleaner.cleanFolder(FileAdministrator.ROOT_PATH + "Airline", content);
             content.clear();
 
 
@@ -418,7 +391,6 @@ public class Database {
                 FileSaver.save(FileAdministrator.ROOT_PATH + "Airline/" + adminOperations.get(adminName).get_name() + "/info", content);
                 content.clear();
             }
-            System.out.println("Save airline info done (save admin function) ");
 
             for (String adminName : adminOperations.keySet()) { //Make flight folder and create flightNumber and folder for each flight and create and add info,passenegers,Tickets and Seats files for each flight  in each airline
                 FileSaver.testDir(FileAdministrator.ROOT_PATH + "Airline/" + adminOperations.get(adminName).get_name() + "/Flight");
@@ -447,29 +419,21 @@ public class Database {
                 }
 
             }
-            System.out.println("Save admin operations done (save admin function) ");
         }
     }
 
     public static void saveAdminTable() {
-//        if(adminTable == null)
-//            throw new IllegalArgumentException("Admin table not found (save admin function)");
         if (adminTable != null || adminTable.size() != 0) {
             ArrayList<String> content = new ArrayList<>();
-            for (String adminName : adminTable.keySet()) {
+            for (String adminName : adminTable.keySet())
                 content.add(adminTable.get(adminName).toString());
-            }
 
             FileSaver.testDir(FileAdministrator.ROOT_PATH + "User/Admin");
             FileSaver.save(FileAdministrator.ROOT_PATH + "User/Admin/Admins", content);
-            System.out.println("Save admin table done (save admin function) ");
-
         }
     }
 
     public static void saveUserTable() { /// create and save clientUsernames file and folder for each client contain info and booking and PaymentMethod folder contain 4 files for payments method
-//        if(userTable == null)
-//            throw new IllegalArgumentException("User table not found (save admin function)");
         if (userTable != null || userTable.size() != 0) {
             ArrayList<String> content = new ArrayList<>();
             for (String userName : userTable.keySet()) {
@@ -477,10 +441,11 @@ public class Database {
             }
             FileSaver.testDir(FileAdministrator.ROOT_PATH + "User/Client");
             FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/ClientUsernames", content);
+            content.add("ClientUsernames");
+            FolderCleaner.cleanFolder(FileAdministrator.ROOT_PATH + "User/Client", content);
             content.clear();
 
             for (String userName : userTable.keySet()) {
-                System.out.println("For Testing: " + userTable.get(userName).getFirst().toString() + "in save user table function");
                 content.add(userTable.get(userName).getFirst().toString());
 
                 FileSaver.testDir(FileAdministrator.ROOT_PATH + "User/Client/" + userName);
@@ -491,6 +456,7 @@ public class Database {
                     content.add(booking.toString());
                 }
                 FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/Booking", content);
+                content.clear();
 
 
                 ArrayList<String> depCard = new ArrayList<>(),
@@ -514,21 +480,16 @@ public class Database {
                 FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod/PayPal", payPal);
                 FileSaver.save(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod/VodafoneCash", vodafoneCash);
             }
-            System.out.println("Save user table done (save admin function) ");
         }
     }
 
     public static void saveAirports() {
-//        if(airports == null)
-//            throw new IllegalArgumentException("Airports not found (save admin function)");
         if (airports != null && airports.size() != 0) {
             ArrayList<String> content = new ArrayList<>();
             for (Airport airport : airports) {
-                System.out.println(airport.toString());
                 content.add(airport.toString());
             }
             FileSaver.save(FileAdministrator.ROOT_PATH + "Airports", content);
-            System.out.println("Save airports done (save admin function) ");
         }
     }
 
@@ -537,6 +498,5 @@ public class Database {
         saveAdminOperations();
         saveUserTable();
         saveAirports();
-        System.out.println("saving process done"); //testing
     }
 }

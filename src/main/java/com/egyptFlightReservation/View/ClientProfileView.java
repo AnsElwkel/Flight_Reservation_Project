@@ -8,13 +8,15 @@ public class ClientProfileView {
     public ClientProfileView() {
     }
 
-    public void displayUserProfile(String username, String name, String email, String phoneNumber) {
-        System.out.println("------- Your Profile -------");
-        System.out.println("Username: " + username);
-        System.out.println("Name: " + name.replaceAll("_", " "));
-        System.out.println("Email: " + email);
-        System.out.println("Phone Number: " + phoneNumber);
-        System.out.println("---------------------------");
+    public void displayUserProfile(String username, int premiumPoints, String name, String email, String phoneNumber) {
+        Tools.showTableFormat.show("Your Profile" ,
+                new String[]{"" , "Information"} ,
+                new String [][] { {"Username" , username} ,
+                        {"Name" , name.replaceAll("_", " ")},
+                        {"Premium Points" , String.valueOf(premiumPoints)},
+                        {"Email" , email},
+                        {"Phone Number" , phoneNumber}});
+        Tools.Menu.showMessage("" , 1);
     }
 
     public int editUserInfoMenu() {

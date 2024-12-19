@@ -18,13 +18,12 @@ public class FileLoader {
         loadAdminTable();
         loadAdminOperationsTable();
         loadAirports();
-        System.out.println("Data loaded");
     }
 
 
     static boolean testFile(String fileName) {
         if (!new File(fileName).exists()) {
-            System.out.println("File does not exist" + fileName);
+//            System.out.println("File does not exist" + fileName);
             return false;
         }
         return true;
@@ -38,12 +37,7 @@ public class FileLoader {
         System.out.println();
         for (int i = 0; i < bookingHistory.length; i++) {
             System.out.println(bookingHistory[i]);
-//            System.out.println();
         }
-//        for (String ticket : tickets) {
-//            System.out.println(ticket);
-//        }
-//        System.out.println();
         if (paymentMethods != null && paymentMethods.length > 0) {
             for (String[] paymentMethod : paymentMethods) {
                 if (paymentMethod == null) continue;
@@ -57,14 +51,13 @@ public class FileLoader {
 
     public static void loadUserTable() {
         try {
-            String fileName = "/home/anaselwkel/IdeaProjects/Flight_Reservation_Project/src/Files/User/Client/ClientUsernames";
+            String fileName = FileAdministrator.ROOT_PATH + "User/Client/ClientUsernames";
             File file = new File(FileAdministrator.ROOT_PATH + "User/Client/ClientUsernames");
             testFile(FileAdministrator.ROOT_PATH + "User/Client/ClientUsernames");
 
             Scanner fin = new Scanner(file);
             while (fin.hasNextLine()) {
                 String userName = fin.nextLine();
-//                System.out.println(userName); //testing
 
                 String dir = FileAdministrator.ROOT_PATH +"User/Client/" + userName;
 
@@ -81,12 +74,7 @@ public class FileLoader {
                 String[] bookingHistory = loadFile(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/Booking");
 
 
-                //load Tickets
-//                fileName = dir + "/Ticket";
-//                testFile(fileName);
-//
                 String[] tickets = null;
-//                tickets = loadFile(fileName);
 
                 //load payments
                 testFile(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod/DebitCard");
@@ -101,13 +89,12 @@ public class FileLoader {
                         loadFile(FileAdministrator.ROOT_PATH + "User/Client/" + userName + "/PaymentMethod/VodafoneCash")
                 };
 
-                printFilesForTesting(clientContent, bookingHistory, tickets, paymentMethods);
+//                printFilesForTesting(clientContent, bookingHistory, tickets, paymentMethods);
                 Database.getDatabase().loadUserTable(userName, clientContent, bookingHistory, tickets, paymentMethods);
             }
             fin.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error has occurred.");
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
@@ -136,7 +123,7 @@ public class FileLoader {
                 for (String flightNumber : flightNumbers) {
                     if (testFile(FileAdministrator.ROOT_PATH + "Airline/" + airlineName + "/Flight" + "/" + flightNumber + "/info")) {
                         flightsInfo.add(loadFile(FileAdministrator.ROOT_PATH + "Airline/" + airlineName + "/Flight" + "/" + flightNumber + "/info"));
-                        System.out.println(FileAdministrator.ROOT_PATH + "Airline/" + airlineName + "/Flight" + "/" + flightNumber + "/info" + " is loaded !!!!!!!!!");
+//                        System.out.println(FileAdministrator.ROOT_PATH + "Airline/" + airlineName + "/Flight" + "/" + flightNumber + "/info" + " is loaded !!!!!!!!!");
                     }
 
 
@@ -164,7 +151,7 @@ public class FileLoader {
     public static String[] loadFile(String fileName) {
         File file = new File(fileName);
         if (!file.exists()) {
-            System.out.println("File does not exist" + fileName);
+//            System.out.println("File does not exist" + fileName);
             return null;
         }
         ArrayList<String> tmp = new ArrayList<>();
@@ -172,7 +159,7 @@ public class FileLoader {
             Scanner fin = new Scanner(file);
             while (fin.hasNextLine()) {
                 String line = fin.nextLine();
-                System.out.println("Line: " + line);
+//                System.out.println("Line: " + line);
                 tmp.add(line);
             }
             fin.close();

@@ -95,10 +95,6 @@ public class Flight {
         setSeats(seatInfo);
         setPassengers(passengerInfo);
         setTickets(ticketInfo);
-        System.out.println("Flight Constructor" + info[7] + " " + info[9] + " " + info[10] + " " + info[11]);
-
-//        expandCountOfSeats(Integer.parseInt(info[7]), Integer.parseInt(info[9]),
-//                Integer.parseInt(info[10]), Integer.parseInt(info[11]));
     }
 
     public void fillRowOfSeats(int rowNumber) {
@@ -194,37 +190,22 @@ public class Flight {
     public void setSeats(String[] seats) {
         if (seats != null && seats.length > 0) {
             String[] content = seats[0].split(" ");
-//            int totalSeats=Integer.parseInt(content[0]) , cntTotalSeatRows = Integer.parseInt(content[1]) ,
-//                    cntTotalSeatCols = Integer.parseInt(content[2]) , cntFirstClassCols=Integer.parseInt(content[3]) ,
-//                    cntBusinessClassCols =Integer.parseInt(content[4]), cntEconomyClassCols=Integer.parseInt(content[5]);
             for (int i = 0; i < cntTotalSeatRows; i++) {
                 Seats.add(new ArrayList<>());
             }
-            System.out.println("Seat file lines : " + seats.length);
             for (int i = 1; i < seats.length; i++) {
                 content = seats[i].split(" ");
                 String seatNumber = content[0];
-                /// a 22
+
                 int colNum = Integer.parseInt(seatNumber.substring(1));
                 if (1 <= colNum && colNum <= cntFirstClassCols) {
-                    System.out.println(1 + " " + colNum + " " + cntFirstClassCols);
                     Seats.get(seatNumber.charAt(0) - 'A').add(new FirstClass(content[0], Boolean.parseBoolean(content[1]), Integer.parseInt(content[2]), content[3]));
                 } else if (cntFirstClassCols + 1 <= colNum && colNum <= cntFirstClassCols + cntBusinessClassCols) {
-                    System.out.println(cntFirstClassCols + 1 + " " + colNum + " " + cntFirstClassCols + cntBusinessClassCols);
                     Seats.get(seatNumber.charAt(0) - 'A').add(new BusinessClass(content[0], Boolean.parseBoolean(content[1]), Integer.parseInt(content[2]), content[3]));
                 } else
                     Seats.get(seatNumber.charAt(0) - 'A').add(new EconomyClass(content[0], Boolean.parseBoolean(content[1]), Integer.parseInt(content[2]), content[3]));
 
-                System.out.println("Seats loaded successfully");
             }
-        } else {
-            System.out.println("Seats are empty " + airlineName + " " + flight_number + "in setSeats function");
-        }
-        for (int i = 0; i < Seats.size(); i++) {
-            for (int j = 0; j < Seats.get(i).size(); j++) {
-                System.out.print(Seats.get(i).get(j).getSeatNumber() + " ");
-            }
-            System.out.println();
         }
 
     }
@@ -258,9 +239,6 @@ public class Flight {
     public ArrayList<String> getSeatsInfo() {
         ArrayList<String> seatsInfo = new ArrayList<>();
         seatsInfo.add(totalSeats + " " + cntTotalSeatRows + " " + cntTotalSeatCols + " " + cntFirstClassCols + " " + cntBusinessClassCols + " " + cntEconomyClassCols);
-//        for(ArrayList<Seat> row : Seats)
-//            for(Seat seat : row)
-//                seatsInfo.add(seat.toString());
         for (int i = 0; i < Seats.get(0).size(); i++) {
             for (int j = 0; j < Seats.size(); j++) {
                 seatsInfo.add(Seats.get(j).get(i).toString());
@@ -341,29 +319,6 @@ public class Flight {
         return cntTotalSeatCols;
     }
 
-    public int getCntFirstClassCols() {
-        return cntFirstClassCols;
-    }
-
-    public int getCntBusinessClassCols() {
-        return cntBusinessClassCols;
-    }
-
-    public int getFirstClassPrice() {
-        return firstClassPrice;
-    }
-
-    public int getCntEconomyClassCols() {
-        return cntEconomyClassCols;
-    }
-
-    public int getBusinessClassPrice() {
-        return businessClassPrice;
-    }
-
-    public int getEconomyClassPrice() {
-        return economyClassPrice;
-    }
 
     public void setCntFirstClassCols(int cntFirstClassCols) {
         this.cntFirstClassCols = cntFirstClassCols;
@@ -380,34 +335,44 @@ public class Flight {
 
     public void setSeatNumbers() {
         for (char rowCharcter = 'A'; rowCharcter < this.cntTotalSeatRows + 'A'; rowCharcter++) {
-            for (int i = 0; i < this.cntTotalSeatCols; i++) {
+            for (int i = 0; i < this.cntTotalSeatCols; i++)
                 Seats.get(rowCharcter - 'A').get(i).setSeatNumber(String.valueOf(rowCharcter) + String.valueOf(i + 1));
-                System.out.println("Seat info: " + (int) (rowCharcter - 'A') + " " + i + " " + Seats.get(rowCharcter - 'A').get(i).getSeatNumber());
-            }
         }
-        System.out.println("Seat Number is updated");
     }
 
+    public int getCntFirstClassCols() {
+        return cntFirstClassCols;
+    }
+    public int getCntBusinessClassCols() {
+        return cntBusinessClassCols;
+    }
+    public int getFirstClassPrice() {
+        return firstClassPrice;
+    }
+    public int getCntEconomyClassCols() {
+        return cntEconomyClassCols;
+    }
+    public int getBusinessClassPrice() {
+        return businessClassPrice;
+    }
+    public int getEconomyClassPrice() {
+        return economyClassPrice;
+    }
     public int getCntOfAvailableFirstClassSeats() {
         return cntOfAvailableFirstClassSeats;
     }
-
     public int getCntOfAvailableBusinessClassSeats() {
         return cntOfAvailableBusinessClassSeats;
     }
-
     public int getCntOfAvailableEconomyClassSeats() {
         return cntOfAvailableEconomyClassSeats;
     }
-
     public int getFirstClassPremiumPoints() {
         return firstClassPremiumPoints;
     }
-
     public int getBusinessClassPremiumPoints() {
         return businessClassPremiumPoints;
     }
-
     public int getEconomyClassPremiumPoints() {
         return economyClassPremiumPoints;
     }

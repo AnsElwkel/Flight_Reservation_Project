@@ -6,7 +6,7 @@ D1 true 13000 relaxation_areas
 E1 true 13000 relaxation_areas
 F1 true 13000 relaxation_areas
 A2 true 13000 relaxation_areas
-B2 true 13000 relaxation_areas
+B2 false 13000 relaxation_areas
 C2 true 13000 relaxation_areas
 D2 true 13000 relaxation_areas
 E2 true 13000 relaxation_areas
@@ -72,7 +72,7 @@ D12 true 5000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
 E12 true 5000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
 F12 true 5000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
 A13 true 5000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
-B13 true 5000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
+B13 false 5000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
 C13 true 5000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
 D13 true 5000 Limited_Legroom_and_regular_food_and_personal_space_more_limited
 E13 true 5000 Limited_Legroom_and_regular_food_and_personal_space_more_limited

@@ -16,7 +16,7 @@ public class  signUpView {
     }
 
     public String getUserName() {
-        System.out.println("User Name: ");
+        System.out.print("User Name: ");
         return cin.nextLine();
     }
 
@@ -36,22 +36,22 @@ public class  signUpView {
     }
 
     public String getMobileNumber() {
-        System.out.print("Phone Number:");
+        System.out.print("Phone Number: ");
         return cin.nextLine();
     }
 
     public String getDate() {
-        System.out.println("birthdate in the format YYYY-MM-DD:");
+        System.out.print("birthdate in the format YYYY-MM-DD: ");
         return cin.nextLine();
     }
 
     public String getGender() {
-        System.out.print("Gender(Female/Male):");
+        System.out.print("Gender(Female/Male): ");
         return cin.nextLine();
     }
 
     public String getPassportNumber() {
-        System.out.print("Passport Number:");
+        System.out.print("Passport Number: ");
         return cin.nextLine();
     }
 }

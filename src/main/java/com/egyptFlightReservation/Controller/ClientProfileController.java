@@ -11,7 +11,6 @@ import java.util.Scanner;
 public class ClientProfileController {
     private int choice;
     protected ClientProfileView view;
-    protected Scanner scanner;
     private Client client;
 
     public ClientProfileController() {
@@ -24,13 +23,10 @@ public class ClientProfileController {
             editUserInfo();
         else if (choice == 2) {
             displayBookingHistory();
+            Tools.Menu.showMessage("" , 3);
             mainMenu();
         } else if (choice == 3)
             BackToHomePage();
-    }
-
-    public void message() {
-        System.out.println("Updated Successfully.");
     }
 
     public void editUserInfo() {
@@ -53,7 +49,7 @@ public class ClientProfileController {
             editPassword();
 
         if (1 <= choice && choice <= 5)
-            message();
+            Tools.Menu.showMessage("Updated successfully!" , 2);
 
         mainMenu();
     }
@@ -66,7 +62,7 @@ public class ClientProfileController {
     }
 
     public void mainMenu() {
-        view.displayUserProfile(client.getUsername(), client.getName(), client.getEmail(), client.getPhoneNumber());
+        view.displayUserProfile(client.getUsername() , client.getPremiumPoints() , client.getName(), client.getEmail(), client.getPhoneNumber());
         choice = view.menu();
         while (!(1 <= choice && choice <= 3)) {
             System.out.println("Invalid Choice,Please Enter Your Choice:");

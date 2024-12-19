@@ -10,12 +10,14 @@ import java.util.ArrayList;
 public class PaymentProcessController {
     ArrayList<PaymentMethod> paymentMethods;
     int curPremiumPoints;
+    boolean once;
 
     private PaymentProcessView view;
 
     public PaymentProcessController() {
         this.view = new PaymentProcessView();
         this.curPremiumPoints = Database.getDatabase().getUserPremiumPoints();
+        this.once = false; /// To call the discount process only once
     }
 
     private ArrayList<PaymentMethod> myPaymentMethods() {
@@ -23,7 +25,11 @@ public class PaymentProcessController {
     }
 
     public myPair<Boolean, Double> paymentProcess(double amount) {
-        amount = discountProcess(amount);
+        if(!once){
+            amount = discountProcess(amount); /// Discount Process using premium points
+            once = true;
+        }
+
         this.paymentMethods = myPaymentMethods();
         String[] s = new String[paymentMethods.size()];
         for (int i = 0; i < paymentMethods.size(); i++)
@@ -41,6 +47,7 @@ public class PaymentProcessController {
         }
     }
     public double discountProcess(double amount) {
+
         int choice = view.getChoiceOfDiscountInfo();
         while(!(choice == 1 || choice == -1)){
             System.out.println("Invalid choice , please try again");
@@ -80,12 +87,6 @@ public class PaymentProcessController {
 
         if (1 <= choice && choice <= 4) // save new method in database
             Database.getDatabase().addPaymentMethod(newMethod);
-
-        if (choice == 5) {
-            return;
-        } else {
-            System.out.println("Invalid choice....Something is wrong in payment process controller");
-        }
     }
 
 }

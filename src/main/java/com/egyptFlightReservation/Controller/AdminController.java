@@ -145,7 +145,7 @@ public class AdminController {
 
     public void AdminProcess() {
         admin = Database.getDatabase().getAdmin();
-
+        System.out.println("Welcome | " + admin.getUsername() + " | ");
         int choice;
         do {
             choice = view.adminMenu();

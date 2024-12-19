@@ -10,7 +10,7 @@ public class InputValidator {
     public static boolean isValidPassword(String password) {
         return (password.matches(".*[0-9]{1,}.*") && password.matches(".*[-_@]{1,}.*") &&
                 password.matches(".*[A-Z]{1,}.*") && password.matches(".*[a-z]{1,}.*") &&
-                password.length() == 8);
+                password.length() == 8 && !Input.isContainSpaces(password));
     }
 
     public static boolean isValidPhoneNumber(String mobileNumber) {

@@ -97,6 +97,7 @@ public class SearchingController {
                 results[i] = makeResultFormat(i + 1, searchResults.get(i));
             view.showResult(titles, results);
         }
+        Tools.Menu.showMessage("" , 1);
 
     }
 
@@ -111,12 +112,12 @@ public class SearchingController {
     public void sortBy(int choice) {
         if (choice == 1) { /// Sort by Date
             this.searchResults = filterFunction();
-        } else if (choice == 2) {
-            // sort based on price
-            sortByPrice(this.searchResults);
-        } else if (choice == 3) {
-            // sort based on cnt of available seat
+        } else if (choice == 2) { /// Sort based on price
+            sortByPrice(searchResults);
+        } else if (choice == 3) { /// Sort based on cnt of available seat
             sortByAvailableSeats(searchResults);
+        } else if(choice == 4) {
+            sortByPremiumPoints(searchResults);
         }
     }
 
@@ -152,5 +153,18 @@ public class SearchingController {
             flights.sort(Comparator.comparing(Flight::getCntOfAvailableBusinessClassSeats).reversed()); ///debug
         else
             flights.sort(Comparator.comparing(Flight::getCntOfAvailableEconomyClassSeats).reversed());
+    }
+    public void sortByPremiumPoints(ArrayList<Flight> flights) {///  check logic again
+        int choice = view.getChoiceOfSortByPremiumPoints();
+        while (choice < 1 || choice > 3) {
+            System.out.println("Invalid choice");
+            choice = view.getChoiceOfSortByPremiumPoints();
+        }
+        if (choice == 1)
+            flights.sort(Comparator.comparing(Flight::getFirstClassPremiumPoints).reversed()); ///debug
+        else if (choice == 2)
+            flights.sort(Comparator.comparing(Flight::getBusinessClassPremiumPoints).reversed()); ///debug
+        else
+            flights.sort(Comparator.comparing(Flight::getEconomyClassPremiumPoints).reversed());
     }
 }

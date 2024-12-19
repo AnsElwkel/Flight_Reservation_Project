@@ -8,15 +8,8 @@ import com.egyptFlightReservation.Model.Database;
 import com.egyptFlightReservation.Model.FileHandling.FileLoader;
 
 public class FirstView {
-    /// Implement some design and nice view :)
-
-
     public FirstView() {
         FileLoader.loadData();
-//        FileLoader.loadAirports();
-//        FileLoader.loadAdminTable();
-//        FileLoader.loadAdminOperationsTable();
-
     }
 
 
@@ -33,7 +26,9 @@ public class FirstView {
             signUpController signUp = new signUpController();
             signUp.SignUpProcess();
         } else {
+
             Database.getDatabase().saveData();
+            Menu.showMessage("Exit..." , 1);
             System.exit(0);
         }
     }

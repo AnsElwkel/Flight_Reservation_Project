@@ -94,9 +94,6 @@ public class Airline {
                            ArrayList<String[]> passengersInfo,
                            ArrayList<String[]> ticketsInfo,
                            ArrayList<String[]> seatsInfo) {
-        for (int i = 0; i < seatsInfo.size(); i++) {
-            System.out.println("seatsInfo.get(i): " + Arrays.toString(seatsInfo.get(i)));
-        }
 
         for (int i = 0; i < flightsInfo.size(); i++) {
             String[] content = flightsInfo.get(i)[0].split(" ");
@@ -105,7 +102,7 @@ public class Airline {
                     (seatsInfo.size() - 1 < i ? null : seatsInfo.get(i))));
 
             Database.getDatabase().addInSearchingTable(LocalDate.parse(content[4]), Flights.get(content[1]));
-            System.out.println("Flight added to database");
+//            System.out.println("Flight added to database");
         }
 
     }

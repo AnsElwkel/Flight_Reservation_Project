@@ -47,8 +47,8 @@ public class SearchingView {
     }
 
     public int sortBy() {
-        Menu.show(new String[]{"Date", "Price", "Seat Available"});
-        return MenuSelector.select("Enter The Choice", 1, 3);
+        Menu.show(new String[]{"Date", "Price", "Seat Available" , "Premium Points"});
+        return MenuSelector.select("Enter The Choice", 1, 4);
     }
 
     public int getChoiceOfSortByPriceOfAnyClass() {
@@ -58,6 +58,10 @@ public class SearchingView {
 
     public int getChoiceOfSortByAvailableOfAnyClass() {
         Menu.show(new String[]{"AvailableFirstClass", "AvailableBusinessClass", "AvailableEconomyClass"});
+        return MenuSelector.select("Enter The Choice", 1, 3);
+    }
+    public int getChoiceOfSortByPremiumPoints() {
+        Menu.show(new String[]{"FirstClassPremiumPoints", "BusinessClassPremiumPoints", "EconomyClassPremiumPoints"});
         return MenuSelector.select("Enter The Choice", 1, 3);
     }
 
