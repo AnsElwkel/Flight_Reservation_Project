@@ -4,7 +4,7 @@ import com.egyptFlightReservation.Model.Database;
 
 public class InputValidator {
     public static boolean isValidEmail(String email) {
-        return email.endsWith("@gmail.com");
+        return email.endsWith("@gmail.com") && email.length() > 10 && !Tools.Input.isContainSpaces(email);
     }
 
     public static boolean isValidPassword(String password) {
