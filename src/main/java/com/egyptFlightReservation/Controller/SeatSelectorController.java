@@ -111,12 +111,7 @@ public class SeatSelectorController {
                 Database.getDatabase().addPassenger(flightNumber, departureDate);
             }
 
-        } else {
-            // return to home page
-
-
         }
-
 
         return true;
     }
