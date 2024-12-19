@@ -60,7 +60,7 @@ public class AdminController {
         else Menu.showMessage("Airport successfully removed" , 1);
     }
     public void showClients() {
-        String[] titles = {"Client Username", "Client Name", "Client Email" , "Client Password" , "Gender" , "Phone" , "BirthDate" , "Passport Number"};
+        String[] titles = {"Client Username", "Client Name", "Client Email" , "Client Password" , "Gender" , "Phone" , "BirthDate" , "Passport Number" , "Premium Points"};
         String[][] data = Database.getDatabase().getAllClientsInfo();
         Tools.showTableFormat.show("Clients Information" , titles , data);
 
