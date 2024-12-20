@@ -199,7 +199,6 @@ public class AdminController {
 
         while (!admin.expandCountOfSeats(flightNumber, Integer.parseInt(newCountOfRows), Integer.parseInt(newFirstClassCols),
                 Integer.parseInt(newBusinessClassCols), Integer.parseInt(newEconomyClassCols))) {
-            System.out.println("");
             flightNumber = view.getFlightNumber();
             newCountOfRows = view.newCountOfRows();
             newFirstClassCols = view.getNewFirstClassCols();

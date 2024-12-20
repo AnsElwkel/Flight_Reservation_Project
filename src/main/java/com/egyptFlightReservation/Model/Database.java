@@ -50,7 +50,6 @@ public class Database {
 
 
 
-
     public static int getUserPremiumPoints(){
         return userTable.get(curUser).getFirst().getPremiumPoints();
     }
@@ -65,7 +64,7 @@ public class Database {
 
     public static void addTicket(LocalDate DepDate, String flightNumber, Ticket ticket) {
         for (Flight flight : searchingTable.get(DepDate)) {
-            if (flight.getFlight_number().equals(flightNumber)) {
+            if (flight.getFlightNumber().equals(flightNumber)) {
                 flight.addTicket(ticket);
                 break;
             }
@@ -86,10 +85,10 @@ public class Database {
 
     public static Airline getAirline() {
         for (String cur : adminOperations.keySet()) {
-            System.out.println(cur + " in get airline function");
+//            System.out.println(cur + " in get airline function");
         }
         if (!adminOperations.containsKey(curUser)) {
-            System.out.println(curUser + " not found in admin operations container");
+//            System.out.println(curUser + " not found in admin operations container");
         }
         return adminOperations.get(curUser);
     }
@@ -144,7 +143,6 @@ public class Database {
     }
 
     public static boolean expandCountOfSeats(String flightNumber, int newCountOfRows, int countOfFirstClass, int countOfBusinessClass, int countOfEconomyClass) {
-        System.out.println("curUser " + curUser);
         return adminOperations.get(curUser).expandCountOfSeats(flightNumber, newCountOfRows, countOfFirstClass, countOfBusinessClass, countOfEconomyClass);
     }
 
@@ -180,7 +178,7 @@ public class Database {
 
     public static void addPassenger(String flightNumber, LocalDate departureDate) {
         for (Flight flight : searchingTable.get(departureDate))
-            if (flight.getFlight_number().equals(flightNumber)) {
+            if (flight.getFlightNumber().equals(flightNumber)) {
                 flight.addPassenger(new Passenger(userTable.get(curUser).getFirst().getName(), UUID.randomUUID().toString(),
                         userTable.get(curUser).getFirst().getPhoneNumber(), userTable.get(curUser).getFirst().getEmail()));
             }
@@ -416,8 +414,9 @@ public class Database {
                         content = adminOperations.get(adminName).getSeatsInfo(flightNum);
                         FileSaver.save(FileAdministrator.ROOT_PATH + "Airline/" + adminOperations.get(adminName).get_name() + "/Flight/" + flightNum + "/Seats", content);
                     }
+                    flightNums.add("flightNumber");
+                    FolderCleaner.cleanFolder(FileAdministrator.ROOT_PATH + "Airline/" + adminOperations.get(adminName).get_name() + "/Flight", flightNums);
                 }
-
             }
         }
     }

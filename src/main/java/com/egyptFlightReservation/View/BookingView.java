@@ -30,11 +30,13 @@ public class BookingView {
         System.out.println("==========================");
         System.out.println("==== Booking Failed ! ====");
         System.out.println("==========================");
+        Tools.Menu.showMessage("" , 1);
     }
 
     public void showMassageOfSuccessfulBooking() {
         System.out.println("==============================");
         System.out.println("==== Booking Successful ! ====");
         System.out.println("==============================");
+        Tools.Menu.showMessage("" , 1);
     }
 }

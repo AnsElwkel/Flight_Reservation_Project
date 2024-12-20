@@ -41,10 +41,10 @@ public class Flight {
         this.firstClassFeatures = info.get(13);
         this.businessClassFeatures = info.get(14);
         this.economyClassFeatures = info.get(15);
-        this.airlineName = info.get(16);
-        this.firstClassPremiumPoints = Integer.parseInt(info.get(17));
-        this.businessClassPremiumPoints = Integer.parseInt(info.get(18));
-        this.economyClassPremiumPoints = Integer.parseInt(info.get(19));
+        this.firstClassPremiumPoints = Integer.parseInt(info.get(16));
+        this.businessClassPremiumPoints = Integer.parseInt(info.get(17));
+        this.economyClassPremiumPoints = Integer.parseInt(info.get(18));
+        this.airlineName = info.get(19);
 
 
         this.firstClassPrice = Integer.parseInt(info.get(8));
@@ -101,14 +101,15 @@ public class Flight {
         for (int i = 0; i < cntTotalSeatCols; i++) {
             if (i < cntFirstClassCols) {
                 Seats.get(rowNumber).add(new FirstClass(String.valueOf((char) ('A' + rowNumber)) + String.valueOf(i + 1), true, firstClassPrice, firstClassFeatures));
+                ++cntOfAvailableFirstClassSeats;
             } else if (i < cntFirstClassCols + cntBusinessClassCols) {
                 Seats.get(rowNumber).add(new BusinessClass(String.valueOf((char) ('A' + rowNumber)) + String.valueOf(i + 1), true, businessClassPrice, businessClassFeatures));
+                ++cntOfAvailableBusinessClassSeats;
             } else {
                 Seats.get(rowNumber).add(new EconomyClass(String.valueOf((char) ('A' + rowNumber)) + String.valueOf(i + 1), true, economyClassPrice, economyClassFeatures));
+                ++cntOfAvailableEconomyClassSeats;
             }
-            System.out.print(Seats.get(rowNumber).get(i).getSeatNumber() + " ");
         }
-        System.out.println();
     }
 
     public boolean expandCountOfSeats(int newCountOfRows, int newCountOfFirstClass, int newCountOfBusinessClass, int newCountOfEconomyClass) {
@@ -120,45 +121,41 @@ public class Flight {
             return false;
         }
         //add new rows
-        System.out.println(cntTotalSeatRows + " " + newCountOfRows);
         while (this.cntTotalSeatRows < newCountOfRows) {
             Seats.add(new ArrayList<Seat>());
             fillRowOfSeats(cntTotalSeatRows);
             ++this.cntTotalSeatRows;
         }
-        System.out.println(cntTotalSeatRows + " " + newCountOfRows);
 
-        System.out.println("cntFirstClassColsBefore " + cntFirstClassCols + " " + newCountOfFirstClass);
         while (this.cntFirstClassCols < newCountOfFirstClass) {
-            System.out.println("Size of seats: " + Seats.size());
             for (ArrayList<Seat> row : Seats) {
-                System.out.println(row.size());
                 row.add(cntFirstClassCols, new FirstClass("", true, firstClassPrice, firstClassFeatures));
+                ++cntOfAvailableFirstClassSeats;
             }
             ++this.cntFirstClassCols;
             ++this.cntTotalSeatCols;
         }
-        System.out.println("cntFirstClassColsAfter " + cntFirstClassCols + " " + newCountOfFirstClass);
 
-        System.out.println("cntBusinessClassColsBefore " + cntBusinessClassCols + " " + newCountOfBusinessClass);
         while (this.cntBusinessClassCols < newCountOfBusinessClass) {
-            for (ArrayList<Seat> row : Seats)
+            for (ArrayList<Seat> row : Seats){
                 row.add(cntFirstClassCols + cntBusinessClassCols, new BusinessClass("", true, businessClassPrice, businessClassFeatures));
+                ++cntOfAvailableBusinessClassSeats;
+            }
             ++this.cntBusinessClassCols;
             ++this.cntTotalSeatCols;
         }
-        System.out.println("cntBusinessClassColsAfter " + cntBusinessClassCols + " " + newCountOfBusinessClass);
 
-        System.out.println("cntEconomyClassColsBefore " + cntEconomyClassCols + " " + newCountOfEconomyClass);
         while (this.cntEconomyClassCols < newCountOfEconomyClass) {
-            for (ArrayList<Seat> row : Seats)
+            for (ArrayList<Seat> row : Seats){
                 row.add(cntFirstClassCols + cntBusinessClassCols + cntEconomyClassCols, new EconomyClass("", true, economyClassPrice, economyClassFeatures));
+                ++cntOfAvailableEconomyClassSeats;
+            }
             ++this.cntEconomyClassCols;
             ++this.cntTotalSeatCols;
         }
-        System.out.println("cntEconomyClassColsAfter " + cntEconomyClassCols + " " + newCountOfEconomyClass);
 
         setSeatNumbers();
+        totalSeats = cntTotalSeatRows * (cntEconomyClassCols + cntBusinessClassCols + cntFirstClassCols);
         return true;
     }
 
@@ -255,11 +252,11 @@ public class Flight {
         reservedTickets.add(ticket);
     }
 
-    public void setDeparture_airport(String departure_airport) {
+    public void setDepartureAirport(String departure_airport) {
         this.departure_airport = departure_airport;
     }
 
-    public void setArrival_airport(String arrival_airport) {
+    public void setArrivalAirport(String arrival_airport) {
         this.arrival_airport = arrival_airport;
     }
 
@@ -275,15 +272,15 @@ public class Flight {
         return col * getCntTotalSeatRows();
     }
 
-    public String getFlight_number() {
+    public String getFlightNumber() {
         return flight_number;
     }
 
-    public String getDeparture_airport() {
+    public String getDepartureAirport() {
         return departure_airport;
     }
 
-    public String getArrival_airport() {
+    public String getArrivalAirport() {
         return arrival_airport;
     }
 
@@ -375,5 +372,17 @@ public class Flight {
     }
     public int getEconomyClassPremiumPoints() {
         return economyClassPremiumPoints;
+    }
+
+    public void setCntOfAvailableFirstClassSeats(int cntOfAvailableFirstClassSeats) {
+        this.cntOfAvailableFirstClassSeats = cntOfAvailableFirstClassSeats;
+    }
+
+    public void setCntOfAvailableBusinessClassSeats(int cntOfAvailableBusinessClassSeats) {
+        this.cntOfAvailableBusinessClassSeats = cntOfAvailableBusinessClassSeats;
+    }
+
+    public void setCntOfAvailableEconomyClassSeats(int cntOfAvailableEconomyClassSeats) {
+        this.cntOfAvailableEconomyClassSeats = cntOfAvailableEconomyClassSeats;
     }
 }

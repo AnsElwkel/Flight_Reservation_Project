@@ -1,5 +1,6 @@
 package com.egyptFlightReservation.Controller;
 
+import Tools.myPair;
 import com.egyptFlightReservation.Model.*;
 import com.egyptFlightReservation.View.SearchingView;
 import com.egyptFlightReservation.Model.Database;
@@ -61,21 +62,12 @@ public class SearchingController {
             selectionAfterShowResult(); /// recursion call
 
         } else if (choice == 2) {
-            choice = view.getChoiceOfFlight(1, searchResults.size()); // from 1 to size of array
+            choice = view.getChoiceOfFlight(Math.min(1 , searchResults.size()), searchResults.size()); // from 1 to size of array
             --choice;
-
-            SeatSelectorController seatController = new SeatSelectorController(searchResults.get(choice).getAirlineName(),
-                    searchResults.get(choice).getFlight_number(), searchResults.get(choice).getSeats(), searchResults.get(choice).getCntTotalSeatRows(),
-                    searchResults.get(choice).getCntFirstClassCols(), searchResults.get(choice).getCntBusinessClassCols(),
-                    searchResults.get(choice).getCntEconomyClassCols(),
-                    searchResults.get(choice).getFirstClassPrice(), searchResults.get(choice).getBusinessClassPrice(), searchResults.get(choice).getEconomyClassPrice(),
-                    searchResults.get(choice).getCntOfAvailableFirstClassSeats(), searchResults.get(choice).getCntOfAvailableBusinessClassSeats(),
-                    searchResults.get(choice).getCntOfAvailableEconomyClassSeats(),
-                    searchResults.get(choice).getDeparture_airport(), searchResults.get(choice).getArrival_airport(),
-                    searchResults.get(choice).getDepartureDate(), searchResults.get(choice).getArrivalDate() ,
-                    searchResults.get(choice).getFirstClassPremiumPoints() , searchResults.get(choice).getBusinessClassPremiumPoints() ,
-                    searchResults.get(choice).getEconomyClassPremiumPoints());
-            if (!seatController.selectionProcess()) return false;
+            SeatSelectorController seatController = new SeatSelectorController(searchResults.get(choice));
+            myPair<Boolean , Flight> selectionProcessRet = seatController.selectionProcess();
+            if (!selectionProcessRet.getFirst()) return false;
+            searchResults.set(choice , selectionProcessRet.getSecond());
             return true;
         } else {
             return false;

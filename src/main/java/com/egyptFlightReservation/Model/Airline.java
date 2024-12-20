@@ -43,7 +43,7 @@ public class Airline {
     }
 
     public void addFlight(Flight flight) {
-        Flights.put(flight.getFlight_number(), flight);
+        Flights.put(flight.getFlightNumber(), flight);
     }
 
     public void setSchedule(String ID, LocalDate departureDate, LocalDate arrivalDate) {

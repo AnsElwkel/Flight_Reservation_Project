@@ -47,14 +47,14 @@ public class BookingController {
                     departureDate.toString(), arrivalDate.toString(), countOfSeats};
             ArrayList<String> bookingInfo = new ArrayList<String>();
             bookingInfo.addAll(java.util.Arrays.asList(info));
-//            for (String s : info) System.out.print(s + " ");
-            System.out.println();
+
             myPair<Boolean ,Double> paymentProcessRet = paymentProcessController.paymentProcess(totalPrice);
             bookingInfo.add(String.valueOf(paymentProcessRet.getSecond()));
             if (paymentProcessRet.getFirst()) {
                 //make new tickets
                 //flag the seats and add the passengers
                 //save the booking
+
                 bookingInfo.add("true");
                 Database.getDatabase().addBooking(new Booking(bookingInfo));
                 view.showMassageOfSuccessfulBooking();
@@ -62,6 +62,7 @@ public class BookingController {
             } else {
                 //save the booking status as failed booking
                 //return to home page
+
                 bookingInfo.add("false");
                 Database.getDatabase().addBooking(new Booking(bookingInfo));
                 view.showMassageOfFailedBooking();
@@ -70,7 +71,6 @@ public class BookingController {
 
         }
         return false;
-
         /// return to home page
 
     }

@@ -23,7 +23,7 @@ public class ClientProfileController {
             editUserInfo();
         else if (choice == 2) {
             displayBookingHistory();
-            Tools.Menu.showMessage("" , 3);
+            Tools.Menu.showMessage("" , 2);
             mainMenu();
         } else if (choice == 3)
             BackToHomePage();
