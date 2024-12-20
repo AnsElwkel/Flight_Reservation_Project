@@ -8,6 +8,7 @@ import com.egyptFlightReservation.Model.Database;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.TreeMap;
 
 public class SearchingController {
 
@@ -86,7 +87,7 @@ public class SearchingController {
         if (searchResults.isEmpty()) {
             System.out.println("No Suitable Flights found");
         } else {
-            String[] titles = {"Number", "AirlineName", "Dep. Date", "Arr. Date",
+            String[] titles = {"Number", "AirlineName" , "Rating Average" , "Rating Counts", "Dep. Date", "Arr. Date",
                     "First Class Cnt", "First Class Price" , "First Class Premium Points", "Business Class Cnt", "Business Class Price", "Business Class Premium Points",
                     "Economy Class Cnt", "Economy Class Price" , "Economy Class Premium Points"};
             String[][] results = new String[(int) searchResults.size()][];
@@ -100,10 +101,12 @@ public class SearchingController {
     }
 
     public String[] makeResultFormat(int number, Flight flight) { ///  change this to table format
-        String[] ret = {String.valueOf(number), flight.getAirlineName(), flight.getDepartureDate().toString(), flight.getArrivalDate().toString(),
+        String[] ret = {String.valueOf(number), flight.getAirlineName(),String.valueOf(Database.getDatabase().getRatingAverageOfCertainAirline(flight.getAirlineName())) ,
+                String.valueOf(Database.getDatabase().getRatingCountOfCertainAirline(flight.getAirlineName())), flight.getDepartureDate().toString(), flight.getArrivalDate().toString(),
                 String.valueOf(flight.getCntOfAvailableFirstClassSeats()), String.valueOf(flight.getFirstClassPrice()), String.valueOf(flight.getFirstClassPremiumPoints()),
                 String.valueOf(flight.getCntOfAvailableBusinessClassSeats()), String.valueOf(flight.getBusinessClassPrice()), String.valueOf(flight.getBusinessClassPremiumPoints()),
-                String.valueOf(flight.getCntOfAvailableEconomyClassSeats()), String.valueOf(flight.getEconomyClassPrice()) , String.valueOf(flight.getEconomyClassPremiumPoints())};
+                String.valueOf(flight.getCntOfAvailableEconomyClassSeats()), String.valueOf(flight.getEconomyClassPrice()) , String.valueOf(flight.getEconomyClassPremiumPoints()),
+        };
         return ret;
     }
 
@@ -116,11 +119,30 @@ public class SearchingController {
             sortByAvailableSeats(searchResults);
         } else if(choice == 4) {
             sortByPremiumPoints(searchResults);
+        }else if(choice == 5) {
+            searchResults = sortByRatingAverage(searchResults);
         }
     }
 
     public ArrayList<Flight> filterFunction() {
         return Database.getDatabase().searchFlights(fromDate, toDate);
+    }
+
+    public ArrayList<Flight> sortByRatingAverage(ArrayList<Flight> flights) {
+        ArrayList<Flight> sortedFlights = new ArrayList<>();
+        TreeMap<Double , ArrayList<Flight>> map = new TreeMap<>();
+        for (Flight flight : flights) {
+            double avg = Database.getDatabase().getRatingAverageOfCertainAirline(flight.getAirlineName());
+            if(!map.containsKey(avg))
+                map.put(avg , new ArrayList<>());
+            map.get(avg).add(flight);
+        }
+
+        for (ArrayList<Flight> flight : map.values()) {
+            sortedFlights.addAll(flight);
+        }
+        sortedFlights = new ArrayList<Flight>(sortedFlights.reversed());
+        return sortedFlights;
     }
 
     public void sortByPrice(ArrayList<Flight> flights) {

@@ -149,7 +149,7 @@ public class AdminController {
         int choice;
         do {
             choice = view.adminMenu();
-            while (!((1 <= choice && choice <= 6))) {
+            while (!((1 <= choice && choice <= 7))) {
                 System.out.println("Invalid Number");
                 choice = view.adminMenu();
             }
@@ -163,12 +163,22 @@ public class AdminController {
                 expandCountOfSeats();
             else if (choice == 5)
                 showFlights();
+            else if(choice == 6)
+                showRatings();
 
-        } while (choice != 6);
+        } while (choice != 7);
         //log out
         FirstView.Run();
     }
-
+    public void showRatings(){
+        String[] titles = {"Client Username" , "Rate" , "Review"};
+        ArrayList<String> info = Database.getDatabase().getAllRatingsInfo();
+        String[][] data = new String[info.size()][3];
+        for(int i = 0 ;i < info.size();i++){
+            data[i] = info.get(i).split("~");
+        }
+        view.showRatings(titles , data);
+    }
     public void showFlights(){
         ArrayList<Flight> airlineFlights = Database.getDatabase().getAirlineFlights();
         if(airlineFlights == null||airlineFlights.isEmpty())

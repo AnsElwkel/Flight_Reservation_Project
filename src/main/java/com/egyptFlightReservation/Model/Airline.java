@@ -6,18 +6,47 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.TreeMap;
+import java.util.HashSet;
+import java.util.HashMap;
 
 public class Airline {
     private String name;
     private String ID;
     private String location;
     private TreeMap<String, Flight> Flights;
-
-    public Airline(String name, String ID, String location) {
+    private HashMap<String , String> clientsWhoRated;
+    private int ratingCount , sumOfRatings;
+    private double ratingAverage;
+    public Airline(String name, String ID, String location , double ratingAverage , int sumOfRatings , int ratingCount) {
         this.name = name;
         this.ID = ID;
         this.location = location;
         this.Flights = new TreeMap<>();
+        this.clientsWhoRated = new HashMap<>();
+        this.ratingCount = 0;
+        this.sumOfRatings = 0;
+        this.ratingAverage = 0.0;
+    }
+
+    public ArrayList<String> getAllRatings(){
+        ArrayList<String> ratings = new ArrayList<>();
+        for(String key : this.clientsWhoRated.keySet()){
+            ratings.add(key+"~"+clientsWhoRated.get(key));
+        }
+        return ratings;
+    }
+    public void setRate(String username , int rate , String review){
+        clientsWhoRated.put(username , String.valueOf(rate) + "~" + review);
+        ratingCount++;
+        sumOfRatings += rate;
+        ratingAverage = ((double)sumOfRatings)/ratingCount;
+    }
+
+    public boolean isRatedBefore(String username){
+        if(this.clientsWhoRated.containsKey(username)){
+            return true;
+        }
+        return false;
     }
 
     public String get_name() {
@@ -110,5 +139,20 @@ public class Airline {
     public ArrayList<Flight> getFlights(){
         return new ArrayList<Flight>(Flights.values());
     }
+    @Override
+    public String toString() {
+        return name + " " + ID + " " + ratingCount + " " + ratingAverage;
+    }
 
+    public double getRatingAverage() {
+        return ratingAverage;
+    }
+
+    public int getSumOfRatings() {
+        return sumOfRatings;
+    }
+
+    public int getRatingCount() {
+        return ratingCount;
+    }
 }

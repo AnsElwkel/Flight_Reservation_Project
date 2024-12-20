@@ -29,6 +29,10 @@ public class AdminView {
         Tools.showTableFormat.show("Airline Flights" , titles , data);
         Tools.Menu.showMessage("" , 1);
     }
+    public void showRatings(String [] titles , String[][] ratingsInfo){
+        Tools.showTableFormat.show("Rating Information", titles , ratingsInfo);
+        Menu.showMessage("" , 1);
+    }
 
     public String getNewAdminUserName() {
         Scanner cin = new Scanner(System.in);
@@ -117,8 +121,9 @@ public class AdminView {
                                   {"3" , "Update Schedule"},
                                   {"4" , "Update count of Seats"},
                                   {"5" , "Show Flights"} ,
-                                  {"6" , "Log out"} });
-        System.out.print("Enter Number in range (1 - 5): ");
+                                  {"6" , "Show Ratings"},
+                                  {"7" , "Log out"} });
+        System.out.print("Enter Number in range (1 - 7): ");
         return cin.nextInt();
     }
 

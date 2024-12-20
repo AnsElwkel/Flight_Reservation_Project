@@ -34,7 +34,7 @@ public class InputValidator {
     }
 
     public static boolean isValidUsername(String username) {
-        return (!Input.isContainSpaces(username.trim()) && username.length() >= 3
+        return (!Input.isContainSpaces(username.trim()) && username.trim().length() >= 3
                 && Database.getDatabase().isUniqueUserName(username.trim()));
     }
 

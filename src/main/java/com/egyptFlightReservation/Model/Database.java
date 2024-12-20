@@ -52,8 +52,42 @@ public class Database {
         return adminOperations.get(curUser).getFlights();
     }
 
+    public static void setRate(String ID ,int rate , String review){
+        for(String cur : adminOperations.keySet()){
+            if(adminOperations.get(cur).get_ID().equals(ID)){
+                adminOperations.get(cur).setRate(curUser , rate , review);
+                break;
+            }
+        }
+    }
+    public static double getRatingAverageOfCertainAirline(String airlineName){
+        for(String key : adminOperations.keySet()){
+            if(adminOperations.get(key).get_name().equals(airlineName)){
+                return adminOperations.get(key).getRatingAverage();
+            }
+        }
+        return 0;
+    }
+    public static ArrayList<String> getAllRatingsInfo(){
+        return adminOperations.get(curUser).getAllRatings();
+    }
+    public static int getRatingCountOfCertainAirline(String airlineName){
+        for(String key : adminOperations.keySet()){
+            if(adminOperations.get(key).get_name().equals(airlineName)){
+                return adminOperations.get(key).getRatingCount();
+            }
+        }
+        return 0;
+    }
 
-
+    public static boolean isRatedBefore(String airlineID){
+        for(String cur : adminOperations.keySet()){
+            if(adminOperations.get(cur).get_ID().equals(airlineID)){
+                return adminOperations.get(cur).isRatedBefore(curUser);
+            }
+        }
+        return false;
+    }
     public static int getUserPremiumPoints(){
         return userTable.get(curUser).getFirst().getPremiumPoints();
     }
@@ -95,6 +129,15 @@ public class Database {
 //            System.out.println(curUser + " not found in admin operations container");
         }
         return adminOperations.get(curUser);
+    }
+    public static String[][] getAirlines() {
+        String[][] airlinesInfo = new String[airports.size()][];
+        int i = 0;
+        for(String cur : adminOperations.keySet()) {
+            String tmp = String.valueOf(i+1) + " " + adminOperations.get(cur).toString();
+            airlinesInfo[i++] =tmp.split(" ");
+        }
+        return airlinesInfo;
     }
 
     public static boolean isUniqueUserName(String userName) {
@@ -223,7 +266,7 @@ public class Database {
     /// Main Admin Functions
     public static void createNewAdmin(String adminName, Admin admin, String AirlineName, String AirlineCode, String airlineLocation) {
         adminTable.put(adminName, admin);
-        adminOperations.put(adminName, new Airline(AirlineName, AirlineCode, airlineLocation));
+        adminOperations.put(adminName, new Airline(AirlineName, AirlineCode, airlineLocation , 0 , 0 , 0));
     }
 
     public static void addNewAirport(Airport airport) {
@@ -349,7 +392,13 @@ public class Database {
 
         String[] tmp = airlineInfo[0].split(" ");
         if (!adminOperations.containsKey(tmp[0])) {
-            adminOperations.put(tmp[0], new Airline(tmp[1], tmp[2], tmp[3]));
+            adminOperations.put(tmp[0], new Airline(tmp[1], tmp[2], tmp[3] , Double.parseDouble(tmp[4]) ,Integer.parseInt(tmp[5]) , Integer.parseInt(tmp[6])));
+        }
+        if(airlineInfo.length > 1) {
+            for(int i = 1; i < airlineInfo.length; i++){
+                String[] tmp2 = airlineInfo[i].split("~");
+                adminOperations.get(tmp[0]).setRate(tmp2[0] , Integer.parseInt(tmp2[1]) , tmp2[2]);
+            }
         }
 
         if (flightsInfo != null && flightsInfo.size() > 0) {
@@ -360,7 +409,6 @@ public class Database {
     public static void loadAirports(String[] content) {
         for (String cur : content) {
             String[] tmp = cur.split(" ");
-//            System.out.println(tmp[0] + " " + tmp[1] + " " + tmp[2]);
             airports.add(new Airport(tmp[0], tmp[1], tmp[2]));
         }
     }
@@ -389,8 +437,12 @@ public class Database {
 
             for (String adminName : adminOperations.keySet()) { // load info file of each airline
                 String tmp = adminName + " " + adminOperations.get(adminName).get_name() + " " +
-                        adminOperations.get(adminName).get_ID() + " " + adminOperations.get(adminName).get_location();
+                        adminOperations.get(adminName).get_ID() + " " + adminOperations.get(adminName).get_location() + " " +
+                        String.valueOf(adminOperations.get(adminName).getRatingAverage()) + " " +
+                        adminOperations.get(adminName).getSumOfRatings() +
+                        " " + adminOperations.get(adminName).getRatingCount();
                 content.add(tmp);
+                content.addAll(adminOperations.get(adminName).getAllRatings());
                 FileSaver.save(FileAdministrator.ROOT_PATH + "Airline/" + adminOperations.get(adminName).get_name() + "/info", content);
                 content.clear();
             }

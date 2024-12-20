@@ -26,7 +26,6 @@ public class FirstView {
             signUpController signUp = new signUpController();
             signUp.SignUpProcess();
         } else {
-
             Database.getDatabase().saveData();
             Menu.showMessage("Exit..." , 1);
             System.exit(0);

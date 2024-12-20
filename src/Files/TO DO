@@ -1,2 +1,5 @@
-- Main admin can also -> showUsers , showAdmins
-- Points variable for each client to discount on bookings
+clientController -> show all flights function into
+adminController -> show airline flights in airline
+clientProfileController -> show payment methods
+Add rating system
+
