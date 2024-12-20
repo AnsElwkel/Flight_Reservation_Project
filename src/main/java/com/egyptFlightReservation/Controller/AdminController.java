@@ -161,10 +161,30 @@ public class AdminController {
                 updateSchedule();
             else if (choice == 4)
                 expandCountOfSeats();
+            else if (choice == 5)
+                showFlights();
 
-        } while (choice != 5);
+        } while (choice != 6);
         //log out
         FirstView.Run();
+    }
+
+    public void showFlights(){
+        ArrayList<Flight> airlineFlights = Database.getDatabase().getAirlineFlights();
+        if(airlineFlights == null||airlineFlights.isEmpty())
+            System.out.println("No flights found");
+        else{
+            String[] titles = {"Flight Number", "Departure Date", "Arrival Date" , "Departure Airport", "Arrival Airport",
+                                "Available First Class" , "Available Business Class", "Available Economy Class"};
+            String[][] data = new String[airlineFlights.size()][8];
+            for(int i = 0; i < airlineFlights.size(); i++){
+                data[i] = new String[]{airlineFlights.get(i).getFlightNumber(), String.valueOf(airlineFlights.get(i).getDepartureDate()),
+                String.valueOf(airlineFlights.get(i).getArrivalDate()), airlineFlights.get(i).getDepartureAirport(),
+                        airlineFlights.get(i).getArrivalAirport() , String.valueOf(airlineFlights.get(i).getCntOfAvailableFirstClassSeats()) ,
+                        String.valueOf(airlineFlights.get(i).getCntOfAvailableBusinessClassSeats()),String.valueOf(airlineFlights.get(i).getCntOfAvailableEconomyClassSeats())};
+            }
+            view.displayAirlineFlights(titles , data);
+        }
     }
 
     public void addFlight() {

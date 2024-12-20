@@ -3,9 +3,11 @@ package com.egyptFlightReservation.Controller;
 import Tools.Input;
 import Tools.InputValidator;
 import com.egyptFlightReservation.Model.Database;
+import com.egyptFlightReservation.Model.Payment.PaymentMethod;
 import com.egyptFlightReservation.Model.User.Client;
 import com.egyptFlightReservation.View.ClientProfileView;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ClientProfileController {
@@ -25,8 +27,22 @@ public class ClientProfileController {
             displayBookingHistory();
             Tools.Menu.showMessage("" , 2);
             mainMenu();
-        } else if (choice == 3)
+        } else if (choice == 3){
+            displayPaymentMethods();
+        }else if (choice == 4)
             BackToHomePage();
+    }
+
+    public void displayPaymentMethods(){
+        ArrayList<PaymentMethod> payments = Database.getDatabase().getClientPayment();
+        ArrayList<String> info = new ArrayList<>();
+        if(payments == null || payments.isEmpty())
+            info.add(new String("No payment methods available"));
+        else{
+            for(PaymentMethod paymentMethod : payments)
+                info.add(paymentMethod.PublicPaymentDetails());
+        }
+        view.showMyPayments(info);
     }
 
     public void editUserInfo() {
@@ -64,7 +80,7 @@ public class ClientProfileController {
     public void mainMenu() {
         view.displayUserProfile(client.getUsername() , client.getPremiumPoints() , client.getName(), client.getEmail(), client.getPhoneNumber());
         choice = view.menu();
-        while (!(1 <= choice && choice <= 3)) {
+        while (!(1 <= choice && choice <= 4)) {
             System.out.println("Invalid Choice,Please Enter Your Choice:");
             choice = view.menu();
         }

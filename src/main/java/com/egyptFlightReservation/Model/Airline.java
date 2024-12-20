@@ -34,8 +34,8 @@ public class Airline {
 
     public void removeFlight(String ID) {
         if (Flights.containsKey(ID)) {
+            Flights.remove(ID);
         }
-        Flights.remove(ID);
     }
 
     public boolean isEmptyFlights() {
@@ -105,6 +105,10 @@ public class Airline {
 //            System.out.println("Flight added to database");
         }
 
+    }
+
+    public ArrayList<Flight> getFlights(){
+        return new ArrayList<Flight>(Flights.values());
     }
 
 }

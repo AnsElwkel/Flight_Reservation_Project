@@ -13,8 +13,6 @@ import java.util.Scanner;
 public class AdminView {
     public int mainAdminMenu() {
         Scanner cin = new Scanner(System.in);
-//        System.out.println("----- Main Admin Menu -----");
-//        Menu.show(new String[]{"Add Admin", "Add Airport" , "Show Airports" , "Show Users" , "Show Airline Admins", "Log out"});
         Tools.showTableFormat.show("Main Admin Operations" ,
                 new String[]{"Choice" , "Operation"} ,
                 new String [][] { {"1" , "Add Admin"} ,
@@ -25,6 +23,11 @@ public class AdminView {
                         {"6" , "Log out"}});
         System.out.print("Enter your choice: ");
         return cin.nextInt();
+    }
+
+    public void displayAirlineFlights(String [] titles , String[][] data ){
+        Tools.showTableFormat.show("Airline Flights" , titles , data);
+        Tools.Menu.showMessage("" , 1);
     }
 
     public String getNewAdminUserName() {
@@ -113,7 +116,8 @@ public class AdminView {
                                   {"2" , "Remove Flight"},
                                   {"3" , "Update Schedule"},
                                   {"4" , "Update count of Seats"},
-                                  {"5" , "Log out"} ,});
+                                  {"5" , "Show Flights"} ,
+                                  {"6" , "Log out"} });
         System.out.print("Enter Number in range (1 - 5): ");
         return cin.nextInt();
     }

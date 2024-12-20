@@ -16,7 +16,7 @@ public class ClientController {
 
     public void process() {
         int choice = view.clientMenu(Database.getDatabase().getCurUser());
-        while (choice > 3 || choice < 1) {
+        while (choice > 4 || choice < 1) {
             System.out.println("Invalid input");
             choice = view.clientMenu(Database.getDatabase().getCurUser());
         }
@@ -28,10 +28,15 @@ public class ClientController {
         } else if (choice == 2) {
             //reserve call search engine
             SearchingController searchingController = new SearchingController();
-            if (!searchingController.searchProcess())
+            if (!searchingController.searchProcess(1))
                 process(); /// recursion checking !!!!!
             again = true;
         } else if (choice == 3) {
+            SearchingController searchingController = new SearchingController();
+            if (!searchingController.searchProcess(2))
+                process(); /// recursion checking !!!!!
+            again = true;
+        }else if(choice == 4){
             FirstView.Run();
         }
 

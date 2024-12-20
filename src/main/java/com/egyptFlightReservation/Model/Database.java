@@ -48,6 +48,10 @@ public class Database {
         userTable.get(curUser).getFirst().subtractPremiumPoints(points);
     }
 
+    public static ArrayList<Flight> getAirlineFlights(){
+        return adminOperations.get(curUser).getFlights();
+    }
+
 
 
     public static int getUserPremiumPoints(){
@@ -129,6 +133,7 @@ public class Database {
             adminOperations.get(curUser).removeFlight(flightNumber);
         else
             System.out.println("Admin Name not contain in admin operations container");
+
     }
 
 
@@ -392,8 +397,10 @@ public class Database {
 
             for (String adminName : adminOperations.keySet()) { //Make flight folder and create flightNumber and folder for each flight and create and add info,passenegers,Tickets and Seats files for each flight  in each airline
                 FileSaver.testDir(FileAdministrator.ROOT_PATH + "Airline/" + adminOperations.get(adminName).get_name() + "/Flight");
+                ArrayList<String> flightNums = new ArrayList<>();
                 if (!adminOperations.get(adminName).isEmptyFlights()) {
-                    ArrayList<String> flightNums = adminOperations.get(adminName).getflightNumbers();
+                    flightNums.addAll(adminOperations.get(adminName).getflightNumbers());
+
                     FileSaver.save(FileAdministrator.ROOT_PATH + "Airline/" + adminOperations.get(adminName).get_name() + "/Flight/flightNumber", flightNums);
 
                     for (String flightNum : flightNums) {
@@ -414,9 +421,11 @@ public class Database {
                         content = adminOperations.get(adminName).getSeatsInfo(flightNum);
                         FileSaver.save(FileAdministrator.ROOT_PATH + "Airline/" + adminOperations.get(adminName).get_name() + "/Flight/" + flightNum + "/Seats", content);
                     }
-                    flightNums.add("flightNumber");
-                    FolderCleaner.cleanFolder(FileAdministrator.ROOT_PATH + "Airline/" + adminOperations.get(adminName).get_name() + "/Flight", flightNums);
+                }else{
+                    FileSaver.save(FileAdministrator.ROOT_PATH + "Airline/" + adminOperations.get(adminName).get_name() + "/Flight/flightNumber" , flightNums);
                 }
+                flightNums.add("flightNumber");
+                FolderCleaner.cleanFolder(FileAdministrator.ROOT_PATH + "Airline/" + adminOperations.get(adminName).get_name() + "/Flight", flightNums);
             }
         }
     }

@@ -2,12 +2,20 @@ package com.egyptFlightReservation.View;
 
 import Tools.Menu;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ClientProfileView {
     public ClientProfileView() {
     }
-
+    public void showMyPayments(ArrayList<String> methods){
+        System.out.println();
+        System.out.println("+-------- My Payments --------+");
+        for(String method : methods){
+            System.out.println("+ " + method);
+        }
+        Tools.Menu.showMessage("" , 1);
+    }
     public void displayUserProfile(String username, int premiumPoints, String name, String email, String phoneNumber) {
         Tools.showTableFormat.show("Your Profile" ,
                 new String[]{"" , "Information"} ,
@@ -31,7 +39,7 @@ public class ClientProfileView {
     public int menu() {
         Scanner cin = new Scanner(System.in);
         System.out.println("Select an option:");
-        Menu.show(new String[]{"Edit User Info", "View Booking Details", "Back To Home Page"});
+        Menu.show(new String[]{"Edit User Info", "Show Booking Details" , "Show My Payments" , "Back To Home Page"});
         System.out.print("Enter your choice: ");
         return cin.nextInt();
     }

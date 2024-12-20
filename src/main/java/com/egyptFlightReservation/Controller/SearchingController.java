@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 public class SearchingController {
+
     LocalDate fromDate, toDate;
     private SearchingView view;
     private ArrayList<Flight> searchResults;
@@ -20,17 +21,22 @@ public class SearchingController {
         searchResults = new ArrayList<>();
     }
 
-    public boolean searchProcess() {
-        this.fromDate = view.getFromDate();
-        while (fromDate == null) {
-            System.out.println("invalid format");
+    public boolean searchProcess(int op) {
+        if(op == 1){
             this.fromDate = view.getFromDate();
-        }
+            while (fromDate == null) {
+                System.out.println("invalid format");
+                this.fromDate = view.getFromDate();
+            }
 
-        this.toDate = view.getToDate();
-        while (toDate == null) {
-            System.out.println("invalid format");
             this.toDate = view.getToDate();
+            while (toDate == null) {
+                System.out.println("invalid format");
+                this.toDate = view.getToDate();
+            }
+        }else if(op == 2){
+            this.fromDate = LocalDate.now();
+            this.toDate = LocalDate.now().plusYears(2);
         }
 
         /// Return filtered flights in toDate from fromDate range

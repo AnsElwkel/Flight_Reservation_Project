@@ -1,3 +1,36 @@
+Egypt Flight Reservation Documentation
+
+Main Admin functionalities:
+Add New Airline Admin
+Add New Airport
+Show and remove Airports
+Show and remove Admins and Airlines
+Show and remove Users
+
+Airline Admins functionalities:
+Add New Flights
+Remove Flights
+Update Schedule
+Update count of Seats
+Show Airline Flights
+
+Client functionalities:
+Show All flights
+Reserve flights
+View Profile
+Edit his information
+Add and show the payment methods
+Show Booking History
+
+
+Login Sample:
+Anas
+Anas_123
+
+Reserve flight Sample:
+2024-12-24
+2024-12-28
+
 Airline Admin Login Sample:
 Ahmed Ahmed_12
 

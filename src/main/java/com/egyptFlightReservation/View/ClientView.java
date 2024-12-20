@@ -11,7 +11,7 @@ public class ClientView {
 
     public int clientMenu(String username) {
         System.out.println("Welcome " + username + " | UserView");
-        Menu.show(new String[]{"View Profile", "Reserve Flight", "Log Out"});
+        Menu.show(new String[]{"View Profile", "Reserve Flight" , "Show Available Flights", "Log Out"});
         System.out.print("Enter number in range (1 - 3): ");
         return cin.nextInt();
     }
