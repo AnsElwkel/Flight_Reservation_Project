@@ -38,8 +38,4 @@ public class InputValidator {
                 && Database.getDatabase().isUniqueUserName(username.trim()));
     }
 
-    public static String replaceSpaces(String input) {
-        return input.replaceAll(" ", "_");
-    }
-
 }

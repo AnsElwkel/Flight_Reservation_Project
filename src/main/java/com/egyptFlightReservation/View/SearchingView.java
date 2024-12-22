@@ -29,7 +29,6 @@ public class SearchingView {
     }
 
     public void showResult(String[] titles, String[][] resultFlights) {
-//        Menu.show(resultFlights);
         if (resultFlights.length == 0) {
             System.out.println("No Result Found!");
             return;

@@ -29,6 +29,7 @@ public class ClientProfileController {
             mainMenu();
         } else if (choice == 3){
             displayPaymentMethods();
+            mainMenu();
         }else if (choice == 4)
             BackToHomePage();
     }

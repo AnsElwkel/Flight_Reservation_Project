@@ -20,7 +20,6 @@ public class SeatSelectorController {
     public SeatSelectorController(Flight flight) {
         view = new SeatSelectorView();
         this.flight = flight;
-
     }
 
     public myPair<Boolean , Flight> selectionProcess() {

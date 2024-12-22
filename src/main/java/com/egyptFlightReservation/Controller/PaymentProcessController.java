@@ -25,8 +25,12 @@ public class PaymentProcessController {
     }
 
     public myPair<Boolean, Double> paymentProcess(double amount) {
+        myPair<Double ,Integer > discountProcessRet = new myPair<Double , Integer>();
+        int points = 0;
         if(!once){
-            amount = discountProcess(amount); /// Discount Process using premium points
+            discountProcessRet = discountProcess(amount); /// Discount Process using premium points
+            amount = discountProcessRet.getFirst();
+            points = discountProcessRet.getSecond();
             once = true;
         }
 
@@ -43,10 +47,15 @@ public class PaymentProcessController {
             addNewPayment();
             return paymentProcess(amount);
         } else {
-            return new myPair(myPaymentMethods().get(choice - 1).paymentProcess(amount) , amount);
+            boolean isSuccess = myPaymentMethods().get(choice - 1).paymentProcess(amount);
+            if(isSuccess){
+                Database.getDatabase().subtractPremiumPoints(points);
+                return new myPair<>(true , amount);
+            }
+            return new myPair<>(false , amount);
         }
     }
-    public double discountProcess(double amount) {
+    public myPair<Double , Integer> discountProcess(double amount) {
 
         int choice = view.getChoiceOfDiscountInfo();
         while(!(choice == 1 || choice == -1)){
@@ -60,11 +69,9 @@ public class PaymentProcessController {
                 System.out.println("Invalid input , please try again");
                 points = view.getDiscountPoint();
             }
-            Database.getDatabase().subtractPremiumPoints(points);
-            return amount - ((double)1 * amount * (points / 10000.0));
-
+            return new myPair<>(amount - ((double)1 * amount * (points / 10000.0)) , points);
         }
-        return amount;
+        return new myPair<>(amount , 0);
     }
 
     public void addNewPayment() {

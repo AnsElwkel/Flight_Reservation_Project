@@ -17,7 +17,6 @@ public class Booking {
     /// May be book more than seat !
     private String totalPrice;
 
-    private ArrayList<String> seatNumbers;
     /// May be book more than seat !
     private String clientName;
 
@@ -44,19 +43,6 @@ public class Booking {
                 countOfSeats + " " + totalPrice + " " + bookingStatus;
     }
 
-    public void displayBookingDetails() {
-        System.out.println("Booking ID: " + bookingId);
-        System.out.println("Flight Number: " + flightNumber);
-        System.out.println("Departure Airport: " + departureAirport);
-        System.out.println("Departure Time: " + departureDate);
-        System.out.println("Arrival Time: " + arrivalDate);
-        System.out.println("Client Name: " + clientName);
-    }
-
-    public String getClientName() {
-        return clientName;
-    }
-
     public String getFlightNumber() {
         return flightNumber;
     }
@@ -81,10 +67,6 @@ public class Booking {
         return arrivalDate;
     }
 
-    public String isBookingStatus() {
-        return bookingStatus;
-    }
-
     public String getTotalPrice() {
         return totalPrice;
     }
@@ -99,10 +81,6 @@ public class Booking {
 
     public String getCountOfSeats() {
         return countOfSeats;
-    }
-
-    public ArrayList<String> getSeatNumbers() {
-        return seatNumbers;
     }
 
     public String getBookingStatus() {

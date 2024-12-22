@@ -49,13 +49,13 @@ public class showTableFormat {
     }
 
     private static void printCenteredTitle(String title, int width) {
-        int padding = (width - title.length() - 2) / 2; // -2 for the '|' characters
+        int spaces = (width - title.length() - 2) / 2; /// -2 for the '|' characters
         System.out.print('|');
-        for (int i = 0; i < padding; i++)
+        for (int i = 0; i < spaces; i++)
             System.out.print(' ');
 
         System.out.print(title);
-        for (int i = 0; i < width - title.length() - padding - 2; i++)
+        for (int i = 0; i < width - title.length() - spaces - 2; i++)
             System.out.print(' ');
 
         System.out.println('|');

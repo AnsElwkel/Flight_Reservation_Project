@@ -22,7 +22,6 @@ public class LoginController {
 
     public void LoginProcess() {
         loginInput();
-
     }
 
 

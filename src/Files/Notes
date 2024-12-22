@@ -26,8 +26,17 @@ ANASELWKEL Anas_11
 
 === Airline Admins sample ===
 Ahmed  ahmed ahmed@gmail.com Ahmed_12 FlyEgypt  FE1 Cairo
+F125 Cairo_International_Airport Los_Angeles_International_Airport 2024-12-25 2024-12-26 6 14 3 15000 5 10000 6 7000 premium_food_and_relaxation_areas  More_Legroom_and_noise-canceling_headphones  Limited_Legroom_and_regular_food_and_personal_space_more_limited 75 50 0
+F2324 Cairo_International_Airport Los_Angeles_International_Airport 2024-12-26 2024-12-28 6 14 4 13000 5 9000 5 5000 relaxation_areas  More_Legroom  Limited_Legroom_and_regular_food_and_personal_space_more_limited 100 50 20
+
 Mohamed mohamed mohamed@gmail.com Mohamed@32 NileAir NA1 Giza
+F1129 Sharm_El_Sheikh_International_Airport  Cairo_International_Airport 2025-02-12 2025-02-12 6 12 3 2000 4 1500 5 1000 relaxation_areas More_Legroom Limited_Legroom_and_regular_food_and_personal_space_more_limited 0 0 0
+F1256 Sharm_El_Sheikh_International_Airport  Los_Angeles_International_Airport 2025-01-12 2025-01-13 4 10 3 18000 3 15000 4 12000 relaxation_areas More_Legroom Limited_Legroom_and_regular_food_and_personal_space_more_limited 150 100 50
+
 Kareem kareem kareem@gmail.com Kareem_1 NesmaAirlines NSM Cairo
+F1324 Cairo_International_Airport Sharm_El_Sheikh_International_Airport 2025-01-05 2025-01-06 6 14 4 17000 4 12000 7 9000 relaxation_areas  More_Legroom  Limited_Legroom_and_regular_food_and_personal_space_more_limited 50 0 0
+
+
 Amr amr_hany amr@gmail.com Amr@1234 EgyptAir MSR Military_Transportation_Department
 
 === Airline Sample ===
@@ -39,6 +48,7 @@ EgyptAir MSR Military_Transportation_Department
 === Client Sample ===
 Anas anas hesham anas@gmail.com Anas_123 Male 01117581803 012345678 2005-07-02
 basel based hesham basel@gmail.com Basel@12 male 01234567891 112536889 2005-01-01
+zeyad zeyad hesham zeyad@gmail.com Zeyad_8a maLe 01115341700 113564895 2003-8-18
 
 === Airports sample ===
 Cairo_International_Airport      CAI    Cairo
@@ -47,13 +57,22 @@ Sharm_El_Sheikh_International_Airport   SSH     Sharm_El_sheikh
 Los_Angeles_International_Airport   LAX     Los_Angeles
 
 === Flights Sample ===
-F125 Cairo_International_Airport Los_Angeles_International_Airport 2024-12-25 2024-12-26 6 14 3 15000 5 10000 6 7000 premium_food_and_relaxation_areas  More_Legroom_and_noise-canceling_headphones  Limited_Legroom_and_regular_food_and_personal_space_more_limited 75 50 0
-F2324 Cairo_International_Airport Los_Angeles_International_Airport 2024-12-26 2024-12-28 6 14 4 13000 5 9000 5 5000 relaxation_areas  More_Legroom  Limited_Legroom_and_regular_food_and_personal_space_more_limited 100 50 20
-F1324 Cairo_International_Airport Los_Angeles_International_Airport 2024-11-14 2024-11-15 6 14 4 17000 4 12000 7 9000 relaxation_areas  More_Legroom  Limited_Legroom_and_regular_food_and_personal_space_more_limited 50 0 0
 F1234 Cairo_International_Airport Sharm_El_Sheikh_International_Airport 2024-12-27 2024-12-27 60 9 18 6 6 6 20 20 20 10000 8000 5000 asdfafsfas asdgcxzf a 50 30 0
 
 === Sign Up Sample ===
 Anas ans@gmail.com Anas_123 Male 2005-07-02 01117581803 123456789
+
+
+
+
+Tasks
+Sign Up and clientProfile -> Mariam
+UML and Flight -> Youssef
+UML and airline -> Ahmed
+Seats -> Toqa
+Client and User -> mariam
+Passengers and tickets -> Amr
+
 
 
 ============

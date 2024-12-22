@@ -4,9 +4,7 @@ import Tools.Menu;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.TreeMap;
-import java.util.HashSet;
 import java.util.HashMap;
 
 public class Airline {
@@ -23,31 +21,11 @@ public class Airline {
         this.location = location;
         this.Flights = new TreeMap<>();
         this.clientsWhoRated = new HashMap<>();
-        this.ratingCount = 0;
-        this.sumOfRatings = 0;
-        this.ratingAverage = 0.0;
+        this.ratingCount = ratingCount;
+        this.sumOfRatings = sumOfRatings;
+        this.ratingAverage = ratingAverage;
     }
 
-    public ArrayList<String> getAllRatings(){
-        ArrayList<String> ratings = new ArrayList<>();
-        for(String key : this.clientsWhoRated.keySet()){
-            ratings.add(key+"~"+clientsWhoRated.get(key));
-        }
-        return ratings;
-    }
-    public void setRate(String username , int rate , String review){
-        clientsWhoRated.put(username , String.valueOf(rate) + "~" + review);
-        ratingCount++;
-        sumOfRatings += rate;
-        ratingAverage = ((double)sumOfRatings)/ratingCount;
-    }
-
-    public boolean isRatedBefore(String username){
-        if(this.clientsWhoRated.containsKey(username)){
-            return true;
-        }
-        return false;
-    }
 
     public String get_name() {
         return name;
@@ -67,9 +45,51 @@ public class Airline {
         }
     }
 
+    public double getRatingAverage() {
+        return ratingAverage;
+    }
+
+    public int getSumOfRatings() {
+        return sumOfRatings;
+    }
+
+    public int getRatingCount() {
+        return ratingCount;
+    }
+
     public boolean isEmptyFlights() {
         return Flights.isEmpty();
     }
+
+    public ArrayList<Flight> getFlights(){
+        return new ArrayList<Flight>(Flights.values());
+    }
+
+
+/// Rating System
+
+    public ArrayList<String> getAllRatings(){
+        ArrayList<String> ratings = new ArrayList<>();
+        for(String key : this.clientsWhoRated.keySet()){
+            ratings.add(key+"~"+clientsWhoRated.get(key));
+        }
+        return ratings;
+    }
+    public void setRate(String username , int rate , String review){
+        clientsWhoRated.put(username , String.valueOf(rate) + "~" + review);
+        ratingCount++;
+        sumOfRatings += rate;
+        ratingAverage = ((double)sumOfRatings)/ratingCount;
+    }
+    public boolean isRatedBefore(String username){
+        if(this.clientsWhoRated.containsKey(username)){
+            return true;
+        }
+        return false;
+    }
+
+
+    /// Database access
 
     public void addFlight(Flight flight) {
         Flights.put(flight.getFlightNumber(), flight);
@@ -136,23 +156,10 @@ public class Airline {
 
     }
 
-    public ArrayList<Flight> getFlights(){
-        return new ArrayList<Flight>(Flights.values());
-    }
     @Override
     public String toString() {
         return name + " " + ID + " " + ratingCount + " " + ratingAverage;
     }
 
-    public double getRatingAverage() {
-        return ratingAverage;
-    }
 
-    public int getSumOfRatings() {
-        return sumOfRatings;
-    }
-
-    public int getRatingCount() {
-        return ratingCount;
-    }
 }

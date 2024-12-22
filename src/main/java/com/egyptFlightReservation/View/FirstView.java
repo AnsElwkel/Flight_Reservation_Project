@@ -12,7 +12,6 @@ public class FirstView {
         FileLoader.loadData();
     }
 
-
     public static void Run() {
         System.out.println("Welcome to Egypt Flight Reservation System");
         Menu.show(new String[]{"Login", "Sign Up", "Exit"});

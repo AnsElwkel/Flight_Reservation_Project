@@ -33,11 +33,9 @@ public class ClientView {
         String review = cin2.nextLine();
         return new myPair<>(rate, review);
     }
-
     public ClientView() {
         firstMassage();
     }
-
     public void firstMassage() {
         System.out.println("====================================================");
         System.out.println("==== Welcome to Egypt Flight Reservation System ====");

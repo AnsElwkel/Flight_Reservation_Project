@@ -3,7 +3,6 @@ package com.egyptFlightReservation.Model;
 import java.util.ArrayList;
 
 public class Passenger {
-    /// /
     private String Name, ID, PhoneNumber, Email;
 
     public Passenger(String Name, String ID, String PhoneNumber, String Email) {

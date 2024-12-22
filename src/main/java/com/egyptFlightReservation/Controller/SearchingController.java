@@ -44,7 +44,7 @@ public class SearchingController {
         this.searchResults = filterFunction(); // database access
 
         if (this.searchResults.isEmpty()) {
-            System.out.println("No flights found in searchProcess function in searchingController");
+            System.out.println("No flights founds");
             return false;
         }
 
@@ -67,7 +67,6 @@ public class SearchingController {
             choice = view.sortBy();
             this.sortBy(choice);
             selectionAfterShowResult(); /// recursion call
-
         } else if (choice == 2) {
             choice = view.getChoiceOfFlight(Math.min(1 , searchResults.size()), searchResults.size()); // from 1 to size of array
             --choice;
@@ -81,7 +80,6 @@ public class SearchingController {
         }
         return true;
     }
-
 
     public void showResult(ArrayList<Flight> searchResults) {
         if (searchResults.isEmpty()) {
@@ -97,7 +95,6 @@ public class SearchingController {
             view.showResult(titles, results);
         }
         Tools.Menu.showMessage("" , 1);
-
     }
 
     public String[] makeResultFormat(int number, Flight flight) { ///  change this to table format

@@ -39,79 +39,66 @@ public class AdminView {
         System.out.print("Enter New Admin Username: ");
         return cin.nextLine();
     }
-
     public String getNewAdminName() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter New Admin Name: ");
         return cin.nextLine();
     }
-
     public String getAdminPassword() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter New Admin Password: ");
         return cin.nextLine();
     }
-
     public String getNewAdminEmail() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter New Admin Email: ");
         return cin.nextLine();
     }
-
     public String getAirlineName() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter New Airline Name: ");
         return cin.nextLine();
     }
-
     public String getAirlineCode() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter New Airline Code: ");
         return cin.nextLine();
     }
-
     public String getAirlineLocation() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter New Airline Location: ");
         return cin.nextLine();
     }
-
     public String getNewDepartureDate() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter New Departure Date: ");
         return cin.nextLine();
     }
-
     public String getNewArrivalDate() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter New Arrival Date: ");
         return cin.nextLine();
     }
-
     public String newCountOfRows() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter New Number of Rows (must be between count of current seat and 10 inclusive): ");
         return cin.nextLine();
     }
-
     public String getNewFirstClassCols() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter Number of New First Class Cols (must be between current count of first class and 26 inclusive): ");
         return cin.nextLine();
     }
-
     public String getNewBusinessClassCols() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter Number of New Business Class Cols (must be between current count of business class and 26 inclusive): ");
         return cin.nextLine();
     }
-
     public String getNewEconomyClassCols() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter Number of New Business Class Cols (must be between current count of economy class and 26 inclusive): ");
         return cin.nextLine();
     }
-
     public int adminMenu() {
         Scanner cin = new Scanner(System.in);
         Tools.showTableFormat.show("Admin Operations" ,
@@ -126,13 +113,11 @@ public class AdminView {
         System.out.print("Enter Number in range (1 - 7): ");
         return cin.nextInt();
     }
-
     public String getFlightNumber() {
         Scanner cin = new Scanner(System.in);
         System.out.print("Enter Flight Number: ");
         return cin.nextLine();
     }
-
     public ArrayList<String> getInfoOfNewFlight() {
         Scanner cin = new Scanner(System.in);
         ArrayList<String> info = new ArrayList<>();
@@ -176,7 +161,6 @@ public class AdminView {
         info.add(cin.nextLine());
         return info;
     }
-
     public ArrayList<String> getInfoOfNewAirport() {
         Scanner cin = new Scanner(System.in);
         ArrayList<String> info = new ArrayList<>();
@@ -212,7 +196,7 @@ public class AdminView {
     }
     public String getAdminUsername(){
         Scanner cin = new Scanner(System.in);
-        System.out.print("Enter Admin Username Code: ");
+        System.out.print("Enter Admin Username : ");
         return cin.nextLine();
     }
     public String getClientUsername(){

@@ -11,11 +11,9 @@ import java.util.ArrayList;
 
 public class ClientController {
     ClientView view;
-    Client client;
 
     public ClientController() {
         view = new ClientView();
-        client = Database.getDatabase().getClient();
     }
 
     public void process() {
@@ -71,7 +69,6 @@ public class ClientController {
         }
 
     }
-
 
     public void showProfile() { /// Call profile controller
         ClientProfileController profileController = new ClientProfileController();

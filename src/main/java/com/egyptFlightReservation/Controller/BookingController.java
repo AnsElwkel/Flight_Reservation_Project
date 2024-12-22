@@ -72,6 +72,5 @@ public class BookingController {
         }
         return false;
         /// return to home page
-
     }
 }

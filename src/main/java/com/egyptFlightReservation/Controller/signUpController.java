@@ -81,7 +81,6 @@ public class signUpController {
         return true;
     }
 
-
     public boolean validateMobile() {//Ahndl 01
         this.mobileNumber = view.getMobileNumber();
         while (!InputValidator.isValidPhoneNumber(mobileNumber)) {

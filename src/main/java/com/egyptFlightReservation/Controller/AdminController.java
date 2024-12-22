@@ -11,7 +11,6 @@ import com.egyptFlightReservation.View.FirstView;
 
 import java.util.ArrayList;
 
-/// add show all airports , show all admins , show all clients
 public class AdminController {
     Admin admin;
     private AdminView view;
@@ -19,7 +18,7 @@ public class AdminController {
     public AdminController() {
         this.view = new AdminView();
     }
-
+/// Main Admin functionalities
     public void MainAdminFunction() {
 
         int choice = view.mainAdminMenu();
@@ -40,7 +39,6 @@ public class AdminController {
         else
             FirstView.Run();
     }
-
     public void removeClient(){
         String clientUsername = view.getClientUsername();
         if(!Database.getDatabase().removeClient(clientUsername))
@@ -142,7 +140,7 @@ public class AdminController {
         MainAdminFunction(); //rec
     }
 
-
+/// Airline Admins functionalities
     public void AdminProcess() {
         admin = Database.getDatabase().getAdmin();
         System.out.println("Welcome | " + admin.getUsername() + " | ");
@@ -196,7 +194,6 @@ public class AdminController {
             view.displayAirlineFlights(titles , data);
         }
     }
-
     public void addFlight() {
         ArrayList<String> info = view.getInfoOfNewFlight();
         if (Database.getDatabase().getAirline() == null) System.out.println("Airline not found");
@@ -205,13 +202,11 @@ public class AdminController {
         admin.addFlight(newFlight);
         Menu.showMessage("Flight successfully added" , 1);
     }
-
     public void removeFlight() {
         String flightNumber = view.getFlightNumber();
         admin.removeFlight(flightNumber);
         Menu.showMessage("Flight successfully removed" , 1);
     }
-
     public void updateSchedule() {
         String flightNumber = view.getFlightNumber(),
                 departureDate = view.getNewDepartureDate(),
@@ -219,7 +214,6 @@ public class AdminController {
         admin.updateSchedule(flightNumber, departureDate, arrivalDate);
         Menu.showMessage("Schedule successfully updated" , 1);
     }
-
     public void expandCountOfSeats() {
         String flightNumber = view.getFlightNumber(),
                 newCountOfRows = view.newCountOfRows(),
@@ -229,12 +223,12 @@ public class AdminController {
 
         while (!admin.expandCountOfSeats(flightNumber, Integer.parseInt(newCountOfRows), Integer.parseInt(newFirstClassCols),
                 Integer.parseInt(newBusinessClassCols), Integer.parseInt(newEconomyClassCols))) {
+
             flightNumber = view.getFlightNumber();
             newCountOfRows = view.newCountOfRows();
             newFirstClassCols = view.getNewFirstClassCols();
             newBusinessClassCols = view.getNewBusinessClassCols();
             newEconomyClassCols = view.getNewEconomyClassCols();
         }
-
     }
 }

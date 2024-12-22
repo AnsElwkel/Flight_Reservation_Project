@@ -13,6 +13,7 @@ public class ClientProfileView {
         System.out.println("+-------- My Payments --------+");
         for(String method : methods){
             System.out.println("+ " + method);
+        System.out.println("+-----------------------------+");
         }
         Tools.Menu.showMessage("" , 1);
     }
@@ -88,6 +89,5 @@ public class ClientProfileView {
         System.out.print("Enter new full name: ");
         return cin.nextLine();
     }
-
 
 }

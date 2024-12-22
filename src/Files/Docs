@@ -1,5 +1,53 @@
 Egypt Flight Reservation Documentation
 
+An application from the Egyptian Ministry of Tourism to book flights, including all airlines, and provides ease of booking for citizens and achieves great benefits on several levels, including:
+
+1. For citizens and users:
+
+Improved user experience: The application provides a unified platform that makes it easier for users to find the flights that suit them.
+
+Ease of access: Flights can be easily booked via phone or computer without the need to visit multiple offices or locations.
+
+Transparency: Prices, times, and services are clearly displayed, enabling users to make informed decisions.
+
+Various options: The ability to compare flights between different airlines to choose the most appropriate in terms of cost, timing, number of returned premium points, number of available seats, or average rating.
+
+Availability of airline ratings: Citizens are able to rate and express their opinion on any airline
+
+Distinctive points feature: The user starts for the first time when creating an account on the application, he gets 1000 distinctive points, i.e. (10%) discount when booking any flight, and there is a return of other points based on each airline
+
+2. For airlines:
+
+Increasing customers: It gives all airlines, especially the smaller ones, a platform to reach a wide segment of users.
+
+Central marketing: The application provides an effective means of promoting companies' offers and services.
+
+Improving competitiveness: It enhances fair competition between companies, which leads to improving the quality of services.
+
+3. For the Ministry of Tourism and National Economy:
+
+Promoting tourism: It makes it easier for citizens and foreign visitors to book their flights, which enhances travel and tourism movement.
+
+Increasing revenues: The ministry may impose nominal fees on companies or reservations to support the state treasury.
+
+Data analysis: The application provides valuable data on travel movement that can be used to improve tourism plans and infrastructure.
+
+Facilitating cooperation: It supports coordination between airlines and the ministry to provide better services.
+
+4. Technically:
+
+Centralization of services: brings all airlines together in one place, reducing distraction and increasing efficiency.
+
+Supporting digital transformation: enhances the country's strategy towards digital transformation and providing services online.
+
+5. For society:
+
+Providing job opportunities: Creating and operating the application requires technical and administrative teams, which creates new job opportunities.
+
+Enhancing trust: Providing a government service that facilitates citizens' lives enhances their trust in the government and its institutions.
+
+
+
 Main Admin functionalities:
 Add New Airline Admin
 Add New Airport
@@ -13,6 +61,7 @@ Remove Flights
 Update Schedule
 Update count of Seats
 Show Airline Flights
+Show Rating and Reviews
 
 Client functionalities:
 Show All flights
@@ -23,17 +72,30 @@ Add and show the payment methods
 Show Booking History
 Rate the airlines and add review
 
+43 Classes
 
-Login Sample:
-Anas
-Anas_123
 
-Reserve flight Sample:
-2024-12-24
-2024-12-28
 
+1-
+Main Admin samples:
+ANASELWKEL
+Anas_11
+-show airports
+-add airport
+Hurghada_International_Airport  HRG     Hurghada
+
+-show clients
+-show admins
+
+remove admin:
+Kareem kareem kareem@gmail.com Kareem_1 NesmaAirlines NSM Cairo
+
+add admin:
+Amr amr_hany amr@gmail.com Amr@1234 EgyptAir MSR Military_Transportation_Department
+
+2-
 Airline Admin Login Sample:
-Ahmed Ahmed_12
+Amr Amr@1234
 
 Airline Admin Add Flight Sample:
 F1234
@@ -56,10 +118,27 @@ Cheaper_price
 50
 0
 
+- Update schedule
+- update count of seat
 
-Expand Count Of Seats Sample:
-F1234
-8
-8
-8
-8
+
+
+
+3-
+Sign Up Sample:
+zeyad
+zeyad hesham
+zeyad@gmail.com
+Zeyad_8a
+maLe
+01115341700
+113564895
+2003-8-18
+
+-show the payments
+-show the booking history
+-edit the full name
+Zeyad Hesham Elwkel
+
+
+Rate FlyEgypt Airline

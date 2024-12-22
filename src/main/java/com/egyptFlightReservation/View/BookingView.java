@@ -11,28 +11,23 @@ public class BookingView {
 
     public BookingView() {
     }
-
     public String check_confirmation() {
         System.out.println("\nConfirm booking? (yes/no):");
         return cin.nextLine();
     }
-
     public void showBookingDetails(String[] titles, String[][] details) {
         Tools.showTableFormat.show("Booking Details", titles, details);
         Menu.show(new String[]{"Pay", "Cancel and back to home page"});
     }
-
     public int getChoice() {
         return MenuSelector.select("Enter Number", 1, 2);
     }
-
     public void showMassageOfFailedBooking() {
         System.out.println("==========================");
         System.out.println("==== Booking Failed ! ====");
         System.out.println("==========================");
         Tools.Menu.showMessage("" , 1);
     }
-
     public void showMassageOfSuccessfulBooking() {
         System.out.println("==============================");
         System.out.println("==== Booking Successful ! ====");

@@ -11,17 +11,16 @@ import com.egyptFlightReservation.Model.Payment.*;
 import com.egyptFlightReservation.Model.User.Admin;
 import com.egyptFlightReservation.Model.User.Client;
 
-
+/// Singleton DP
 public class Database {
-    private static TreeMap<String, myTuple<Client, ArrayList<Booking>, ArrayList<Ticket>, ArrayList<PaymentMethod>>> userTable;
     /// ClientUserName Info
-    private static TreeMap<String, Admin> adminTable;
+    private static TreeMap<String, myTuple<Client, ArrayList<Booking>, ArrayList<Ticket>, ArrayList<PaymentMethod>>> userTable;
     /// AdminName Info
-    private static TreeMap<String, Airline> adminOperations;
+    private static TreeMap<String, Admin> adminTable;
     /// AdminName Airline
+    private static TreeMap<String, Airline> adminOperations;
     private static TreeMap<LocalDate, ArrayList<Flight>> searchingTable;
     private static ArrayList<Airport> airports;
-    /// save and load it
     private static String curUser;
     private static Database database;
 
@@ -33,25 +32,28 @@ public class Database {
         airports = new ArrayList<>();
     }
 
-
-
     public static Database getDatabase() {
         if (database == null)
             database = new Database();
         return database;
     }
 
+    ///  Premium Points Feature
     public static void addPremiumPoints(int gainedPremiumPoints) {
         userTable.get(curUser).getFirst().addPremiumPoints(gainedPremiumPoints);
     }
     public static void subtractPremiumPoints(int points){
         userTable.get(curUser).getFirst().subtractPremiumPoints(points);
     }
+    public static int getUserPremiumPoints(){
+        return userTable.get(curUser).getFirst().getPremiumPoints();
+    }
 
     public static ArrayList<Flight> getAirlineFlights(){
         return adminOperations.get(curUser).getFlights();
     }
 
+    /// Rating System
     public static void setRate(String ID ,int rate , String review){
         for(String cur : adminOperations.keySet()){
             if(adminOperations.get(cur).get_ID().equals(ID)){
@@ -79,7 +81,6 @@ public class Database {
         }
         return 0;
     }
-
     public static boolean isRatedBefore(String airlineID){
         for(String cur : adminOperations.keySet()){
             if(adminOperations.get(cur).get_ID().equals(airlineID)){
@@ -88,18 +89,15 @@ public class Database {
         }
         return false;
     }
-    public static int getUserPremiumPoints(){
-        return userTable.get(curUser).getFirst().getPremiumPoints();
-    }
 
+
+    /// UserTable functionalities
     public static void addClient(Client client) {
-        System.out.println(client.getName());
         if (client == null || client.getName() == null || client.getName().isEmpty()) {
             throw new IllegalArgumentException("Client name cannot be null or empty");
         }
         userTable.put(curUser, new myTuple<>(client, new ArrayList<>(), new ArrayList<>(), new ArrayList<>()));
     }
-
     public static void addTicket(LocalDate DepDate, String flightNumber, Ticket ticket) {
         for (Flight flight : searchingTable.get(DepDate)) {
             if (flight.getFlightNumber().equals(flightNumber)) {
@@ -108,108 +106,20 @@ public class Database {
             }
         }
     }
-
     public static ArrayList<PaymentMethod> getClientPayment() {
         return userTable.get(curUser).getFourth();
     }
-
     public static void addPaymentMethod(PaymentMethod paymentMethod) {
         userTable.get(curUser).getFourth().add(paymentMethod);
     }
-
     public static void addBooking(Booking booking) {
         userTable.get(curUser).getSecond().add(booking);
     }
-
-    public static Airline getAirline() {
-        for (String cur : adminOperations.keySet()) {
-//            System.out.println(cur + " in get airline function");
-        }
-        if (!adminOperations.containsKey(curUser)) {
-//            System.out.println(curUser + " not found in admin operations container");
-        }
-        return adminOperations.get(curUser);
-    }
-    public static String[][] getAirlines() {
-        String[][] airlinesInfo = new String[airports.size()][];
-        int i = 0;
-        for(String cur : adminOperations.keySet()) {
-            String tmp = String.valueOf(i+1) + " " + adminOperations.get(cur).toString();
-            airlinesInfo[i++] =tmp.split(" ");
-        }
-        return airlinesInfo;
-    }
-
-    public static boolean isUniqueUserName(String userName) {
-        return !userTable.containsKey(userName);
-    }
-
-    public static boolean isCorrectLogin(String userName, String password) {
-        if (!userTable.containsKey(userName))
-            return false;
-        return password.equals(userTable.get(userName).getFirst().getPassword());
-    }
-
-    public static boolean isAdmin(String userName, String password) {
-        if (!adminTable.containsKey(userName))
-            return false;
-        return password.equals(adminTable.get(userName).getPassword());
-    }
-
-    public static String getCurUser() {
-        return curUser;
-    }
-
-    public static void setCurUser(String username) {
-        curUser = username;
-    }
-
-    public static void addNewFlight(Flight flight) {
-        if (searchingTable.get(flight.getDepartureDate()) == null)
-            searchingTable.put(flight.getDepartureDate(), new ArrayList<>());
-        searchingTable.get(flight.getDepartureDate()).add(flight);
-        adminOperations.get(curUser).addFlight(flight);
-    }
-
-    public static void removeFlight(String flightNumber) {
-        if (adminOperations.containsKey(curUser))
-            adminOperations.get(curUser).removeFlight(flightNumber);
-        else
-            System.out.println("Admin Name not contain in admin operations container");
-
-    }
-
-
-    public static Admin getAdmin() {
-        if (adminTable == null || !adminTable.containsKey(curUser))
-            return null;
-        return adminTable.get(curUser);
-    }
-
-    public static void updateSchedule(String flightNumber, LocalDate departureDate, LocalDate arrivalDate) {
-        adminOperations.get(curUser).setSchedule(flightNumber, departureDate, arrivalDate);
-    }
-
-    public static boolean expandCountOfSeats(String flightNumber, int newCountOfRows, int countOfFirstClass, int countOfBusinessClass, int countOfEconomyClass) {
-        return adminOperations.get(curUser).expandCountOfSeats(flightNumber, newCountOfRows, countOfFirstClass, countOfBusinessClass, countOfEconomyClass);
-    }
-
-    public static ArrayList<Flight> searchFlights(LocalDate fromDate, LocalDate toDate) {
-        SortedMap<LocalDate, ArrayList<Flight>> resultFlights = searchingTable.subMap(fromDate, true, toDate, true);
-        ArrayList<Flight> flights = new ArrayList<>();
-        for (var cur : resultFlights.keySet())
-            for (Flight flight : resultFlights.get(cur))
-                flights.add(flight);
-
-        return flights;
-    }
-
     public static Client getClient() {
         if (!userTable.containsKey(curUser)) throw new IllegalArgumentException("User not found");
         if (userTable.get(curUser).getFirst() == null) throw new IllegalArgumentException("Client not found");
         return userTable.get(curUser).getFirst();
     }
-
     public static String[][] getBookingHistory() {
 //        return userTable.get(curUser).getSecond();
         String[][] history = new String[userTable.get(curUser).getSecond().size()][11];
@@ -223,7 +133,87 @@ public class Database {
         }
         return history;
     }
+    public static String getCurUser() {
+        return curUser;
+    }
+    public static void setCurUser(String username) {
+        curUser = username;
+    }
 
+
+    public static Airline getAirline() {
+        for (String cur : adminOperations.keySet()) {
+//            System.out.println(cur + " in get airline function");
+        }
+        if (!adminOperations.containsKey(curUser)) {
+//            System.out.println(curUser + " not found in admin operations container");
+        }
+        return adminOperations.get(curUser);
+    }
+    public static String[][] getAirlines() {
+        String[][] airlinesInfo = new String[adminOperations.size()][];
+        int i = 0;
+        for(String cur : adminOperations.keySet()) {
+            String tmp = String.valueOf(i+1) + " " + adminOperations.get(cur).toString();
+            airlinesInfo[i++] =tmp.split(" ");
+        }
+        return airlinesInfo;
+    }
+
+
+    ///  Login and Sign Up validation
+    public static boolean isUniqueUserName(String userName) {
+        return !userTable.containsKey(userName);
+    }
+    public static boolean isCorrectLogin(String userName, String password) {
+        if (!userTable.containsKey(userName))
+            return false;
+        return password.equals(userTable.get(userName).getFirst().getPassword());
+    }
+    public static boolean isAdmin(String userName, String password) {
+        if (!adminTable.containsKey(userName))
+            return false;
+        return password.equals(adminTable.get(userName).getPassword());
+    }
+
+
+    /// Admin functionalities
+    public static Admin getAdmin() {
+        if (adminTable == null || !adminTable.containsKey(curUser))
+            return null;
+        return adminTable.get(curUser);
+    }
+    public static void addNewFlight(Flight flight) {
+        if (searchingTable.get(flight.getDepartureDate()) == null)
+            searchingTable.put(flight.getDepartureDate(), new ArrayList<>());
+        searchingTable.get(flight.getDepartureDate()).add(flight);
+        adminOperations.get(curUser).addFlight(flight);
+    }
+    public static void removeFlight(String flightNumber) {
+        if (adminOperations.containsKey(curUser))
+            adminOperations.get(curUser).removeFlight(flightNumber);
+        else
+            System.out.println("Admin Name not contain in admin operations container");
+
+    }
+    public static void updateSchedule(String flightNumber, LocalDate departureDate, LocalDate arrivalDate) {
+        adminOperations.get(curUser).setSchedule(flightNumber, departureDate, arrivalDate);
+    }
+    public static boolean expandCountOfSeats(String flightNumber, int newCountOfRows, int countOfFirstClass, int countOfBusinessClass, int countOfEconomyClass) {
+        return adminOperations.get(curUser).expandCountOfSeats(flightNumber, newCountOfRows, countOfFirstClass, countOfBusinessClass, countOfEconomyClass);
+    }
+
+
+    /// Searching functionalities
+    public static ArrayList<Flight> searchFlights(LocalDate fromDate, LocalDate toDate) {
+        SortedMap<LocalDate, ArrayList<Flight>> resultFlights = searchingTable.subMap(fromDate, true, toDate, true);
+        ArrayList<Flight> flights = new ArrayList<>();
+        for (var cur : resultFlights.keySet())
+            for (Flight flight : resultFlights.get(cur))
+                flights.add(flight);
+
+        return flights;
+    }
     public static void addPassenger(String flightNumber, LocalDate departureDate) {
         for (Flight flight : searchingTable.get(departureDate))
             if (flight.getFlightNumber().equals(flightNumber)) {
@@ -231,7 +221,6 @@ public class Database {
                         userTable.get(curUser).getFirst().getPhoneNumber(), userTable.get(curUser).getFirst().getEmail()));
             }
     }
-
     public static void addInSearchingTable(LocalDate departureDate, Flight flight) {
         if (!searchingTable.containsKey(departureDate))
             searchingTable.put(departureDate, new ArrayList<>());
@@ -246,35 +235,30 @@ public class Database {
         curUser = username;
         userTable.get(curUser).getFirst().setUsername(username);
     }
-
     public static void editPassword(String password) {
         userTable.get(curUser).getFirst().setPassword(password);
     }
-
     public static void editEmail(String email) {
         userTable.get(curUser).getFirst().setEmail(email);
     }
-
     public static void editPhoneNumber(String phoneNumber) {
         userTable.get(curUser).getFirst().setPhoneNumber(phoneNumber);
     }
-
     public static void editFullName(String fullName) {
         userTable.get(curUser).getFirst().setName(fullName);
     }
+
 
     /// Main Admin Functions
     public static void createNewAdmin(String adminName, Admin admin, String AirlineName, String AirlineCode, String airlineLocation) {
         adminTable.put(adminName, admin);
         adminOperations.put(adminName, new Airline(AirlineName, AirlineCode, airlineLocation , 0 , 0 , 0));
     }
-
     public static void addNewAirport(Airport airport) {
         if (airports == null)
             airports = new ArrayList<>();
         airports.add(airport);
     }
-
     public static String[][] getAllAirportsInfo(){
         if(airports != null && !airports.isEmpty()){
             String[][] info = new String[airports.size()][3];
@@ -284,7 +268,6 @@ public class Database {
         }
         return null;
     }
-
     public static boolean removeAirport(String airportCode){
         for(Airport airport : airports){
             if(airportCode.equals(airport.getAirportcode())){
@@ -294,21 +277,19 @@ public class Database {
         }
         return false;
     }
-
     public static boolean removeAdmin(String adminUsername){
         if(!adminTable.containsKey(adminUsername))
             return false;
         adminTable.remove(adminUsername);
+        adminOperations.remove(adminUsername);
         return true;
     }
-
     public static boolean removeClient(String clientUsername){
         if(!userTable.containsKey(clientUsername))
             return false;
         userTable.remove(clientUsername);
         return true;
     }
-
     public static String[][] getAllAdminsInfo(){
         if(adminTable != null && !adminTable.isEmpty()){
             String[][] info = new String[adminTable.size()][5];
@@ -319,7 +300,6 @@ public class Database {
         }
         return null;
     }
-
     public static String[][] getAllClientsInfo(){
         if(userTable != null && !userTable.isEmpty()){
             String[][] info = new String[userTable.size()][8];
@@ -375,14 +355,12 @@ public class Database {
         userTable.put(userName, new myTuple<Client, ArrayList<Booking>, ArrayList<Ticket>, ArrayList<PaymentMethod>>
                 (newClient, bookings, null, methods));
     }
-
     public static void loadAdminTable(String[] content) {
         for (String cur : content) {
             String[] tmp = cur.split(" ");
             adminTable.put(tmp[0], new Admin(tmp[0], tmp[1], tmp[2], tmp[3], tmp[4]));
         }
     }
-
     public static void loadAdminOperations(String[] airlineInfo, ArrayList<String[]> flightsInfo,
                                            ArrayList<String[]> passengersInfo,
                                            ArrayList<String[]> ticketsInfo,
@@ -405,7 +383,6 @@ public class Database {
             adminOperations.get(tmp[0]).setFlights(flightsInfo, passengersInfo, ticketsInfo, seatsInfo);
         }
     }
-
     public static void loadAirports(String[] content) {
         for (String cur : content) {
             String[] tmp = cur.split(" ");
@@ -481,7 +458,6 @@ public class Database {
             }
         }
     }
-
     public static void saveAdminTable() {
         if (adminTable != null || adminTable.size() != 0) {
             ArrayList<String> content = new ArrayList<>();
@@ -492,7 +468,6 @@ public class Database {
             FileSaver.save(FileAdministrator.ROOT_PATH + "User/Admin/Admins", content);
         }
     }
-
     public static void saveUserTable() { /// create and save clientUsernames file and folder for each client contain info and booking and PaymentMethod folder contain 4 files for payments method
         if (userTable != null || userTable.size() != 0) {
             ArrayList<String> content = new ArrayList<>();
@@ -542,7 +517,6 @@ public class Database {
             }
         }
     }
-
     public static void saveAirports() {
         if (airports != null && airports.size() != 0) {
             ArrayList<String> content = new ArrayList<>();
@@ -552,7 +526,6 @@ public class Database {
             FileSaver.save(FileAdministrator.ROOT_PATH + "Airports", content);
         }
     }
-
     public static void saveData() {
         saveAdminTable();
         saveAdminOperations();
