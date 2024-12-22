@@ -24,9 +24,8 @@ public class PaymentProcessController {
         return Database.getDatabase().getClientPayment();
     }
 
-    public myPair<Boolean, Double> paymentProcess(double amount) {
+    public myPair<Boolean, Double> paymentProcess(double amount, int points) {
         myPair<Double ,Integer > discountProcessRet = new myPair<Double , Integer>();
-        int points = 0;
         if(!once){
             discountProcessRet = discountProcess(amount); /// Discount Process using premium points
             amount = discountProcessRet.getFirst();
@@ -45,7 +44,7 @@ public class PaymentProcessController {
             // add new Payment
             // call recursion
             addNewPayment();
-            return paymentProcess(amount);
+            return paymentProcess(amount , points);
         } else {
             boolean isSuccess = myPaymentMethods().get(choice - 1).paymentProcess(amount);
             if(isSuccess){

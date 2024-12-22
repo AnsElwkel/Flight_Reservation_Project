@@ -48,7 +48,7 @@ public class BookingController {
             ArrayList<String> bookingInfo = new ArrayList<String>();
             bookingInfo.addAll(java.util.Arrays.asList(info));
 
-            myPair<Boolean ,Double> paymentProcessRet = paymentProcessController.paymentProcess(totalPrice);
+            myPair<Boolean ,Double> paymentProcessRet = paymentProcessController.paymentProcess(totalPrice , 0);
             bookingInfo.add(String.valueOf(paymentProcessRet.getSecond()));
             if (paymentProcessRet.getFirst()) {
                 //make new tickets
