@@ -141,9 +141,11 @@ Users and customers have access to the platform’s core services for booking an
 
 - **Design Patterns**:  
   - Implements **MVC (Model-View-Controller)** for modular application design.  
-  - Uses the **Singleton Design Pattern** to Database Class.  
+  - Uses the **Singleton Design Pattern** to Database Class.
+   
+- **Professional High Level File Handling**
 
-- **Efficient Database Handling**:  
+- **Efficient Database (Class) Handling**:  
   - A dedicated `Database` class is designed with an efficient and scalable structure to manage data effectively.  
   - **Data Structures Used**:  
     - **TreeMap**: Applied for admin operations and accessing user information in a sorted and efficient manner.  
